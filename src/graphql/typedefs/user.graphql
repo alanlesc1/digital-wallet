@@ -1,0 +1,11 @@
+# Types
+type User implements Timestamps { 
+  id: Int!
+  name: String!
+  email: String!
+  password: String!
+  
+  # Interface required
+  createdAt: Date!
+  updatedAt: Date!
+}

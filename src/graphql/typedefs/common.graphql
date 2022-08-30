@@ -1,0 +1,5 @@
+# Interface for sequelize common fields
+interface Timestamps {
+  createdAt: Date!
+  updatedAt: Date!
+}

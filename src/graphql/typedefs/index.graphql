@@ -1,0 +1,13 @@
+# Custom Scalars
+scalar Date
+
+type Query {
+  # User
+  currentUser: User
+}
+
+type Mutation {
+  # User
+  signUp(name: String!, email: String!, password: String!): String
+  login(email: String!, password: String!): String
+}
