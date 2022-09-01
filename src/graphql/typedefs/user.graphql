@@ -3,9 +3,15 @@ type User implements Timestamps {
   id: Int!
   name: String!
   email: String!
-  password: String!
+  isUserVerified: Boolean!
+  verificationCodeExp: Date
   
   # Interface required
   createdAt: Date!
   updatedAt: Date!
+}
+
+type Login {
+  token: String
+  user: User
 }

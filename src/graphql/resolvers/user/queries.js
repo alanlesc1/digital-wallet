@@ -5,7 +5,7 @@ const userQueries = {
     if (user) {
       return await User.findOne({ where: { id: user.id } });
     }
-    
+
     throw new Error("Not an authenticated user");
   },
 };
