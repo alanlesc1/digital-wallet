@@ -27,6 +27,19 @@ module.exports = {
           allowNull: false,
           type: Sequelize.STRING(64)
         },
+        verificationCode: {
+          allowNull: true,
+          type: Sequelize.STRING(4)
+        },
+        verificationCodeExp: {
+          allowNull: true,
+          type: Sequelize.DATE
+        },
+        isUserVerified: {
+          type: Sequelize.BOOLEAN,
+          allowNull: false,
+          defaultValue: false,
+        },
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE
@@ -40,7 +53,7 @@ module.exports = {
       await queryInterface.addIndex(
         'Users',
         ['email'],
-        { 
+        {
           name: 'users_email',
           indexType: 'BTREE',
           trx
