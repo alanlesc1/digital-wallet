@@ -3,12 +3,12 @@ scalar Date
 
 type Query {
   # User
-  currentUser: User
+  currentUser: CurrentUserResult
 }
 
 type Mutation {
   # User
-  signUp(name: String!, email: String!, password: String!): User
-  verifyUser(email: String!, password: String!, verificationCode: String): User
-  login(email: String!, password: String!): Login
+  signUp(name: String!, email: String!, password: String!): SignUpResult
+  verifyUser(email: String!, password: String!, verificationCode: String): UserVerificationResult
+  login(email: String!, password: String!): LoginResult
 }

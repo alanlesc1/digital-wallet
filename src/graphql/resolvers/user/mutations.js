@@ -3,65 +3,109 @@ import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
 import { jwtSecret } from '../../../../src/config/environment';
 import { generateNewVerification, verifyCode } from '../../../helpers/userVerification';
+import {
+  ResultsFactory,
+  SignUpResultSuccess,
+  SignUpResultError,
+  UserVerificationResultSuccess,
+  UserVerificationResultError,
+  LoginResultSuccess,
+  LoginResultError,
+  invalidEmailPasswordMessage,
+  userIsAlreadyVerifiedMessage,
+  verificationCodeWasGeneratedMessage,
+  notAVerifiedUserMessage
+} from '../../helpers/resultsFactory';
+import { ValidationError } from 'sequelize';
 
 const userMutations = {
   signUp: async (_, { name, email, password }) => {
-    const user = await User.create({
-      name,
-      email,
-      password: await bcrypt.hash(password, 10),
-    });
+    try {
+      const user = await User.create({
+        name,
+        email,
+        password: await bcrypt.hash(password, 10),
+      });
 
-    return user;
+      return ResultsFactory.create({ type: SignUpResultSuccess, user: user });
+    } catch (error) {
+      if (error instanceof ValidationError)
+        return ResultsFactory.create({ type: SignUpResultError, message: error.errors[0].message });
+      else {
+        console.error(error);
+        return ResultsFactory.create({ type: SignUpResultError });
+      }
+    }
   },
   verifyUser: async (_, { email, password, verificationCode }) => {
-    const user = await User.findOne({ where: { email } });
+    try {
+      const user = await User.findOne({ where: { email } });
 
-    if (user) {
-      const valid = await bcrypt.compare(password, user.password);
+      if (user) {
+        const valid = await bcrypt.compare(password, user.password);
 
-      if (valid) {
-        if (user.isUserVerified)
-          throw new Error("User is already verified!");
+        if (valid) {
+          if (user.isUserVerified) {
+            return ResultsFactory.create({ type: UserVerificationResultError, message: userIsAlreadyVerifiedMessage });
+          }
 
-        if (!user.verificationCode && verificationCode)
-          throw new Error("Generate a verification code first!");
+          if (!user.verificationCode && verificationCode) {
+            return ResultsFactory.create({ type: UserVerificationResultError, message: verificationCodeWasGeneratedMessage });
+          }
 
-        // Check for previously generated verification code
-        if (verificationCode) {
-          await verifyCode(user, verificationCode);
+          // Check for previously generated verification code
+          if (verificationCode) {
+            await verifyCode(user, verificationCode);
+          }
+          // Generate a new verification code
+          else {
+            await generateNewVerification(user);
+          }
+
+          await user.reload();
+          return ResultsFactory.create({ type: UserVerificationResultSuccess, user: user });
         }
-        // Generate a new verification code
-        else {
-          await generateNewVerification(user);
-        }
-
-        await user.reload();
-        return user;
+      }
+    } catch (error) {
+      if (error instanceof ValidationError)
+        return ResultsFactory.create({ type: UserVerificationResultError, message: error.errors[0].message });
+      else {
+        console.error(error);
+        return ResultsFactory.create({ type: UserVerificationResultError });
       }
     }
 
-    throw new Error("Invalid email/password");
+    return ResultsFactory.create({ type: UserVerificationResultError, message: invalidEmailPasswordMessage });
   },
   login: async (_, { email, password }) => {
-    const user = await User.findOne({ where: { email } });
+    try {
+      const user = await User.findOne({ where: { email } });
 
-    if (user) {
-      const valid = await bcrypt.compare(password, user.password);
+      if (user) {
+        const valid = await bcrypt.compare(password, user.password);
 
-      if (valid) {
-        if (!user.isUserVerified)
-          throw new Error("Not a verified user");
+        if (valid) {
+          if (!user.isUserVerified) {
+            return ResultsFactory.create({ type: LoginResultError, message: notAVerifiedUserMessage });
+          }
 
-        const token = jsonwebtoken.sign({ id: user.id, email: user.email }, jwtSecret, {
-          expiresIn: "1d",
-        });
+          const token = jsonwebtoken.sign({ id: user.id, email: user.email }, jwtSecret, {
+            expiresIn: "1d",
+          });
 
-        return { token: token, user: { ...user.toJSON() } };
+          return ResultsFactory.create({ type: LoginResultSuccess, token: token, user: user });
+        }
+      }
+
+      return ResultsFactory.create({ type: LoginResultError, message: invalidEmailPasswordMessage });
+    } catch (error) {
+      if (error instanceof ValidationError)
+        return ResultsFactory.create({ type: LoginResultError, message: error.errors[0].message });
+      else {
+        console.error(error);
+        return ResultsFactory.create({ type: LoginResultError });
       }
     }
-
-    throw new Error("Invalid email/password");
   },
 };
 

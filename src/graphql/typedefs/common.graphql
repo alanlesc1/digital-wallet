@@ -3,3 +3,12 @@ interface Timestamps {
   createdAt: Date!
   updatedAt: Date!
 }
+
+# Interface for errors
+interface Error {
+  message: String!
+}
+
+type NotAuthenticatedError implements Error {
+  message: String!
+}

@@ -1,13 +1,28 @@
 import { User } from '../../../db/models';
+import {
+  ResultsFactory,
+  NotAuthenticatedError,
+  Error
+} from '../../helpers/resultsFactory';
 
 const userQueries = {
   currentUser: async (_, args, { user }) => {
     if (user) {
-      return await User.findOne({ where: { id: user.id } });
+      try {
+        const userModel = await User.findOne({ where: { id: user.id } });
+        console.log(userModel);
+        return {
+          __typename: "User",
+          ...userModel.toJSON()
+        };
+      } catch (error) {
+        console.error(error);
+        return ResultsFactory.create({ type: Error });
+      }
+    } else {
+      return ResultsFactory.create({ type: NotAuthenticatedError });
     }
-
-    throw new Error("Not an authenticated user");
-  },
+  }
 };
 
 export default userQueries;
