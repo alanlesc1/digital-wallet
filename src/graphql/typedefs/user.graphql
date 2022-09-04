@@ -1,14 +1,13 @@
 # User type
 type User implements Timestamps { 
   id: Int!
+  createdAt: Date!
+  updatedAt: Date!
+  isActive: Boolean!
   name: String!
   email: String!
   isUserVerified: Boolean!
   verificationCodeExp: Date
-  
-  # Interface required
-  createdAt: Date!
-  updatedAt: Date!
 }
 
 # Sign up types

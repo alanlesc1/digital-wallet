@@ -11,6 +11,19 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER
         },
+        createdAt: {
+          allowNull: false,
+          type: Sequelize.DATE
+        },
+        updatedAt: {
+          allowNull: false,
+          type: Sequelize.DATE
+        },
+        isActive: {
+          type: Sequelize.BOOLEAN,
+          allowNull: false,
+          defaultValue: true,
+        },
         name: {
           allowNull: false,
           type: Sequelize.STRING(120)
@@ -39,14 +52,6 @@ module.exports = {
           type: Sequelize.BOOLEAN,
           allowNull: false,
           defaultValue: false,
-        },
-        createdAt: {
-          allowNull: false,
-          type: Sequelize.DATE
-        },
-        updatedAt: {
-          allowNull: false,
-          type: Sequelize.DATE
         }
       }, { trx });
 
