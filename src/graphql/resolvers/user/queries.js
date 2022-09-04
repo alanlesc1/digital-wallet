@@ -10,7 +10,6 @@ const userQueries = {
     if (user) {
       try {
         const userModel = await User.findOne({ where: { id: user.id } });
-        console.log(userModel);
         return {
           __typename: "User",
           ...userModel.toJSON()
