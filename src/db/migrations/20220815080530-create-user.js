@@ -11,6 +11,11 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER
         },
+        uuid: {
+          allowNull: false,
+          type: Sequelize.UUID,
+          default: Sequelize.UUID
+        },
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE
