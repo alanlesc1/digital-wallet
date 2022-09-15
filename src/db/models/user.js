@@ -10,10 +10,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.hasMany(models.UserQrCode);
     }
   }
   User.init({
+    uuid: {
+      type: DataTypes.UUIDV4,
+      allowNull: false,
+      defaultValue: DataTypes.UUIDV4
+    },
     isActive: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
