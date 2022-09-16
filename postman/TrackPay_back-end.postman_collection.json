@@ -150,7 +150,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "mutation userQRCode ($renew: Boolean) {\n  userQRCode (renew: $renew) {\n    __typename\n    ... on UserQRCode {\n      dataType\n      data\n    }\n\n    ... on UserQRCodeError {\n      message\n    }\n\n    ... on Error {\n      message\n    }\n  }\n}\n",
+						"query": "mutation userQRCode ($renew: Boolean) {\n  userQRCode (renew: $renew) {\n    __typename\n    ... on UserQRCode {\n      schemaVersion\n      dataType\n      data\n    }\n\n    ... on UserQRCodeError {\n      message\n    }\n\n    ... on Error {\n      message\n    }\n  }\n}\n",
 						"variables": "{\n    \"renew\": false\n}"
 					}
 				},

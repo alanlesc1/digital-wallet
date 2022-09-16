@@ -1,5 +1,6 @@
 # User QR Code type
 type UserQRCode { 
+  schemaVersion: String!
   dataType: String!
   data: String!
 }

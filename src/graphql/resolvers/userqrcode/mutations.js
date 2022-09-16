@@ -3,6 +3,12 @@ import {
   ResultsFactory,
 } from '../../helpers/resultsFactory';
 
+/*
+Used to declare the QR Code current schema version.
+For version 1.0, data is just the QR Code UUID (table UserQRCodes.uuid) 
+*/
+const currentQRCodeSchemaVersion = "1.0";
+
 const userQRCodeMutations = {
   userQRCode: async (_, { renew }, { user }) => {
     if (user) {
@@ -36,6 +42,7 @@ const userQRCodeMutations = {
 
         return {
           __typename: "UserQRCode",
+          schemaVersion: currentQRCodeSchemaVersion,
           dataType: 'PlainText',
           data: existing.uuid
         };
