@@ -1,0 +1,11 @@
+# User QR Code type
+type UserQRCode { 
+  dataType: String!
+  data: String!
+}
+
+type UserQRCodeError implements Error {
+  message: String!
+}
+
+union UserQRCodeResult = UserQRCode | UserQRCodeError

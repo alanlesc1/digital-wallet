@@ -141,6 +141,30 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Retrieve/renew user QR Code",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation userQRCode ($renew: Boolean) {\n  userQRCode (renew: $renew) {\n    __typename\n    ... on UserQRCode {\n      dataType\n      data\n    }\n\n    ... on UserQRCodeError {\n      message\n    }\n\n    ... on Error {\n      message\n    }\n  }\n}\n",
+						"variables": "{\n    \"renew\": false\n}"
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/graphql",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
