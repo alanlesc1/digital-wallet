@@ -3,19 +3,16 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class ProductCategory extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.hasMany(models.UserQRCode);
-      User.hasMany(models.UserRole);
-      User.hasMany(models.UserWallet);
     }
   }
-  User.init({
+  ProductCategory.init({
     uuid: {
       type: DataTypes.UUIDV4,
       allowNull: false,
@@ -26,41 +23,25 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: true,
     },
-    name: {
-      type: DataTypes.STRING(120),
+    value: {
+      type: DataTypes.STRING(60),
       allowNull: false,
-      validate: {
-        min: 5
-      }
     },
-    email: {
+    name: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      unique: true,
-      validate: {
-        isEmail: true
+    },
+    ParentProductCategoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'ProductCategories',
+        key: 'id'
       }
-    },
-    password: {
-      type: DataTypes.STRING(64),
-      allowNull: false,
-    },
-    verificationCode: {
-      allowNull: true,
-      type: DataTypes.STRING(4)
-    },
-    verificationCodeExp: {
-      allowNull: true,
-      type: DataTypes.DATE
-    },
-    isUserVerified: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
     },
   }, {
     sequelize,
-    modelName: 'User',
+    modelName: 'ProductCategory',
   });
-  return User;
+  return ProductCategory;
 };

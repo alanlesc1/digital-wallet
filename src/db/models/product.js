@@ -3,19 +3,17 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Product extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.hasMany(models.UserQRCode);
-      User.hasMany(models.UserRole);
-      User.hasMany(models.UserWallet);
+      Product.belongsTo(models.ProductCategory);
     }
   }
-  User.init({
+  Product.init({
     uuid: {
       type: DataTypes.UUIDV4,
       allowNull: false,
@@ -26,41 +24,38 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: true,
     },
-    name: {
-      type: DataTypes.STRING(120),
+    value: {
+      type: DataTypes.STRING(60),
       allowNull: false,
-      validate: {
-        min: 5
-      }
     },
-    email: {
+    name: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      unique: true,
+    },
+    productType: {
+      type: DataTypes.STRING(1),
+      allowNull: false,
       validate: {
-        isEmail: true
+        isIn: {
+          args: [[
+            'I', // Item
+            'S', // Service
+          ]],
+          msg: "Must be one of 'I', 'S'"
+        }
       }
     },
-    password: {
-      type: DataTypes.STRING(64),
-      allowNull: false,
-    },
-    verificationCode: {
-      allowNull: true,
-      type: DataTypes.STRING(4)
-    },
-    verificationCodeExp: {
-      allowNull: true,
-      type: DataTypes.DATE
-    },
-    isUserVerified: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
+    ProductCategoryId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'ProductCategories',
+        key: 'id'
+      },
+      allowNull: false
     },
   }, {
     sequelize,
-    modelName: 'User',
+    modelName: 'Product',
   });
-  return User;
+  return Product;
 };
