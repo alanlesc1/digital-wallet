@@ -12,6 +12,8 @@ Clone this repository to you local system and run the command below to install t
 
     npm install
 
+After that, you should create a file called ".env" in the root directory. We provide the file ".env.example" as a template. You can also ask your dev. team to send you a filled in one.
+
 ### PostgreSQL configuration
 After installing postgreSQL in your local system, you should create the trackpay user:
 
@@ -27,7 +29,9 @@ Some migration scripts reference the function generate_uuid. Run the command bel
 
     psql -d trackpay -U trackpay -c 'CREATE EXTENSION "uuid-ossp"' -h localhost
 
-And now you are ready to run the migration scripts. In your project directory, run:
+### DB migration/seed
+
+Now you are ready to run the migration scripts. In your project directory, run:
 
     sequelize db:migrate
 
