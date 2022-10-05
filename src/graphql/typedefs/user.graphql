@@ -9,6 +9,7 @@ type User implements Timestamps {
   email: String!
   isUserVerified: Boolean!
   verificationCodeExp: Date
+  userRoles: [UserRole]!
 }
 
 # Sign up types

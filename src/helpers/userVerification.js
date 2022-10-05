@@ -32,6 +32,7 @@ module.exports.verifyCode = async (user, verificationCode) => {
         if (user.verificationCodeExp > now) {
             user.isUserVerified = true;
             await user.save();
+            return true;
         } else {
             throw new Error("Verification code expired!");
         }

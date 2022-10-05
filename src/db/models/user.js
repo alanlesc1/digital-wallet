@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      MUser.hasMany(models.MUserRole, {
+        foreignKey: 'C_User_ID',
+        as: 'userRoles'
+      });
     }
   }
   MUser.init({

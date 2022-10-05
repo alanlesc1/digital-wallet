@@ -1,4 +1,4 @@
-import { MUser } from '../../../db/models';
+import { MUser, MUserRole } from '../../../db/models';
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
 import { jwtSecret } from '../../../../src/config/environment';
@@ -55,14 +55,29 @@ const userMutations = {
 
           // Check for previously generated verification code
           if (verificationCode) {
-            await verifyCode(user, verificationCode);
+            const isVerified = await verifyCode(user, verificationCode);
+
+            if (isVerified) {
+              // Create a default access role
+              await MUserRole.create({
+                C_User_ID: user.C_User_ID,
+                role: 'BUY',
+              });
+            }
           }
           // Generate a new verification code
           else {
             await generateNewVerification(user);
           }
 
-          await user.reload();
+          await user.reload({
+            include: {
+              model: MUserRole,
+              as: 'userRoles',
+              attributes: ['created', 'isActive', 'role']
+            }
+          });
+
           return ResultsFactory.create({ type: UserVerificationResultSuccess, user: user });
         }
       }
@@ -79,7 +94,14 @@ const userMutations = {
   },
   login: async (_, { email, password }) => {
     try {
-      const user = await MUser.findOne({ where: { email } });
+      const user = await MUser.findOne({
+        where: { email },
+        include: {
+          model: MUserRole,
+          as: 'userRoles',
+          attributes: ['created', 'isActive', 'role']
+        }
+      });
 
       if (user) {
         const valid = await bcrypt.compare(password, user.password);

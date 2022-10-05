@@ -1,0 +1,6 @@
+# User Role type
+type UserRole { 
+  created: Date!
+  isActive: Boolean!
+  role: String!
+}

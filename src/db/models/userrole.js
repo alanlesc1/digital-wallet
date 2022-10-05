@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      MUserRole.belongsTo(models.MUser, {
+        foreignKey: 'C_User_ID'
+      });
     }
   }
   MUserRole.init({
