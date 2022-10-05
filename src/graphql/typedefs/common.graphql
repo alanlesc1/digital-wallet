@@ -5,10 +5,10 @@ interface Timestamps {
 }
 
 # Interface for errors
-interface Error {
+type Error {
   message: String!
 }
 
-type NotAuthenticatedError implements Error {
+type NotAuthenticatedError {
   message: String!
 }

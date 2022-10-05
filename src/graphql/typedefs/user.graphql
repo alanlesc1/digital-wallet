@@ -16,22 +16,22 @@ type SignUpResultSuccess {
   user: User
 }
 
-type SignUpResultError implements Error {
+type SignUpResultError {
   message: String!
 }
 
-union SignUpResult = SignUpResultSuccess | SignUpResultError
+union SignUpResult = SignUpResultSuccess | SignUpResultError | Error
 
 # User verification types
 type UserVerificationResultSuccess {
   user: User
 }
 
-type UserVerificationResultError implements Error {
+type UserVerificationResultError {
   message: String!
 }
 
-union UserVerificationResult = UserVerificationResultSuccess | UserVerificationResultError
+union UserVerificationResult = UserVerificationResultSuccess | UserVerificationResultError | Error
 
 # Login types
 type LoginResultSuccess {
@@ -39,11 +39,11 @@ type LoginResultSuccess {
   user: User
 }
 
-type LoginResultError implements Error {
+type LoginResultError {
   message: String!
 }
 
-union LoginResult = LoginResultSuccess | LoginResultError
+union LoginResult = LoginResultSuccess | LoginResultError | Error
 
 # CurrentUser types
-union CurrentUserResult = User | NotAuthenticatedError
+union CurrentUserResult = User | NotAuthenticatedError | Error

@@ -5,8 +5,8 @@ type UserQRCode {
   data: String!
 }
 
-type UserQRCodeError implements Error {
+type UserQRCodeError {
   message: String!
 }
 
-union UserQRCodeResult = UserQRCode | UserQRCodeError
+union UserQRCodeResult = UserQRCode | UserQRCodeError | Error
