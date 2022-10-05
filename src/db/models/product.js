@@ -3,24 +3,31 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Product extends Model {
+  class MProduct extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Product.belongsTo(models.ProductCategory);
     }
   }
-  Product.init({
-    uuid: {
+  MProduct.init({
+    M_Product_ID: {
+      type: DataTypes.INTEGER,
+      field: 'm_product_id',
+      primaryKey: true,
+      autoIncrement: true
+    },
+    M_Product_UU: {
       type: DataTypes.UUIDV4,
+      field: 'm_product_uu',
       allowNull: false,
       defaultValue: DataTypes.UUIDV4
     },
     isActive: {
       type: DataTypes.BOOLEAN,
+      field: 'isactive',
       allowNull: false,
       defaultValue: true,
     },
@@ -34,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     productType: {
       type: DataTypes.STRING(1),
+      field: 'producttype',
       allowNull: false,
       validate: {
         isIn: {
@@ -45,17 +53,21 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    ProductCategoryId: {
+    M_ProductCategory_ID: {
       type: DataTypes.INTEGER,
+      field: 'm_productcategory_id',
       references: {
-        model: 'ProductCategories',
-        key: 'id'
+        model: 'MProductCategory',
+        key: 'm_productcategory_id'
       },
       allowNull: false
     },
   }, {
     sequelize,
-    modelName: 'Product',
+    modelName: 'MProduct',
+    tableName: 'm_product',
+    createdAt: 'created',
+    updatedAt: 'updated',
   });
-  return Product;
+  return MProduct;
 };

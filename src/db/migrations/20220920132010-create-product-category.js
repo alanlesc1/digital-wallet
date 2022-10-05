@@ -4,27 +4,27 @@ module.exports = {
     const trx = await queryInterface.sequelize.transaction();
 
     try {
-      await queryInterface.createTable('ProductCategories', {
-        id: {
+      await queryInterface.createTable('m_productcategory', {
+        m_productcategory_id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        uuid: {
+        m_productcategory_uu: {
           allowNull: false,
           type: Sequelize.UUID,
           default: Sequelize.UUID
         },
-        createdAt: {
+        created: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        updatedAt: {
+        updated: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        isActive: {
+        isactive: {
           type: Sequelize.BOOLEAN
         },
         value: {
@@ -35,6 +35,16 @@ module.exports = {
           allowNull: true,
           type: Sequelize.STRING(255)
         },
+        parent_productcategory_id: {
+          type: Sequelize.DataTypes.INTEGER,
+          references: {
+            model: {
+              tableName: 'm_productcategory'
+            },
+            key: 'm_productcategory_id'
+          },
+          allowNull: true
+        },
       }, { trx });
 
       await trx.commit();
@@ -44,6 +54,6 @@ module.exports = {
     }
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('ProductCategories');
+    await queryInterface.dropTable('m_productcategory');
   }
 };

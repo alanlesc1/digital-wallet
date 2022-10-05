@@ -4,27 +4,27 @@ module.exports = {
     const trx = await queryInterface.sequelize.transaction();
 
     try {
-      await queryInterface.createTable('Products', {
-        id: {
+      await queryInterface.createTable('m_product', {
+        m_product_id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        uuid: {
+        m_product_uu: {
           allowNull: false,
           type: Sequelize.UUID,
           default: Sequelize.UUID
         },
-        createdAt: {
+        created: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        updatedAt: {
+        updated: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        isActive: {
+        isactive: {
           type: Sequelize.BOOLEAN
         },
         value: {
@@ -35,27 +35,27 @@ module.exports = {
           allowNull: true,
           type: Sequelize.STRING(255)
         },
-        productType: {
+        producttype: {
           allowNull: false,
           type: Sequelize.STRING(1)
         },
-        ProductCategoryId: {
+        m_productcategory_id: {
           type: Sequelize.DataTypes.INTEGER,
           references: {
             model: {
-              tableName: 'ProductCategories'
+              tableName: 'm_productcategory'
             },
-            key: 'id'
+            key: 'm_productcategory_id'
           },
           allowNull: false
         },
       }, { trx });
 
       await queryInterface.addIndex(
-        'Products',
-        ['isActive', 'value', 'name'],
+        'm_product',
+        ['isactive', 'value', 'name'],
         {
-          name: 'products_activeproducts',
+          name: 'm_product_activeproducts',
           indexType: 'BTREE',
           trx
         }
@@ -68,6 +68,6 @@ module.exports = {
     }
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Products');
+    await queryInterface.dropTable('m_product');
   }
 };

@@ -4,36 +4,36 @@ module.exports = {
     const trx = await queryInterface.sequelize.transaction();
 
     try {
-      await queryInterface.createTable('UserRoles', {
-        id: {
+      await queryInterface.createTable('c_userrole', {
+        c_userrole_id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        uuid: {
+        c_userrole_uu: {
           allowNull: false,
           type: Sequelize.UUID,
           default: Sequelize.UUID
         },
-        createdAt: {
+        created: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        updatedAt: {
+        updated: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        isActive: {
+        isactive: {
           type: Sequelize.BOOLEAN
         },
-        UserId: {
+        c_user_id: {
           type: Sequelize.DataTypes.INTEGER,
           references: {
             model: {
-              tableName: 'Users'
+              tableName: 'c_user'
             },
-            key: 'id'
+            key: 'c_user_id'
           },
           allowNull: false
         },
@@ -44,10 +44,10 @@ module.exports = {
       }, { trx });
 
       await queryInterface.addIndex(
-        'UserRoles',
-        ['isActive', 'UserId'],
+        'c_userrole',
+        ['isactive', 'c_user_id'],
         {
-          name: 'userroles_activeroles',
+          name: 'c_userrole_activeroles',
           indexType: 'BTREE',
           trx
         }
@@ -60,6 +60,6 @@ module.exports = {
     }
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('UserRoles');
+    await queryInterface.dropTable('c_userrole');
   }
 };

@@ -1,7 +1,7 @@
 # Interface for sequelize common fields
 interface Timestamps {
-  createdAt: Date!
-  updatedAt: Date!
+  created: Date!
+  updated: Date!
 }
 
 # Interface for errors

@@ -4,59 +4,59 @@ module.exports = {
     const trx = await queryInterface.sequelize.transaction();
 
     try {
-      await queryInterface.createTable('Orders', {
-        id: {
+      await queryInterface.createTable('c_order', {
+        c_order_id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        uuid: {
+        c_order_uu: {
           allowNull: false,
           type: Sequelize.UUID,
           default: Sequelize.UUID
         },
-        createdAt: {
+        created: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        updatedAt: {
+        updated: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        isActive: {
+        isactive: {
           type: Sequelize.BOOLEAN
         },
-        isSOTrx: {
+        issotrx: {
           type: Sequelize.BOOLEAN
         },
-        VendorUserId: {
+        vendor_user_id: {
           type: Sequelize.DataTypes.INTEGER,
           references: {
             model: {
-              tableName: 'Users'
+              tableName: 'c_user'
             },
-            key: 'id'
+            key: 'c_user_id'
           },
           allowNull: false
         },
-        BuyerUserId: {
+        buyer_user_id: {
           type: Sequelize.DataTypes.INTEGER,
           references: {
             model: {
-              tableName: 'Users'
+              tableName: 'c_user'
             },
-            key: 'id'
+            key: 'c_user_id'
           },
           allowNull: false
         },
       }, { trx });
 
       await queryInterface.addIndex(
-        'Orders',
-        ['isActive', 'isSOTrx', 'VendorUserId', 'BuyerUserId'],
+        'c_order',
+        ['isactive', 'issotrx', 'vendor_user_id', 'buyer_user_id'],
         {
-          name: 'orders_userorders',
+          name: 'c_order_userorders',
           indexType: 'BTREE',
           trx
         }
@@ -69,6 +69,6 @@ module.exports = {
     }
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Orders');
+    await queryInterface.dropTable('c_order');
   }
 };

@@ -3,32 +3,40 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class UserRole extends Model {
+  class MUserRole extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      UserRole.belongsTo(models.User);
     }
   }
-  UserRole.init({
-    uuid: {
+  MUserRole.init({
+    C_UserRole_ID: {
+      type: DataTypes.INTEGER,
+      field: 'c_userrole_id',
+      primaryKey: true,
+      autoIncrement: true
+    },
+    C_UserRole_UU: {
       type: DataTypes.UUIDV4,
+      field: 'c_userrole_uu',
       allowNull: false,
       defaultValue: DataTypes.UUIDV4
     },
     isActive: {
       type: DataTypes.BOOLEAN,
+      field: 'isactive',
       allowNull: false,
       defaultValue: true
     },
-    UserId: {
+    C_User_ID: {
       type: DataTypes.INTEGER,
+      field: 'c_user_id',
       references: {
-        model: 'Users',
-        key: 'id'
+        model: 'MUser',
+        key: 'c_user_id'
       }
     },
     role: {
@@ -49,7 +57,10 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     sequelize,
-    modelName: 'UserRole',
+    modelName: 'MUserRole',
+    tableName: 'c_userrole',
+    createdAt: 'created',
+    updatedAt: 'updated',
   });
-  return UserRole;
+  return MUserRole;
 };

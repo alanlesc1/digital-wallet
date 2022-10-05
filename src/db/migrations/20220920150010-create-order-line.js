@@ -4,64 +4,64 @@ module.exports = {
     const trx = await queryInterface.sequelize.transaction();
 
     try {
-      await queryInterface.createTable('OrderLines', {
-        id: {
+      await queryInterface.createTable('c_orderline', {
+        c_orderline_id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        uuid: {
+        c_orderline_uu: {
           allowNull: false,
           type: Sequelize.UUID,
           default: Sequelize.UUID
         },
-        createdAt: {
+        created: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        updatedAt: {
+        updated: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        isActive: {
+        isactive: {
           type: Sequelize.BOOLEAN
         },
-        OrderId: {
+        c_order_id: {
           type: Sequelize.DataTypes.INTEGER,
           references: {
             model: {
-              tableName: 'Orders'
+              tableName: 'c_order'
             },
-            key: 'id'
+            key: 'c_order_id'
           },
           allowNull: false
         },
-        ProductId: {
+        m_product_id: {
           type: Sequelize.DataTypes.INTEGER,
           references: {
             model: {
-              tableName: 'Products'
+              tableName: 'm_product'
             },
-            key: 'id'
+            key: 'm_product_id'
           },
           allowNull: false
         },
-        qtyEntered: {
+        qtyentered: {
           type: Sequelize.DataTypes.DECIMAL(10, 2),
           allowNull: false
         },
-        priceActual: {
+        priceactual: {
           type: Sequelize.DataTypes.DECIMAL(10, 2),
           allowNull: false
         },
       }, { trx });
 
       await queryInterface.addIndex(
-        'OrderLines',
-        ['isActive', 'OrderId'],
+        'c_orderline',
+        ['isactive', 'c_order_id'],
         {
-          name: 'orderlines_oforder',
+          name: 'c_orderline_oforder',
           indexType: 'BTREE',
           trx
         }
@@ -74,6 +74,6 @@ module.exports = {
     }
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('OrderLines');
+    await queryInterface.dropTable('c_orderline');
   }
 };

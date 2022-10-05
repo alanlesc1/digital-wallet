@@ -1,4 +1,4 @@
-import { User } from '../../../db/models';
+import { MUser } from '../../../db/models';
 import {
   ResultsFactory,
   NotAuthenticatedError,
@@ -9,7 +9,7 @@ const userQueries = {
   currentUser: async (_, args, { user }) => {
     if (user) {
       try {
-        const userModel = await User.findOne({ where: { id: user.id } });
+        const userModel = await MUser.findOne({ where: { C_User_ID: user.C_User_ID } });
         return {
           __typename: "User",
           ...userModel.toJSON()

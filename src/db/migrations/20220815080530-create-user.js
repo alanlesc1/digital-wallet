@@ -4,27 +4,27 @@ module.exports = {
     const trx = await queryInterface.sequelize.transaction();
 
     try {
-      await queryInterface.createTable('Users', {
-        id: {
+      await queryInterface.createTable('c_user', {
+        c_user_id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        uuid: {
+        c_user_uu: {
           allowNull: false,
           type: Sequelize.UUID,
           default: Sequelize.UUID
         },
-        createdAt: {
+        created: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        updatedAt: {
+        updated: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        isActive: {
+        isactive: {
           type: Sequelize.BOOLEAN,
           allowNull: false,
           defaultValue: true,
@@ -45,15 +45,15 @@ module.exports = {
           allowNull: false,
           type: Sequelize.STRING(64)
         },
-        verificationCode: {
+        verificationcode: {
           allowNull: true,
           type: Sequelize.STRING(4)
         },
-        verificationCodeExp: {
+        verificationcodeexp: {
           allowNull: true,
           type: Sequelize.DATE
         },
-        isUserVerified: {
+        isuserverified: {
           type: Sequelize.BOOLEAN,
           allowNull: false,
           defaultValue: false,
@@ -61,10 +61,10 @@ module.exports = {
       }, { trx });
 
       await queryInterface.addIndex(
-        'Users',
+        'c_user',
         ['email'],
         {
-          name: 'users_email',
+          name: 'c_user_email',
           indexType: 'BTREE',
           trx
         }
@@ -77,6 +77,6 @@ module.exports = {
     }
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('c_user');
   }
 };

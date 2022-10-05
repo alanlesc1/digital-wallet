@@ -1,4 +1,4 @@
-import { sequelize, UserQRCode } from '../../../db/models';
+import { sequelize, MUserQRCode } from '../../../db/models';
 import {
   ResultsFactory,
 } from '../../helpers/resultsFactory';
@@ -15,36 +15,36 @@ const userQRCodeMutations = {
       try {
         // Deactivate existing active records
         if (renew) {
-          await sequelize.query('UPDATE "UserQRCodes" SET "isActive" = ? WHERE "UserId" = ?',
+          await sequelize.query('UPDATE C_UserQrCode SET IsActive = ? WHERE C_User_ID = ?',
             {
-              replacements: [false, user.id]
+              replacements: [false, user.C_User_ID]
             });
-            console.log(user.id);
+            console.log(user.C_User_ID);
         }
 
         // Find existing
-        let existing = await UserQRCode.findOne({
+        let existing = await MUserQRCode.findOne({
           where: {
-            UserId: user.id,
+            C_User_ID: user.C_User_ID,
             isActive: true
           },
           order: [
-            ['createdAt', 'DESC'],
+            ['created', 'DESC'],
           ]
         });
 
         // If not found, create a new one
         if (!existing) {
-          existing = await UserQRCode.create({
-            UserId: user.id
+          existing = await MUserQRCode.create({
+            C_User_ID: user.C_User_ID
           });
-        }
+        } 
 
         return {
           __typename: "UserQRCode",
           schemaVersion: currentQRCodeSchemaVersion,
           dataType: 'PlainText',
-          data: existing.uuid
+          data: existing.C_UserQrCode_UU
         };
       } catch (error) {
         console.error(error);

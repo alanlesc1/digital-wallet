@@ -4,53 +4,53 @@ module.exports = {
     const trx = await queryInterface.sequelize.transaction();
 
     try {
-      await queryInterface.createTable('Payments', {
-        id: {
+      await queryInterface.createTable('c_payment', {
+        c_payment_id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        uuid: {
+        c_payment_uu: {
           allowNull: false,
           type: Sequelize.UUID,
           default: Sequelize.UUID
         },
-        createdAt: {
+        created: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        updatedAt: {
+        updated: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        isActive: {
+        isactive: {
           type: Sequelize.BOOLEAN
         },
-        OrderId: {
+        c_order_id: {
           type: Sequelize.DataTypes.INTEGER,
           references: {
             model: {
-              tableName: 'Orders'
+              tableName: 'c_order'
             },
-            key: 'id'
+            key: 'c_order_id'
           },
           allowNull: false
         },
-        isReceipt: {
+        isreceipt: {
           type: Sequelize.BOOLEAN
         },
-        payAmt: {
+        payamt: {
           type: Sequelize.DataTypes.DECIMAL(10, 2),
           allowNull: false
         },
       }, { trx });
 
       await queryInterface.addIndex(
-        'Payments',
-        ['isActive', 'OrderId'],
+        'c_payment',
+        ['isactive', 'c_order_id'],
         {
-          name: 'payments_oforder',
+          name: 'c_payment_oforder',
           indexType: 'BTREE',
           trx
         }
@@ -63,6 +63,6 @@ module.exports = {
     }
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Payments');
+    await queryInterface.dropTable('c_payment');
   }
 };

@@ -4,27 +4,27 @@ module.exports = {
     const trx = await queryInterface.sequelize.transaction();
 
     try {
-      await queryInterface.createTable('Locations', {
-        id: {
+      await queryInterface.createTable('c_location', {
+        c_location_id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        uuid: {
+        c_location_uu: {
           allowNull: false,
           type: Sequelize.UUID,
           default: Sequelize.UUID
         },
-        createdAt: {
+        created: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        updatedAt: {
+        updated: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        isActive: {
+        isactive: {
           type: Sequelize.BOOLEAN
         },
         line1: {
@@ -47,7 +47,7 @@ module.exports = {
           allowNull: true,
           type: Sequelize.STRING(60)
         },
-        zipCode: {
+        zipcode: {
           allowNull: true,
           type: Sequelize.STRING(8)
         },
@@ -60,6 +60,6 @@ module.exports = {
     }
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Locations');
+    await queryInterface.dropTable('c_location');
   }
 };

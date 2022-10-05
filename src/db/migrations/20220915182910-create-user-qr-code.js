@@ -4,46 +4,46 @@ module.exports = {
     const trx = await queryInterface.sequelize.transaction();
 
     try {
-      await queryInterface.createTable('UserQRCodes', {
-        id: {
+      await queryInterface.createTable('c_userqrcode', {
+        c_userqrcode_id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        uuid: {
+        c_userqrcode_uu: {
           allowNull: false,
           type: Sequelize.UUID,
           default: Sequelize.UUID
         },
-        createdAt: {
+        created: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        updatedAt: {
+        updated: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        isActive: {
+        isactive: {
           type: Sequelize.BOOLEAN
         },
-        UserId: {
+        c_user_id: {
           type: Sequelize.DataTypes.INTEGER,
           references: {
             model: {
-              tableName: 'Users'
+              tableName: 'c_user'
             },
-            key: 'id'
+            key: 'c_user_id'
           },
           allowNull: false
         },
       }, { trx });
 
       await queryInterface.addIndex(
-        'UserQRCodes',
-        ['isActive', 'UserId'],
+        'c_userqrcode',
+        ['isactive', 'c_user_id'],
         {
-          name: 'userqrcodes_activeuser',
+          name: 'c_userqrcode_activeuser',
           indexType: 'BTREE',
           trx
         }
@@ -56,6 +56,6 @@ module.exports = {
     }
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('UserQRCodes');
+    await queryInterface.dropTable('c_userqrcode');
   }
 };

@@ -1,4 +1,4 @@
-import { User } from '../../../db/models';
+import { MUser } from '../../../db/models';
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
 import { jwtSecret } from '../../../../src/config/environment';
@@ -21,7 +21,7 @@ import { ValidationError } from 'sequelize';
 const userMutations = {
   signUp: async (_, { name, email, password }) => {
     try {
-      const user = await User.create({
+      const user = await MUser.create({
         name,
         email,
         password: await bcrypt.hash(password, 10),
@@ -39,7 +39,7 @@ const userMutations = {
   },
   verifyUser: async (_, { email, password, verificationCode }) => {
     try {
-      const user = await User.findOne({ where: { email } });
+      const user = await MUser.findOne({ where: { email } });
 
       if (user) {
         const valid = await bcrypt.compare(password, user.password);
@@ -79,7 +79,7 @@ const userMutations = {
   },
   login: async (_, { email, password }) => {
     try {
-      const user = await User.findOne({ where: { email } });
+      const user = await MUser.findOne({ where: { email } });
 
       if (user) {
         const valid = await bcrypt.compare(password, user.password);
@@ -89,7 +89,7 @@ const userMutations = {
             return ResultsFactory.create({ type: LoginResultError, message: notAVerifiedUserMessage });
           }
 
-          const token = jsonwebtoken.sign({ id: user.id, email: user.email }, jwtSecret, {
+          const token = jsonwebtoken.sign({ C_User_ID: user.C_User_ID, email: user.email }, jwtSecret, {
             expiresIn: "1d",
           });
 

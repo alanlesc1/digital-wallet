@@ -1,9 +1,9 @@
 # User type
 type User implements Timestamps { 
-  id: Int!
-  uuid: String!
-  createdAt: Date!
-  updatedAt: Date!
+  C_User_ID: Int!
+  C_User_UU: String!
+  created: Date!
+  updated: Date!
   isActive: Boolean!
   name: String!
   email: String!

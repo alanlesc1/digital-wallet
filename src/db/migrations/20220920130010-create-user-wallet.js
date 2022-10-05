@@ -4,36 +4,36 @@ module.exports = {
     const trx = await queryInterface.sequelize.transaction();
 
     try {
-      await queryInterface.createTable('UserWallets', {
-        id: {
+      await queryInterface.createTable('c_userwallet', {
+        c_userwallet_id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        uuid: {
+        c_userwallet_uu: {
           allowNull: false,
           type: Sequelize.UUID,
           default: Sequelize.UUID
         },
-        createdAt: {
+        created: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        updatedAt: {
+        updated: {
           allowNull: false,
           type: Sequelize.DATE
         },
-        isActive: {
+        isactive: {
           type: Sequelize.BOOLEAN
         },
-        UserId: {
+        c_user_id: {
           type: Sequelize.DataTypes.INTEGER,
           references: {
             model: {
-              tableName: 'Users'
+              tableName: 'c_user'
             },
-            key: 'id'
+            key: 'c_user_id'
           },
           allowNull: false
         },
@@ -41,59 +41,59 @@ module.exports = {
           allowNull: true,
           type: Sequelize.STRING(120)
         },
-        paymentMethod: {
+        paymentmethod: {
           allowNull: false,
           type: Sequelize.STRING(3)
         },
-        cardFirstDigits: {
+        cardfirstdigits: {
           allowNull: false,
           type: Sequelize.STRING(6)
         },
-        cardLastDigits: {
+        cardlastdigits: {
           allowNull: false,
           type: Sequelize.STRING(4)
         },
-        cardBrand: {
+        cardbrand: {
           allowNull: false,
           type: Sequelize.STRING(60)
         },
-        cardHolderName: {
+        cardholdername: {
           allowNull: false,
           type: Sequelize.STRING(120)
         },
-        cardHolderDocNo: {
+        cardholderdocno: {
           allowNull: false,
           type: Sequelize.STRING(14)
         },
-        cardExpMonth: {
+        cardexpmonth: {
           allowNull: false,
           type: Sequelize.DataTypes.INTEGER
         },
-        cardExpYear: {
+        cardexpyear: {
           allowNull: false,
           type: Sequelize.DataTypes.INTEGER
         },
-        billingLocationId: {
+        billing_location_id: {
           type: Sequelize.DataTypes.INTEGER,
           references: {
             model: {
-              tableName: 'Locations'
+              tableName: 'c_location'
             },
-            key: 'id'
+            key: 'c_location_id'
           },
           allowNull: true
         },
-        pagarmeCard: {
+        pm_cardid: {
           allowNull: true,
           type: Sequelize.STRING(60)
         },
       }, { trx });
 
       await queryInterface.addIndex(
-        'UserWallets',
-        ['isActive', 'UserId'],
+        'c_userwallet',
+        ['isactive', 'c_user_id'],
         {
-          name: 'userwallets_activewallets',
+          name: 'c_userwallet_activewallets',
           indexType: 'BTREE',
           trx
         }
@@ -106,6 +106,6 @@ module.exports = {
     }
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('UserWallets');
+    await queryInterface.dropTable('c_userwallet');
   }
 };
