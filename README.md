@@ -4,7 +4,7 @@
 * Ubuntu 20.04 64 bits
 * PostgreSQL >= v14
 * git Client
-* nodejs >= v12
+* nodejs >= v16
 * npm
 
 ### Project configuration
@@ -12,7 +12,7 @@ Clone this repository to you local system and run the command below to install t
 
     npm install
 
-After that, you should create a file called ".env" in the root directory. We provide the file ".env.example" as a template. You can also ask your dev. team to send you a filled in one.
+After that, you should create a file called ".env" in the root directory. We provide the file ".env.example" as a template. It must be filled in correctly for the application to work. You can also ask your dev team for a filled in one.
 
 ### PostgreSQL configuration
 After installing postgreSQL in your local system, you should create the trackpay user:
@@ -36,9 +36,7 @@ Now you are ready to run the migration scripts. In your project directory, run:
     sequelize db:migrate
 
 ### Running the application
-Before running the application, you need to create your dotenv file. We provide a template in the file *.env.example*. It must be filled in correctly for the application to work.
-
-After that, run:
+Just run:
 
     npm run dev
 
