@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      MUserQRCode.belongsTo(models.MUser, {
+        foreignKey: 'C_User_ID'
+      });
     }
   }
   MUserQRCode.init({
@@ -20,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     C_UserQrCode_UU: {
-      type: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       field: 'c_userqrcode_uu',
       allowNull: false,
       defaultValue: DataTypes.UUIDV4
@@ -35,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       field: 'c_user_id',
       references: {
-        model: 'MUser',
+        model: 'c_user',
         key: 'c_user_id'
       }
     }

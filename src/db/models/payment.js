@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      MPayment.belongsTo(models.MOrder, {
+        foreignKey: 'C_Order_ID'
+      });
     }
   }
   MPayment.init({
@@ -20,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     C_Payment_UU: {
-      type: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       field: 'c_payment_uu',
       allowNull: false,
       defaultValue: DataTypes.UUIDV4
@@ -35,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       field: 'c_order_id',
       references: {
-        model: 'MOrder',
+        model: 'c_order',
         key: 'c_order_id'
       }
     },

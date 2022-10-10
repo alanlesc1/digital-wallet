@@ -4,6 +4,7 @@ dotenv.config();
 
 // Boolean value
 export const nodeEnv = {
+  env: process.env.NODE_ENV,
   development: process.env.NODE_ENV === 'development',
   test: process.env.NODE_ENV === 'test',
   staging: process.env.NODE_ENV === 'staging',

@@ -14,6 +14,18 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'C_User_ID',
         as: 'userRoles'
       });
+      MUser.hasMany(models.MUserQRCode, {
+        foreignKey: 'C_User_ID',
+      });
+      MUser.hasMany(models.MUserWallet, {
+        foreignKey: 'C_User_ID',
+      });
+      MUser.hasMany(models.MOrder, {
+        foreignKey: 'vendor_User_ID'
+      });
+      MUser.hasMany(models.MOrder, {
+        foreignKey: 'buyer_User_ID'
+      });
     }
   }
   MUser.init({
@@ -24,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     C_User_UU: {
-      type: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       field: 'c_user_uu',
       allowNull: false,
       defaultValue: DataTypes.UUIDV4

@@ -3,6 +3,8 @@ export const invalidEmailPasswordMessage = "Invalid email/password";
 export const userIsAlreadyVerifiedMessage = "User is already verified";
 export const verificationCodeWasGeneratedMessage = "Verification code not generated yet";
 export const notAVerifiedUserMessage = "Not a verified user";
+export const verificationCodeExpired = "Verification code expired";
+export const verificationCodeIsInvalid = "Verification code is invalid";
 export const notAuthenticatedMessage = "Not authenticated";
 
 export class Result { }

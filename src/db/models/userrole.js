@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     C_UserRole_UU: {
-      type: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       field: 'c_userrole_uu',
       allowNull: false,
       defaultValue: DataTypes.UUIDV4
@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       field: 'c_user_id',
       references: {
-        model: 'MUser',
+        model: 'c_user',
         key: 'c_user_id'
       }
     },

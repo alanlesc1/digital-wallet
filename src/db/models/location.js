@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      MLocation.hasMany(models.MUserWallet, {
+        foreignKey: 'billing_Location_ID',
+      });
     }
   }
   MLocation.init({
@@ -20,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     C_Location_UU: {
-      type: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       field: 'c_location_uu',
       allowNull: false,
       defaultValue: DataTypes.UUIDV4
@@ -58,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     sequelize,
-    modelName: 'Location',
+    modelName: 'MLocation',
     tableName: 'c_location',
     createdAt: 'created',
     updatedAt: 'updated',

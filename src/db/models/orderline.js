@@ -10,6 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      MOrderLine.belongsTo(models.MOrder, {
+        foreignKey: 'C_Order_ID'
+      });
+      MOrderLine.belongsTo(models.MProduct, {
+        foreignKey: 'M_Product_ID'
+      });
     }
   }
   MOrderLine.init({
@@ -20,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     C_OrderLine_UU: {
-      type: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       field: 'c_orderline_uu',
       allowNull: false,
       defaultValue: DataTypes.UUIDV4
@@ -35,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       field: 'c_order_id',
       references: {
-        model: 'MOrder',
+        model: 'c_order',
         key: 'c_order_id'
       }
     },
@@ -43,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       field: 'm_product_id',
       references: {
-        model: 'MProduct',
+        model: 'm_product',
         key: 'm_product_id'
       }
     },

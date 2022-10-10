@@ -55,14 +55,23 @@ const userMutations = {
 
           // Check for previously generated verification code
           if (verificationCode) {
-            const isVerified = await verifyCode(user, verificationCode);
+            try {
+              const isVerified = await verifyCode(user, verificationCode);
 
-            if (isVerified) {
-              // Create a default access role
-              await MUserRole.create({
-                C_User_ID: user.C_User_ID,
-                role: 'BUY',
-              });
+              if (isVerified) {
+                // Create a default access role
+                await MUserRole.create({
+                  C_User_ID: user.C_User_ID,
+                  role: 'BUY',
+                });
+              }
+            } catch (error) {
+              if (error.__typename == "UserVerificationResultError") {
+                return error;
+              } else {
+                console.error(error);
+                return ResultsFactory.create({ type: UserVerificationResultError });
+              }
             }
           }
           // Generate a new verification code

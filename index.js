@@ -2,6 +2,8 @@ import apolloServer from './src/graphql';
 import { expressjwt } from 'express-jwt';
 import { serverPort, jwtSecret } from './src/config/environment';
 import app from './src/app';
+import db from './src/db/models';
+import { nodeEnv } from './src/config/environment';
 
 const auth = expressjwt({
   secret: jwtSecret,
@@ -16,7 +18,7 @@ const start = async () => {
 
   try {
     await app.listen(serverPort);
-    console.log(`Server started at port ${serverPort}`);
+    console.log(`Server (${nodeEnv.env}) started at port ${serverPort}`);
   } catch {
     console.log('Not able to start server');
   }

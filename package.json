@@ -4,8 +4,10 @@
   "description": "TrackPay back-end",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./index.js --exec babel-node",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon ./index.js --exec babel-node",
+    "dev-server": "NODE_ENV=development npm start",
+    "test-server": "NODE_ENV=test npm start",
+    "test": "NODE_ENV=test mocha --require @babel/register 'src/**/*.spec.js'"
   },
   "keywords": [],
   "author": "",
@@ -14,8 +16,12 @@
     "@babel/core": "^7.18.13",
     "@babel/node": "^7.18.10",
     "@babel/preset-env": "^7.18.10",
+    "@babel/register": "^7.18.9",
+    "axios": "^1.1.2",
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0",
     "nodemon": "^2.0.19",
-    "sequelize-cli": "^6.4.1"
+    "sequelize-cli": "^6.5.1"
   },
   "dependencies": {
     "@aws-sdk/client-secrets-manager": "^3.171.0",

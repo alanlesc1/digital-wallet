@@ -10,6 +10,18 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      MOrder.belongsTo(models.MUser, {
+        foreignKey: 'vendor_User_ID'
+      });
+      MOrder.belongsTo(models.MUser, {
+        foreignKey: 'buyer_User_ID'
+      });
+      MOrder.hasMany(models.MOrderLine, {
+        foreignKey: 'C_Order_ID'
+      });
+      MOrder.hasMany(models.MPayment, {
+        foreignKey: 'C_Order_ID'
+      });
     }
   }
   MOrder.init({
@@ -20,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     C_Order_UU: {
-      type: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       field: 'c_order_uu',
       allowNull: false,
       defaultValue: DataTypes.UUIDV4
@@ -41,21 +53,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       field: 'vendor_user_id',
       references: {
-        model: 'MUser',
+        model: 'c_user',
         key: 'c_user_id'
       }
     },
     buyer_User_ID: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'MUser',
+        model: 'c_user',
         key: 'c_user_id'
       }
     }
   }, {
     sequelize,
     modelName: 'MOrder',
-    tableName: 'm_order',
+    tableName: 'c_order',
     createdAt: 'created',
     updatedAt: 'updated',
   });

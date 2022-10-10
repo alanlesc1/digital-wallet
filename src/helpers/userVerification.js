@@ -1,4 +1,11 @@
 import { emailTransporter, verificationCodeEmailOptions } from './email.js';
+import { nodeEnv } from '../config/environment';
+import {
+    ResultsFactory,
+    verificationCodeExpired,
+    verificationCodeIsInvalid,
+    UserVerificationResultError,
+  } from '../graphql/helpers/resultsFactory';
 
 module.exports.generateNewVerification = async (user) => {
     const newVerificationCode = Math.floor(1000 + Math.random() * 9000);
@@ -16,11 +23,13 @@ module.exports.generateNewVerification = async (user) => {
         text: `Seu código de verificação é ${newVerificationCode}`
     }
 
-    emailTransporter.sendMail(emailOptions, function (err, data) {
-        if (err) {
-            throw new Error(err);
-        }
-    });
+    if (!nodeEnv.test) {
+        emailTransporter.sendMail(emailOptions, function (err, data) {
+            if (err) {
+                throw new Error(err);
+            }
+        });
+    }
 };
 
 module.exports.verifyCode = async (user, verificationCode) => {
@@ -34,9 +43,9 @@ module.exports.verifyCode = async (user, verificationCode) => {
             await user.save();
             return true;
         } else {
-            throw new Error("Verification code expired!");
+            throw ResultsFactory.create({ type: UserVerificationResultError, message: verificationCodeExpired });
         }
     } else {
-        throw new Error("Verification code is invalid!");
+        throw ResultsFactory.create({ type: UserVerificationResultError, message: verificationCodeIsInvalid });
     }
 };

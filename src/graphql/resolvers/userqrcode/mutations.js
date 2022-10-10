@@ -1,6 +1,7 @@
 import { sequelize, MUserQRCode } from '../../../db/models';
 import {
   ResultsFactory,
+  NotAuthenticatedError,
 } from '../../helpers/resultsFactory';
 
 /*
@@ -19,7 +20,6 @@ const userQRCodeMutations = {
             {
               replacements: [false, user.C_User_ID]
             });
-            console.log(user.C_User_ID);
         }
 
         // Find existing

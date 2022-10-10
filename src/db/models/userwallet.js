@@ -10,6 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      MUserWallet.belongsTo(models.MUser, {
+        foreignKey: 'C_User_ID'
+      });
+      MUserWallet.belongsTo(models.MLocation, {
+        foreignKey: 'billing_Location_ID'
+      });
     }
   }
   MUserWallet.init({
@@ -20,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     C_UserWallet_UU: {
-      type: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       field: 'c_userwallet_uu',
       allowNull: false,
       defaultValue: DataTypes.UUIDV4
@@ -35,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       field: 'c_user_id',
       references: {
-        model: 'MUser',
+        model: 'c_user',
         key: 'c_user_id'
       }
     },
@@ -96,7 +102,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       field: 'billing_location_id',
       references: {
-        model: 'MLocation',
+        model: 'c_location',
         key: 'c_location_id'
       },
       allowNull: true,

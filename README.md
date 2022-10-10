@@ -12,7 +12,7 @@ Clone this repository to you local system and run the command below to install t
 
     npm install
 
-After that, you should create a file called ".env" in the root directory. We provide the file ".env.example" as a template. It must be filled in correctly for the application to work. You can also ask your dev team for a filled in one.
+After that, you should create a file called /*.env* in the root directory. We provide the file /*.env.example* as a template. It must be filled in correctly for the application to work. You can also ask your dev team for a filled in one.
 
 ### PostgreSQL configuration
 After installing postgreSQL in your local system, you should create the trackpay user:
@@ -21,24 +21,38 @@ After installing postgreSQL in your local system, you should create the trackpay
     psql -U postgres -c "CREATE ROLE trackpay SUPERUSER LOGIN PASSWORD 'trackpay'" -h localhost
     exit
 
-After that, create the database:
+After that, create the dev and test database:
 
     createdb --template=template0 -E UNICODE -O trackpay -U trackpay trackpay -h localhost
+    
+    createdb --template=template0 -E UNICODE -O trackpay -U trackpay trackpay-test -h localhost
 
-Some migration scripts reference the function generate_uuid. Run the command below to install it:
+Some migration scripts reference the function generate_uuid. Run the commands below to install it:
 
     psql -d trackpay -U trackpay -c 'CREATE EXTENSION "uuid-ossp"' -h localhost
 
+    psql -d trackpay-test -U trackpay -c 'CREATE EXTENSION "uuid-ossp"' -h localhost
+
 ### DB migration/seed
 
-Now you are ready to run the migration scripts. In your project directory, run:
+Now you are ready to run the migration scripts in your /*development* environment. Note that this is not necessary when you are running a /*test* environment, as the seed is created automatically each time just before the E2E tests. In your project directory, run:
 
-    sequelize db:migrate
+    npx sequelize db:migrate
 
 ### Running the application
 Just run:
 
-    npm run dev
+    npm run dev-server
 
 ### Testing
 We provide a Postman collection (and an environment sample) in the */postman* directory. You can use it to request the application.
+
+E2E tests can be run by running both the server and the tests client.
+
+In one terminal, run this first:
+
+    npm run test-server
+
+In another terminal, run this next:
+
+    npm test

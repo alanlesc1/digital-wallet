@@ -10,6 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      MProduct.belongsTo(models.MProductCategory, {
+        foreignKey: 'vendor_User_ID'
+      });
+      MProduct.hasMany(models.MOrderLine, {
+        foreignKey: 'M_ProductCategory_ID'
+      });
     }
   }
   MProduct.init({
@@ -20,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     M_Product_UU: {
-      type: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       field: 'm_product_uu',
       allowNull: false,
       defaultValue: DataTypes.UUIDV4
@@ -57,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       field: 'm_productcategory_id',
       references: {
-        model: 'MProductCategory',
+        model: 'm_productcategory',
         key: 'm_productcategory_id'
       },
       allowNull: false
