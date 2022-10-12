@@ -3,13 +3,20 @@ import * as authApi from './authenticationApi';
 import * as userCommonApi from './userCommonApi';
 
 describe('User Common', () => {
+  let token;
+
+  before(async () => {
+    const loginVariables = {
+      "email": authApi.DEFAULT_USER_EMAIL,
+      "password": authApi.DEFAULT_USER_PASSWORD
+    };
+
+    const loginToken = await authApi.loginToken(loginVariables);
+    token = loginToken.data.data.login.token;
+  });
+
   describe('Retrieve current user', () => {
     it('returns the current logged in user', async () => {
-      const variables = {
-        "email": authApi.DEFAULT_USER_EMAIL,
-        "password": authApi.DEFAULT_USER_PASSWORD
-      };
-
       const expectedResult = {
         "data": {
           "currentUser": {
@@ -21,14 +28,6 @@ describe('User Common', () => {
         }
       };
 
-      const {
-        data: {
-          data: {
-            login: { token },
-          },
-        },
-      } = await authApi.loginToken(variables);
-
       const result = await userCommonApi.retrieveCurrentUser(token);
       expect(result.data).to.eql(expectedResult);
     });
@@ -36,12 +35,7 @@ describe('User Common', () => {
 
   describe('Retrieve/renew user QR Code', () => {
     it('creates a new user QR Code', async () => {
-      const loginVariables = {
-        "email": authApi.DEFAULT_USER_EMAIL,
-        "password": authApi.DEFAULT_USER_PASSWORD
-      };
-
-      const requestVariables = {
+      const variables = {
         "renew": false
       };
 
@@ -55,25 +49,12 @@ describe('User Common', () => {
         }
       };
 
-      const {
-        data: {
-          data: {
-            login: { token },
-          },
-        },
-      } = await authApi.loginToken(loginVariables);
-
-      const result = await userCommonApi.retrieveOrRenewUserQrCode(requestVariables, token);
+      const result = await userCommonApi.retrieveOrRenewUserQrCode(variables, token);
       expect(result.data).to.eql(expectedResult);
     });
 
     it('renews the user QR Code', async () => {
-      const loginVariables = {
-        "email": authApi.DEFAULT_USER_EMAIL,
-        "password": authApi.DEFAULT_USER_PASSWORD
-      };
-
-      const requestVariables = {
+      const variables = {
         "renew": true
       };
 
@@ -87,15 +68,7 @@ describe('User Common', () => {
         }
       };
 
-      const {
-        data: {
-          data: {
-            login: { token },
-          },
-        },
-      } = await authApi.loginToken(loginVariables);
-
-      const result = await userCommonApi.retrieveOrRenewUserQrCode(requestVariables, token);
+      const result = await userCommonApi.retrieveOrRenewUserQrCode(variables, token);
       expect(result.data).to.eql(expectedResult);
     });
   });
