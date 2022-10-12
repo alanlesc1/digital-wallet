@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { API_URL } from './api';
 
+export const DEFAULT_USER_NAME = "Test User";
+export const DEFAULT_USER_EMAIL = "test@easytrackpay.com";
+export const DEFAULT_USER_PASSWORD = "123456";
+
 const SIGNUP_GRAPHQL = `mutation signUp($name: String!, $email: String!, $password: String!) {
   signUp(name: $name, email: $email, password: $password) {
     __typename

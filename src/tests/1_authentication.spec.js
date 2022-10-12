@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import * as api from './authenticationApi';
+import * as authApi from './authenticationApi';
 import { sequelize, MUser, MUserRole } from '../db/models';
 
 describe('Authentication', () => {
@@ -14,9 +14,9 @@ describe('Authentication', () => {
   describe('SignUp', () => {
     it('returns a SignUpResultSuccess when user can be created', async () => {
       const variables = {
-        "name": "Test User",
-        "email": "test@easytrackpay.com",
-        "password": "123456"
+        "name": authApi.DEFAULT_USER_NAME,
+        "email": authApi.DEFAULT_USER_EMAIL,
+        "password": authApi.DEFAULT_USER_PASSWORD
       };
 
       const expectedResult = {
@@ -25,23 +25,23 @@ describe('Authentication', () => {
             "__typename": "SignUpResultSuccess",
             "user": {
               "isActive": true,
-              "name": "Test User",
-              "email": "test@easytrackpay.com",
+              "name": authApi.DEFAULT_USER_NAME,
+              "email": authApi.DEFAULT_USER_EMAIL,
               "isUserVerified": false
             }
           }
         }
       };
 
-      const result = await api.signUp(variables);
+      const result = await authApi.signUp(variables);
       expect(result.data).to.eql(expectedResult);
     });
 
     it('returns a SignUpResultError when user already exists', async () => {
       const variables = {
-        "name": "Test User",
-        "email": "test@easytrackpay.com",
-        "password": "123456"
+        "name": authApi.DEFAULT_USER_NAME,
+        "email": authApi.DEFAULT_USER_EMAIL,
+        "password": authApi.DEFAULT_USER_PASSWORD
       };
 
       const expectedResult = {
@@ -53,7 +53,7 @@ describe('Authentication', () => {
         }
       };
 
-      const result = await api.signUp(variables);
+      const result = await authApi.signUp(variables);
       expect(result.data).to.eql(expectedResult);
     });
   });
@@ -61,7 +61,7 @@ describe('Authentication', () => {
   describe('Generate verification code', () => {
     it('returns a UserVerificationResultError when is a invalid email/password', async () => {
       const variables = {
-        "email": "test@easytrackpay.com",
+        "email": authApi.DEFAULT_USER_EMAIL,
         "password": "wrongPassword"
       };
 
@@ -74,14 +74,14 @@ describe('Authentication', () => {
         }
       };
 
-      const result = await api.generateVerificationCode(variables);
+      const result = await authApi.generateVerificationCode(variables);
       expect(result.data).to.eql(expectedResult);
     });
 
     it('returns a UserVerificationResultSuccess when verification code was generated', async () => {
       const variables = {
-        "email": "test@easytrackpay.com",
-        "password": "123456"
+        "email": authApi.DEFAULT_USER_EMAIL,
+        "password": authApi.DEFAULT_USER_PASSWORD
       };
 
       const expectedResult = {
@@ -98,7 +98,7 @@ describe('Authentication', () => {
         }
       };
 
-      const result = await api.generateVerificationCode(variables);
+      const result = await authApi.generateVerificationCode(variables);
       expect(result.data).to.eql(expectedResult);
     });
   });
@@ -107,12 +107,12 @@ describe('Authentication', () => {
     it('returns a UserVerificationResultError when verification code is invalid', async () => {
       await sequelize.query('UPDATE C_User SET VerificationCode = ? WHERE Email = ?',
         {
-          replacements: ['1111', 'test@easytrackpay.com']
+          replacements: ["1111", authApi.DEFAULT_USER_EMAIL]
         });
 
       const variables = {
-        "email": "test@easytrackpay.com",
-        "password": "123456",
+        "email": authApi.DEFAULT_USER_EMAIL,
+        "password": authApi.DEFAULT_USER_PASSWORD,
         "verificationCode": "0000"
       };
 
@@ -125,19 +125,19 @@ describe('Authentication', () => {
         }
       };
 
-      const result = await api.verifyUser(variables);
+      const result = await authApi.verifyUser(variables);
       expect(result.data).to.eql(expectedResult);
     });
 
     it('returns a UserVerificationResultError when verification code is expired', async () => {
       await sequelize.query("UPDATE C_User SET VerificationCodeExp = NOW() - INTERVAL '1 DAY' WHERE Email = ?",
         {
-          replacements: ['test@easytrackpay.com']
+          replacements: [authApi.DEFAULT_USER_EMAIL]
         });
 
       const variables = {
-        "email": "test@easytrackpay.com",
-        "password": "123456",
+        "email": authApi.DEFAULT_USER_EMAIL,
+        "password": authApi.DEFAULT_USER_PASSWORD,
         "verificationCode": "1111"
       };
 
@@ -150,19 +150,19 @@ describe('Authentication', () => {
         }
       };
 
-      const result = await api.verifyUser(variables);
+      const result = await authApi.verifyUser(variables);
       expect(result.data).to.eql(expectedResult);
 
       await sequelize.query("UPDATE C_User SET VerificationCodeExp = NOW() + INTERVAL '1 DAY' WHERE Email = ?",
         {
-          replacements: ['test@easytrackpay.com']
+          replacements: [authApi.DEFAULT_USER_EMAIL]
         });
     });
 
     it('returns a UserVerificationResultSuccess when verification code is valid', async () => {
       const variables = {
-        "email": "test@easytrackpay.com",
-        "password": "123456",
+        "email": authApi.DEFAULT_USER_EMAIL,
+        "password": authApi.DEFAULT_USER_PASSWORD,
         "verificationCode": "1111"
       };
 
@@ -172,28 +172,28 @@ describe('Authentication', () => {
             "__typename": "UserVerificationResultSuccess",
             "user": {
               "isActive": true,
-              "name": "Test User",
-              "email": "test@easytrackpay.com",
+              "name": authApi.DEFAULT_USER_NAME,
+              "email": authApi.DEFAULT_USER_EMAIL,
               "isUserVerified": true
             }
           }
         }
       };
 
-      const result = await api.verifyUser(variables);
+      const result = await authApi.verifyUser(variables);
       expect(result.data).to.eql(expectedResult);
     });
 
     it('checks that the default access role BUYER was created', async () => {
-      const user = await MUser.findOne({ where: { email: "test@easytrackpay.com" } });
+      const user = await MUser.findOne({ where: { email: authApi.DEFAULT_USER_EMAIL } });
       const userRole = await MUserRole.findOne({ where: { C_User_ID: user.C_User_ID } });
       expect(userRole.role).to.eql("BUY");
     });
 
     it('returns a UserVerificationResultError when verification code is already verified', async () => {
       const variables = {
-        "email": "test@easytrackpay.com",
-        "password": "123456",
+        "email": authApi.DEFAULT_USER_EMAIL,
+        "password": authApi.DEFAULT_USER_PASSWORD,
         "verificationCode": "1111"
       };
 
@@ -206,7 +206,7 @@ describe('Authentication', () => {
         }
       };
 
-      const result = await api.verifyUser(variables);
+      const result = await authApi.verifyUser(variables);
       expect(result.data).to.eql(expectedResult);
     });
   });
@@ -214,7 +214,7 @@ describe('Authentication', () => {
   describe('Login', () => {
     it('returns a LoginResultError when is a invalid email/password', async () => {
       const variables = {
-        "email": "test@easytrackpay.com",
+        "email": authApi.DEFAULT_USER_EMAIL,
         "password": "wrongPassword"
       };
 
@@ -227,14 +227,14 @@ describe('Authentication', () => {
         }
       };
 
-      const result = await api.login(variables);
+      const result = await authApi.login(variables);
       expect(result.data).to.eql(expectedResult);
     });
 
     it('returns a LoginResultSuccess when login was successful', async () => {
       const variables = {
-        "email": "test@easytrackpay.com",
-        "password": "123456"
+        "email": authApi.DEFAULT_USER_EMAIL,
+        "password": authApi.DEFAULT_USER_PASSWORD
       };
 
       const expectedResult = {
@@ -243,8 +243,8 @@ describe('Authentication', () => {
             "__typename": "LoginResultSuccess",
             "user": {
               "isActive": true,
-              "name": "Test User",
-              "email": "test@easytrackpay.com",
+              "name": authApi.DEFAULT_USER_NAME,
+              "email": authApi.DEFAULT_USER_EMAIL,
               "userRoles": [
                 {
                   "isActive": true,
@@ -256,7 +256,7 @@ describe('Authentication', () => {
         }
       };
 
-      const result = await api.login(variables);
+      const result = await authApi.login(variables);
       expect(result.data).to.eql(expectedResult);
     });
   });

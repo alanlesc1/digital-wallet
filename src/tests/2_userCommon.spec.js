@@ -6,17 +6,17 @@ describe('User Common', () => {
   describe('Retrieve current user', () => {
     it('returns the current logged in user', async () => {
       const variables = {
-        "email": "test@easytrackpay.com",
-        "password": "123456"
+        "email": authApi.DEFAULT_USER_EMAIL,
+        "password": authApi.DEFAULT_USER_PASSWORD
       };
 
       const expectedResult = {
         "data": {
           "currentUser": {
             "__typename": "User",
-            "email": "test@easytrackpay.com",
+            "email": authApi.DEFAULT_USER_EMAIL,
             "isActive": true,
-            "name": "Test User",
+            "name": authApi.DEFAULT_USER_NAME,
           }
         }
       };
@@ -37,8 +37,8 @@ describe('User Common', () => {
   describe('Retrieve/renew user QR Code', () => {
     it('creates a new user QR Code', async () => {
       const loginVariables = {
-        "email": "test@easytrackpay.com",
-        "password": "123456"
+        "email": authApi.DEFAULT_USER_EMAIL,
+        "password": authApi.DEFAULT_USER_PASSWORD
       };
 
       const requestVariables = {
@@ -69,8 +69,8 @@ describe('User Common', () => {
 
     it('renews the user QR Code', async () => {
       const loginVariables = {
-        "email": "test@easytrackpay.com",
-        "password": "123456"
+        "email": authApi.DEFAULT_USER_EMAIL,
+        "password": authApi.DEFAULT_USER_PASSWORD
       };
 
       const requestVariables = {
