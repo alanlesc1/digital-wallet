@@ -39,6 +39,9 @@ Now you are ready to run the migration scripts in your /*development* environmen
 
     npx sequelize db:migrate
 
+### Firebase
+This aplication uses FCM to send push notification across devices, and you should configure it properly before running the back-end. You will need a Firebase service account credential file, which you can download from the FCM Console. It's a json file that shoud NOT be added to the repository due to security reasons. After downloaded, it should be renamed to /*firebase-adminsdk.json* and put in the back-end root directory.
+
 ### Running the application
 Just run:
 

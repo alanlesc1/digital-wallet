@@ -10,6 +10,6 @@ type Mutation {
   # User
   signUp(name: String!, email: String!, password: String!): SignUpResult
   verifyUser(email: String!, password: String!, verificationCode: String): UserVerificationResult
-  login(email: String!, password: String!): LoginResult
+  login(email: String!, password: String!, fcmToken: String!): LoginResult
   userQRCode(renew: Boolean): UserQRCodeResult
 }

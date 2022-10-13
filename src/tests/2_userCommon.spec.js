@@ -8,7 +8,8 @@ describe('User Common', () => {
   before(async () => {
     const loginVariables = {
       "email": authApi.DEFAULT_USER_EMAIL,
-      "password": authApi.DEFAULT_USER_PASSWORD
+      "password": authApi.DEFAULT_USER_PASSWORD,
+      "fcmToken": authApi.DEFAULT_USER_FCM_TOKEN
     };
 
     const loginToken = await authApi.loginToken(loginVariables);

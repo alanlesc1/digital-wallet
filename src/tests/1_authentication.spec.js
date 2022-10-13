@@ -215,7 +215,8 @@ describe('Authentication', () => {
     it('returns a LoginResultError when is a invalid email/password', async () => {
       const variables = {
         "email": authApi.DEFAULT_USER_EMAIL,
-        "password": "wrongPassword"
+        "password": "wrongPassword",
+        "fcmToken": authApi.DEFAULT_USER_FCM_TOKEN
       };
 
       const expectedResult = {
@@ -234,7 +235,8 @@ describe('Authentication', () => {
     it('returns a LoginResultSuccess when login was successful', async () => {
       const variables = {
         "email": authApi.DEFAULT_USER_EMAIL,
-        "password": authApi.DEFAULT_USER_PASSWORD
+        "password": authApi.DEFAULT_USER_PASSWORD,
+        "fcmToken": authApi.DEFAULT_USER_FCM_TOKEN
       };
 
       const expectedResult = {

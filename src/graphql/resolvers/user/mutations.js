@@ -1,4 +1,4 @@
-import { MUser, MUserRole } from '../../../db/models';
+import { MUser, MUserRole, MUserFcmToken } from '../../../db/models';
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
 import { jwtSecret } from '../../../../src/config/environment';
@@ -101,7 +101,7 @@ const userMutations = {
 
     return ResultsFactory.create({ type: UserVerificationResultError, message: invalidEmailPasswordMessage });
   },
-  login: async (_, { email, password }) => {
+  login: async (_, { email, password, fcmToken }) => {
     try {
       const user = await MUser.findOne({
         where: { email },
@@ -120,11 +120,40 @@ const userMutations = {
             return ResultsFactory.create({ type: LoginResultError, message: notAVerifiedUserMessage });
           }
 
-          const token = jsonwebtoken.sign({ C_User_ID: user.C_User_ID, email: user.email }, jwtSecret, {
+          // Firebase FCM
+          let token;
+            
+          {
+            token = await MUserFcmToken.findOne({
+              where: { token: fcmToken }
+            });
+
+            // if not found, create a new one
+            if (!token) {
+              token = await MUserFcmToken.create({
+                token: fcmToken,
+                C_User_ID: user.C_User_ID,
+                lastSeen: user.sequelize.literal("current_timestamp")
+              });
+            }
+            // otherwise, just keep updated
+            else {
+              token.set({
+                C_User_ID: user.C_User_ID,
+                lastSeen: user.sequelize.literal("current_timestamp")
+              });
+
+              await token.save();
+            }
+          }
+
+          const authToken = jsonwebtoken.sign(
+            { C_User_ID: user.C_User_ID, email: user.email, fcmToken: token.token },
+            jwtSecret, {
             expiresIn: "1d",
           });
 
-          return ResultsFactory.create({ type: LoginResultSuccess, token: token, user: user });
+          return ResultsFactory.create({ type: LoginResultSuccess, token: authToken, user: user });
         }
       }
 

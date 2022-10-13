@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'C_User_ID',
         as: 'userRoles'
       });
+      MUser.hasMany(models.MUserFcmToken, {
+        foreignKey: 'C_User_ID',
+      });
       MUser.hasMany(models.MUserQRCode, {
         foreignKey: 'C_User_ID',
       });

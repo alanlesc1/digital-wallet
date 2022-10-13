@@ -4,6 +4,7 @@ import { API_URL } from './api';
 export const DEFAULT_USER_NAME = "Test User";
 export const DEFAULT_USER_EMAIL = "test@easytrackpay.com";
 export const DEFAULT_USER_PASSWORD = "123456";
+export const DEFAULT_USER_FCM_TOKEN = "MYTOKEN";
 
 const SIGNUP_GRAPHQL = `mutation signUp($name: String!, $email: String!, $password: String!) {
   signUp(name: $name, email: $email, password: $password) {
@@ -88,8 +89,8 @@ export const verifyUser = async variables =>
     variables,
   });
 
-const LOGIN_GRAPHQL = `mutation login($email: String!, $password: String!) {
-  login(email: $email, password: $password) {
+const LOGIN_GRAPHQL = `mutation login($email: String!, $password: String!, $fcmToken: String!) {
+  login(email: $email, password: $password, fcmToken: $fcmToken) {
     __typename
     ... on LoginResultSuccess {
       user {
@@ -116,8 +117,8 @@ export const login = async variables =>
     variables,
   });
 
-const LOGIN_TOKEN_GRAPHQL = `mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+const LOGIN_TOKEN_GRAPHQL = `mutation login($email: String!, $password: String!, $fcmToken: String!) {
+    login(email: $email, password: $password, fcmToken: $fcmToken) {
       __typename
       ... on LoginResultSuccess {
         token
