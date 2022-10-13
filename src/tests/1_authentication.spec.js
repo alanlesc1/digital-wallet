@@ -3,14 +3,6 @@ import * as authApi from './authenticationApi';
 import { sequelize, MUser, MUserRole } from '../db/models';
 
 describe('Authentication', () => {
-  before(async () => {
-    await sequelize
-    .sync({ force: true })
-    .then(async () => {
-      // seed
-    });
-  })
-
   describe('SignUp', () => {
     it('returns a SignUpResultSuccess when user can be created', async () => {
       const variables = {
