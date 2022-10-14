@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      MTable.hasMany(models.MPGMRequest, {
+        foreignKey: 'AD_Table_ID'
+      });
     }
   }
   MTable.init({
