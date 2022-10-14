@@ -9,4 +9,4 @@ type UserQRCodeError {
   message: String!
 }
 
-union UserQRCodeResult = UserQRCode | UserQRCodeError | Error
+union UserQRCodeResult = UserQRCode | UserQRCodeError | NotAuthenticatedError | Error
