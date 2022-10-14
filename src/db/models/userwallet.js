@@ -107,9 +107,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       allowNull: true,
     },
-    PM_CardId: {
+    PGM_CardId: {
       type: DataTypes.STRING(60),
-      field: 'pm_cardid',
+      field: 'pgm_cardid',
       allowNull: true,
     }
   }, {

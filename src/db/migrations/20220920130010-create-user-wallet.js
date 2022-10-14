@@ -86,7 +86,7 @@ module.exports = {
           },
           allowNull: true
         },
-        pm_cardid: {
+        pgm_cardid: {
           allowNull: true,
           type: Sequelize.STRING(60)
         },
