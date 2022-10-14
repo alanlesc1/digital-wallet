@@ -1,10 +1,13 @@
 'use strict';
+
+const { v4: uuidv4 } = require('uuid')
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     const trx = await queryInterface.sequelize.transaction();
 
     try {
-      await queryInterface.createTable('c_userrole', {
+      const schema = {
         c_userrole_id: {
           allowNull: false,
           autoIncrement: true,
@@ -41,7 +44,18 @@ module.exports = {
           allowNull: false,
           type: Sequelize.STRING(3)
         },
-      }, { trx });
+      };
+
+      await queryInterface.createTable('c_userrole', schema, { trx });
+
+      await queryInterface.bulkInsert('ad_table', [
+        {
+          ad_table_uu: uuidv4(),
+          created: new Date(),
+          updated: new Date(),
+          tablename: 'c_userrole'
+        },
+      ], { trx });
 
       await queryInterface.addIndex(
         'c_userrole',
