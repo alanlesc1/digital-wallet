@@ -1,5 +1,6 @@
 import apolloServer from './src/graphql';
 import { expressjwt } from 'express-jwt';
+import cors from 'cors';
 import { serverPort, jwtSecret } from './src/config/environment';
 import app from './src/app';
 import { nodeEnv } from './src/config/environment';
@@ -18,6 +19,7 @@ const start = async () => {
   });
 
   await apolloServer.start();
+  app.use(cors());
   app.use(auth);
   apolloServer.applyMiddleware({ app });
 
