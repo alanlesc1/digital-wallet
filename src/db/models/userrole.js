@@ -42,8 +42,9 @@ module.exports = (sequelize, DataTypes) => {
         key: 'c_user_id'
       }
     },
-    role: {
+    roleName: {
       type: DataTypes.STRING(3),
+      field: 'rolename',
       allowNull: false,
       validate: {
         isIn: {

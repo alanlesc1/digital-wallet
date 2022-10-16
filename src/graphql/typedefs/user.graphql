@@ -1,6 +1,5 @@
-# User type
 type User implements Timestamps { 
-  C_User_ID: Int!
+  C_User_ID: ID!
   C_User_UU: String!
   created: Date!
   updated: Date!
@@ -9,42 +8,40 @@ type User implements Timestamps {
   email: String!
   isUserVerified: Boolean!
   verificationCodeExp: Date
-  userRoles: [UserRole]!
+  userRoles: [UserRole!]
 }
 
-# Sign up types
 type SignUpResultSuccess {
-  user: User
+  user: User!
 }
 
-type SignUpResultError {
-  message: String!
-}
-
-union SignUpResult = SignUpResultSuccess | SignUpResultError | Error
-
-# User verification types
 type UserVerificationResultSuccess {
-  user: User
+  user: User!
 }
 
-type UserVerificationResultError {
-  message: String!
-}
-
-union UserVerificationResult = UserVerificationResultSuccess | UserVerificationResultError | Error
-
-# Login types
 type LoginResultSuccess {
   token: String
   user: User
 }
 
-type LoginResultError {
+type NotAuthenticatedError implements Error {
   message: String!
 }
 
-union LoginResult = LoginResultSuccess | LoginResultError | Error
+type SignUpResultError implements Error {
+  message: String!
+}
 
-# CurrentUser types
-union CurrentUserResult = User | NotAuthenticatedError | Error
+type UserVerificationResultError implements Error {
+  message: String!
+}
+
+type LoginResultError implements Error {
+  message: String!
+}
+
+union SignUpResult = SignUpResultSuccess | SignUpResultError
+union UserVerificationResult = UserVerificationResultSuccess |
+  UserVerificationResultError
+union LoginResult = LoginResultSuccess | LoginResultError
+union UserResult = User | NotAuthenticatedError

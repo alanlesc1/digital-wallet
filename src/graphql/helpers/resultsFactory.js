@@ -6,6 +6,7 @@ export const notAVerifiedUserMessage = "Not a verified user";
 export const verificationCodeExpired = "Verification code expired";
 export const verificationCodeIsInvalid = "Verification code is invalid";
 export const notAuthenticatedMessage = "Not authenticated";
+export const userQRCodeNotFoundMessage = "QR Code not found";
 
 export class Result { }
 export class Error extends Result { }
@@ -17,6 +18,7 @@ export class UserVerificationResultError extends Error { }
 export class LoginResultSuccess extends Result { }
 export class LoginResultError extends Error { }
 export class NotAuthenticatedError extends Error { }
+export class UserQRCodeNotFoundError extends Error { }
 
 // Factory for error/success resolvers returns 
 export class ResultsFactory {
@@ -101,6 +103,15 @@ export class ResultsFactory {
                     return {
                         __typename: "NotAuthenticatedError",
                         ...notAuthenticatedError
+                    };
+                }
+            case UserQRCodeNotFoundError:
+                {
+                    const userQRCodeNotFoundError = new UserQRCodeNotFoundError();
+                    userQRCodeNotFoundError.message = userQRCodeNotFoundMessage;
+                    return {
+                        __typename: "UserQRCodeNotFoundError",
+                        ...userQRCodeNotFoundError
                     };
                 }
             default:

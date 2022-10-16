@@ -40,7 +40,7 @@ module.exports = {
           },
           allowNull: false
         },
-        role: {
+        rolename: {
           allowNull: false,
           type: Sequelize.STRING(3)
         },

@@ -1,12 +1,18 @@
-# User QR Code type
 type UserQRCode { 
   schemaVersion: String!
   dataType: String!
   data: String!
 }
 
-type UserQRCodeError {
+type UserQRCodeNotFoundError implements Error {
   message: String!
 }
 
-union UserQRCodeResult = UserQRCode | UserQRCodeError | NotAuthenticatedError | Error
+type UserQRCodeError implements Error {
+  message: String!
+}
+
+union UserQRCodeResult = UserQRCode | 
+  UserQRCodeNotFoundError | 
+  UserQRCodeError | 
+  NotAuthenticatedError

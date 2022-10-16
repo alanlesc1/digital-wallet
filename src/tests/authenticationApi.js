@@ -99,7 +99,7 @@ const LOGIN_GRAPHQL = `mutation login($email: String!, $password: String!, $fcmT
         email
         userRoles {
           isActive
-          role
+          roleName
         }
       }
     }

@@ -20,7 +20,7 @@ describe('User Common', () => {
     it('returns the current logged in user', async () => {
       const expectedResult = {
         "data": {
-          "currentUser": {
+          "me": {
             "__typename": "User",
             "email": authApi.DEFAULT_USER_EMAIL,
             "isActive": true,
@@ -34,34 +34,27 @@ describe('User Common', () => {
     });
   });
 
-  describe('Retrieve/renew user QR Code', () => {
-    it('creates a new user QR Code', async () => {
-      const variables = {
-        "renew": false
-      };
-
+  describe('Retrieve my current QR Code', () => {
+    it('returns a UserQRCodeNotFoundError when current QR Code does not exist', async () => {
       const expectedResult = {
         "data": {
-          "userQRCode": {
-            "__typename": "UserQRCode",
-            "schemaVersion": "1.0",
-            "dataType": "PlainText"
+          "myCurrentQRCode": {
+            "__typename": "UserQRCodeNotFoundError",
+            "message": "QR Code not found"
           }
         }
       };
 
-      const result = await userCommonApi.retrieveOrRenewUserQrCode(variables, token);
+      const result = await userCommonApi.retrieveMyCurrentQrCode(token);
       expect(result.data).to.eql(expectedResult);
     });
+  });
 
-    it('renews the user QR Code', async () => {
-      const variables = {
-        "renew": true
-      };
-
+  describe('Renew my current QR Code', () => {
+    it('renews my current QR Code', async () => {
       const expectedResult = {
         "data": {
-          "userQRCode": {
+          "renewMyCurrentQRCode": {
             "__typename": "UserQRCode",
             "schemaVersion": "1.0",
             "dataType": "PlainText"
@@ -69,7 +62,7 @@ describe('User Common', () => {
         }
       };
 
-      const result = await userCommonApi.retrieveOrRenewUserQrCode(variables, token);
+      const result = await userCommonApi.renewMyCurrentQrCode(token);
       expect(result.data).to.eql(expectedResult);
     });
   });

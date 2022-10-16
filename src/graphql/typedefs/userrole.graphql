@@ -1,6 +1,8 @@
-# User Role type
 type UserRole { 
+  C_UserRole_ID: ID!
+  C_UserRole_UU: String!
   created: Date!
+  updated: Date!
   isActive: Boolean!
-  role: String!
+  roleName: String!
 }

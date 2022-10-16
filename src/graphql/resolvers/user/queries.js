@@ -6,15 +6,14 @@ import {
 } from '../../helpers/resultsFactory';
 
 const userQueries = {
-  currentUser: async (_, args, { ctx }) => {
+  me: async (_, args, { ctx }) => {
     if (ctx) {
       try {
         const userModel = await MUser.findOne({
           where: { C_User_ID: ctx.C_User_ID },
           include: {
             model: MUserRole,
-            as: 'userRoles',
-            attributes: ['created', 'isActive', 'role']
+            as: 'userRoles'
           }
         });
 

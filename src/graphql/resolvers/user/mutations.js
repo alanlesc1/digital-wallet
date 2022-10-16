@@ -62,7 +62,7 @@ const userMutations = {
                 // Create a default access role
                 await MUserRole.create({
                   C_User_ID: user.C_User_ID,
-                  role: 'BUY',
+                  roleName: 'BUY',
                 });
               }
             } catch (error) {
@@ -82,8 +82,7 @@ const userMutations = {
           await user.reload({
             include: {
               model: MUserRole,
-              as: 'userRoles',
-              attributes: ['created', 'isActive', 'role']
+              as: 'userRoles'
             }
           });
 
@@ -107,8 +106,7 @@ const userMutations = {
         where: { email },
         include: {
           model: MUserRole,
-          as: 'userRoles',
-          attributes: ['created', 'isActive', 'role']
+          as: 'userRoles'
         }
       });
 

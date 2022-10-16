@@ -179,7 +179,7 @@ describe('Authentication', () => {
     it('checks that the default access role BUYER was created', async () => {
       const user = await MUser.findOne({ where: { email: authApi.DEFAULT_USER_EMAIL } });
       const userRole = await MUserRole.findOne({ where: { C_User_ID: user.C_User_ID } });
-      expect(userRole.role).to.eql("BUY");
+      expect(userRole.roleName).to.eql("BUY");
     });
 
     it('returns a UserVerificationResultError when verification code is already verified', async () => {
@@ -242,7 +242,7 @@ describe('Authentication', () => {
               "userRoles": [
                 {
                   "isActive": true,
-                  "role": "BUY"
+                  "roleName": "BUY"
                 }
               ]
             }
