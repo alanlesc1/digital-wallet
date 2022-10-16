@@ -1,5 +1,5 @@
-import { userQueries, userMutations } from './user';
-import { userQRCodeQueries, userQRCodeMutations } from './userqrcode';
+import { userQueries, userMutations, userFields } from './user';
+import { userQRCodeQueries, userQRCodeMutations, userQRCodeFields } from './userqrcode';
 
 const resolvers = {
   Query: {
@@ -10,6 +10,8 @@ const resolvers = {
     ...userMutations,
     ...userQRCodeMutations,
   },
+  ...userFields,
+  ...userQRCodeFields,
 };
 
 export default resolvers;
