@@ -16,7 +16,7 @@ describe('User Common', () => {
     token = loginToken.data.data.login.token;
   });
 
-  describe('Retrieve current user', () => {
+  describe('Return current user', () => {
     it('returns the current logged in user', async () => {
       const expectedResult = {
         "data": {
@@ -29,12 +29,12 @@ describe('User Common', () => {
         }
       };
 
-      const result = await userCommonApi.retrieveCurrentUser(token);
+      const result = await userCommonApi.returnCurrentUser(token);
       expect(result.data).to.eql(expectedResult);
     });
   });
 
-  describe('Retrieve my current QR Code', () => {
+  describe('Return my current QR Code', () => {
     it('returns a UserQRCodeNotFoundError when current QR Code does not exist', async () => {
       const expectedResult = {
         "data": {
@@ -45,7 +45,7 @@ describe('User Common', () => {
         }
       };
 
-      const result = await userCommonApi.retrieveMyCurrentQrCode(token);
+      const result = await userCommonApi.returnMyCurrentQrCode(token);
       expect(result.data).to.eql(expectedResult);
     });
   });

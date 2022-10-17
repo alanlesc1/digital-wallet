@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API_URL } from './api';
 
-const RETRIEVE_CURRENT_USER_GRAPHQL = `query me {
+const RETURN_CURRENT_USER_GRAPHQL = `query me {
   me {
     __typename
     ... on User {
@@ -21,9 +21,9 @@ const RETRIEVE_CURRENT_USER_GRAPHQL = `query me {
 }
 `;
 
-export const retrieveCurrentUser = async token =>
+export const returnCurrentUser = async token =>
   axios.post(API_URL, {
-    query: RETRIEVE_CURRENT_USER_GRAPHQL
+    query: RETURN_CURRENT_USER_GRAPHQL
   },
     {
       headers: {
@@ -31,7 +31,7 @@ export const retrieveCurrentUser = async token =>
       },
     });
 
-const RETRIEVE_MY_CURRENT_QRCODE_GRAPHQL = `query myCurrentQRCode {
+const RETURN_MY_CURRENT_QRCODE_GRAPHQL = `query myCurrentQRCode {
   myCurrentQRCode {
     __typename
     ... on UserQRCode {
@@ -50,9 +50,9 @@ const RETRIEVE_MY_CURRENT_QRCODE_GRAPHQL = `query myCurrentQRCode {
 }
 `;
 
-export const retrieveMyCurrentQrCode = async token =>
+export const returnMyCurrentQrCode = async token =>
   axios.post(API_URL, {
-    query: RETRIEVE_MY_CURRENT_QRCODE_GRAPHQL,
+    query: RETURN_MY_CURRENT_QRCODE_GRAPHQL,
   },
     {
       headers: {
