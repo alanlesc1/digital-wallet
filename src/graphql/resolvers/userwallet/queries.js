@@ -2,11 +2,7 @@ const userWalletQueries = {
   userWallet: async (_, { C_UserWallet_ID }, { authUser, db, results }) => {
     if (authUser) {
       try {
-        const userWallet = await db.MUserWallet.findOne({
-          where: {
-            C_UserWallet_ID: C_UserWallet_ID,
-          }
-        });
+        const userWallet = await db.MUserWallet.findByPk(C_UserWallet_ID);
 
         if (!userWallet) {
           return results.create(results.UserWalletNotFoundError);
