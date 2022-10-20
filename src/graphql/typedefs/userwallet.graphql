@@ -45,4 +45,5 @@ union UserWalletResult = UserWallet |
   UserWallets |
   UserWalletNotFoundError | 
   UserWalletError | 
-  NotAuthenticatedError
+  NotAuthenticatedError |
+  NotAuthorizedError

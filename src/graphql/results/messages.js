@@ -7,6 +7,7 @@ export const messages = {
   verificationCodeExpired: "Verification code expired",
   verificationCodeIsInvalid: "Verification code is invalid",
   notAuthenticatedMessage: "Not authenticated",
+  notAuthorizedMessage: "Not authorized",
   userQRCodeNotFoundMessage: "User QR Code not found",
   userWalletNotFoundMessage: "User Wallet not found",
 }

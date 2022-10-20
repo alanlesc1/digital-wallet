@@ -15,4 +15,5 @@ type UserQRCodeError implements Error {
 union UserQRCodeResult = UserQRCode | 
   UserQRCodeNotFoundError | 
   UserQRCodeError | 
-  NotAuthenticatedError
+  NotAuthenticatedError |
+  NotAuthorizedError

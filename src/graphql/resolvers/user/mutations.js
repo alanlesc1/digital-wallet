@@ -124,8 +124,22 @@ const userMutations = {
             }
           }
 
+          const userRoles = await db.MUserRole.findAll({
+            where: {
+              C_User_ID: user.C_User_ID,
+            },
+            attributes: ['roleName'],
+          });
+
+          const jwtPayload = {
+            C_User_ID: user.C_User_ID,
+            email: user.email,
+            userRoles: userRoles.map(element => element.toJSON().roleName),
+            fcmToken: token.token
+          };
+
           const authToken = jsonwebtoken.sign(
-            { C_User_ID: user.C_User_ID, email: user.email, fcmToken: token.token },
+            jwtPayload,
             jwtSecret, {
             expiresIn: "1d",
           });
