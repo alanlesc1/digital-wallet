@@ -4,13 +4,15 @@ import { jwtSecret } from '../../../../src/config/environment';
 import { generateNewVerification, verifyCode } from '../../../helpers/userVerification';
 import { ValidationError } from 'sequelize';
 
+const passwordSaltRounds = 10;
+
 const userMutations = {
   signUp: async (_, { name, email, password }, { db, results }) => {
     try {
       const user = await db.MUser.create({
         name,
         email,
-        password: await bcrypt.hash(password, 10),
+        password: await bcrypt.hash(password, passwordSaltRounds),
       });
 
       return results.create(results.SignUpResultSuccess, user);
