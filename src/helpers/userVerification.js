@@ -1,11 +1,6 @@
 import { emailTransporter, verificationCodeEmailOptions } from './email.js';
 import { nodeEnv } from '../config/environment';
-import {
-    ResultsFactory,
-    verificationCodeExpired,
-    verificationCodeIsInvalid,
-    UserVerificationResultError,
-  } from '../graphql/helpers/resultsFactory';
+import * as resultsFactory from '../graphql/results';
 
 module.exports.generateNewVerification = async (user) => {
     const newVerificationCode = Math.floor(1000 + Math.random() * 9000);
@@ -43,9 +38,9 @@ module.exports.verifyCode = async (user, verificationCode) => {
             await user.save();
             return true;
         } else {
-            throw ResultsFactory.create({ type: UserVerificationResultError, message: verificationCodeExpired });
+            throw resultsFactory.create(resultsFactory.UserVerificationResultError, resultsFactory.messages.verificationCodeExpired);
         }
     } else {
-        throw ResultsFactory.create({ type: UserVerificationResultError, message: verificationCodeIsInvalid });
+        throw resultsFactory.create(resultsFactory.UserVerificationResultError, resultsFactory.messages.verificationCodeIsInvalid);
     }
 };

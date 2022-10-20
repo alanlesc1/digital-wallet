@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       MUser.hasMany(models.MUserRole, {
         foreignKey: 'C_User_ID',
-        as: 'userRoles'
       });
       MUser.hasMany(models.MUserFcmToken, {
         foreignKey: 'C_User_ID',

@@ -1,56 +1,42 @@
-import { MUser, MUserRole, MUserFcmToken } from '../../../db/models';
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
 import { jwtSecret } from '../../../../src/config/environment';
 import { generateNewVerification, verifyCode } from '../../../helpers/userVerification';
-import {
-  ResultsFactory,
-  SignUpResultSuccess,
-  SignUpResultError,
-  UserVerificationResultSuccess,
-  UserVerificationResultError,
-  LoginResultSuccess,
-  LoginResultError,
-  invalidEmailPasswordMessage,
-  userIsAlreadyVerifiedMessage,
-  verificationCodeWasGeneratedMessage,
-  notAVerifiedUserMessage
-} from '../../helpers/resultsFactory';
 import { ValidationError } from 'sequelize';
 
 const userMutations = {
-  signUp: async (_, { name, email, password }) => {
+  signUp: async (_, { name, email, password }, { db, results }) => {
     try {
-      const user = await MUser.create({
+      const user = await db.MUser.create({
         name,
         email,
         password: await bcrypt.hash(password, 10),
       });
 
-      return ResultsFactory.create({ type: SignUpResultSuccess, user: user });
+      return results.create(results.SignUpResultSuccess, user);
     } catch (error) {
       if (error instanceof ValidationError)
-        return ResultsFactory.create({ type: SignUpResultError, message: error.errors[0].message });
+        return results.create(results.SignUpResultError, error.errors[0].message);
       else {
         console.error(error);
-        return ResultsFactory.create({ type: SignUpResultError });
+        return results.create(results.SignUpResultError);
       }
     }
   },
-  verifyUser: async (_, { email, password, verificationCode }) => {
+  verifyUser: async (_, { email, password, verificationCode }, { db, results }) => {
     try {
-      const user = await MUser.findOne({ where: { email } });
+      const user = await db.MUser.findOne({ where: { email } });
 
       if (user) {
         const valid = await bcrypt.compare(password, user.password);
 
         if (valid) {
           if (user.isUserVerified) {
-            return ResultsFactory.create({ type: UserVerificationResultError, message: userIsAlreadyVerifiedMessage });
+            return results.create(results.UserVerificationResultError, results.messages.userIsAlreadyVerifiedMessage);
           }
 
           if (!user.verificationCode && verificationCode) {
-            return ResultsFactory.create({ type: UserVerificationResultError, message: verificationCodeWasGeneratedMessage });
+            return results.create(results.UserVerificationResultError, results.messages.verificationCodeWasGeneratedMessage);
           }
 
           // Check for previously generated verification code
@@ -60,7 +46,7 @@ const userMutations = {
 
               if (isVerified) {
                 // Create a default access role
-                await MUserRole.create({
+                await db.MUserRole.create({
                   C_User_ID: user.C_User_ID,
                   roleName: 'BUY',
                 });
@@ -70,7 +56,7 @@ const userMutations = {
                 return error;
               } else {
                 console.error(error);
-                return ResultsFactory.create({ type: UserVerificationResultError });
+                return results.create(results.UserVerificationResultError);
               }
             }
           }
@@ -79,35 +65,26 @@ const userMutations = {
             await generateNewVerification(user);
           }
 
-          await user.reload({
-            include: {
-              model: MUserRole,
-              as: 'userRoles'
-            }
-          });
+          await user.reload();
 
-          return ResultsFactory.create({ type: UserVerificationResultSuccess, user: user });
+          return results.create(results.UserVerificationResultSuccess, user);
         }
       }
     } catch (error) {
       if (error instanceof ValidationError)
-        return ResultsFactory.create({ type: UserVerificationResultError, message: error.errors[0].message });
+        return resultscreate(results.UserVerificationResultError, error.errors[0].message);
       else {
         console.error(error);
-        return ResultsFactory.create({ type: UserVerificationResultError });
+        return results.create(results.UserVerificationResultError);
       }
     }
 
-    return ResultsFactory.create({ type: UserVerificationResultError, message: invalidEmailPasswordMessage });
+    return results.create(results.UserVerificationResultError, results.messages.invalidEmailPasswordMessage);
   },
-  login: async (_, { email, password, fcmToken }) => {
+  login: async (_, { email, password, fcmToken }, { db, results }) => {
     try {
-      const user = await MUser.findOne({
-        where: { email },
-        include: {
-          model: MUserRole,
-          as: 'userRoles'
-        }
+      const user = await db.MUser.findOne({
+        where: { email }
       });
 
       if (user) {
@@ -115,20 +92,20 @@ const userMutations = {
 
         if (valid) {
           if (!user.isUserVerified) {
-            return ResultsFactory.create({ type: LoginResultError, message: notAVerifiedUserMessage });
+            return results.create(results.LoginResultError, results.messages.notAVerifiedUserMessage);
           }
 
           // Firebase FCM
           let token;
-            
+
           {
-            token = await MUserFcmToken.findOne({
+            token = await db.MUserFcmToken.findOne({
               where: { token: fcmToken }
             });
 
             // if not found, create a new one
             if (!token) {
-              token = await MUserFcmToken.create({
+              token = await db.MUserFcmToken.create({
                 token: fcmToken,
                 C_User_ID: user.C_User_ID,
                 lastSeen: user.sequelize.literal("current_timestamp")
@@ -151,17 +128,17 @@ const userMutations = {
             expiresIn: "1d",
           });
 
-          return ResultsFactory.create({ type: LoginResultSuccess, token: authToken, user: user });
+          return results.create(results.LoginResultSuccess, { token: authToken, user: user });
         }
       }
 
-      return ResultsFactory.create({ type: LoginResultError, message: invalidEmailPasswordMessage });
+      return results.create(results.LoginResultError, results.messages.invalidEmailPasswordMessage);
     } catch (error) {
       if (error instanceof ValidationError)
-        return ResultsFactory.create({ type: LoginResultError, message: error.errors[0].message });
+        return results.create(results.LoginResultError, error.errors[0].message);
       else {
         console.error(error);
-        return ResultsFactory.create({ type: LoginResultError });
+        return results.create(results.LoginResultError);
       }
     }
   },

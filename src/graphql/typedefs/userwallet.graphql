@@ -1,0 +1,48 @@
+type UserWallet {
+  C_UserWallet_ID: ID!
+  C_UserWallet_UU: String!
+  created: Date!
+  updated: Date!
+  isActive: Boolean!
+  user: User! 
+  name: String!
+  paymentMethod: String!
+  cardFirstDigits: String!
+  cardLastDigits: String!
+  cardBrand: String!
+  cardHolderName: String!
+  cardHolderDocNo: String!
+  cardExpMonth: Int!
+  cardExpYear: Int!
+  billingLocation: Location!
+  PGM_CardId: String!
+}
+
+input CreateUserWalletInput {
+  name: String!
+  paymentMethod: String!
+  cardBrand: String!
+  cardHolderName: String!
+  cardHolderDocNo: String!
+  cardExpMonth: Int!
+  cardExpYear: Int!
+  billingLocation: CreateLocationInput!
+}
+
+type UserWallets { 
+  userWallets: [UserWallet]!
+}
+
+type UserWalletNotFoundError implements Error {
+  message: String!
+}
+
+type UserWalletError implements Error {
+  message: String!
+}
+
+union UserWalletResult = UserWallet | 
+  UserWallets |
+  UserWalletNotFoundError | 
+  UserWalletError | 
+  NotAuthenticatedError

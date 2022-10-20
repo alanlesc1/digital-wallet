@@ -3,12 +3,14 @@ scalar Date
 type Query {
   me: UserResult
   myCurrentQRCode: UserQRCodeResult
+  userWallet(C_UserWallet_ID: ID!): UserWalletResult
+  userWallets(C_User_ID: ID!): UserWalletResult
 }
 
 type Mutation {
   signUp(name: String!, email: String!, password: String!): SignUpResult
   verifyUser(email: String!, password: String!, verificationCode: String): UserVerificationResult
   login(email: String!, password: String!, fcmToken: String!): LoginResult
-
   renewMyCurrentQRCode: UserQRCodeResult
+  createUserWallet(input: CreateUserWalletInput): UserWalletResult
 }

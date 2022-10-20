@@ -1,9 +1,3 @@
-import { sequelize, MUserQRCode } from '../../../db/models';
-import {
-  ResultsFactory,
-  NotAuthenticatedError,
-} from '../../helpers/resultsFactory';
-
 /*
 Used to declare the QR Code current schema version.
 For version 1.0, data is just the QR Code UUID (table UserQRCodes.uuid) 
@@ -11,18 +5,18 @@ For version 1.0, data is just the QR Code UUID (table UserQRCodes.uuid)
 const currentQRCodeSchemaVersion = "1.0";
 
 const userQRCodeMutations = {
-  renewMyCurrentQRCode: async (_, args, { ctx }) => {
-    if (ctx) {
+  renewMyCurrentQRCode: async (_, args, { authUser, db, results }) => {
+    if (authUser) {
       try {
         // Deactivate existing active records
-        await sequelize.query('UPDATE C_UserQrCode SET IsActive = ? WHERE C_User_ID = ?',
+        await db.sequelize.query('UPDATE C_UserQrCode SET IsActive = ? WHERE C_User_ID = ?',
           {
-            replacements: [false, ctx.C_User_ID]
+            replacements: [false, authUser.C_User_ID]
           });
 
-          // Create a new one
-        const existing = await MUserQRCode.create({
-          C_User_ID: ctx.C_User_ID
+        // Create a new one
+        const existing = await db.MUserQRCode.create({
+          C_User_ID: authUser.C_User_ID
         });
 
         return {
@@ -33,10 +27,10 @@ const userQRCodeMutations = {
         };
       } catch (error) {
         console.error(error);
-        return ResultsFactory.create({ type: Error });
+        return results.create(results.Error);
       }
     } else {
-      return ResultsFactory.create({ type: NotAuthenticatedError });
+      return results.create(results.NotAuthenticatedError);
     }
   }
 };

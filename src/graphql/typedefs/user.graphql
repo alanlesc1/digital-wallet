@@ -9,6 +9,7 @@ type User implements Timestamps {
   isUserVerified: Boolean!
   verificationCodeExp: Date
   userRoles: [UserRole!]
+  userWallets: [UserWallet!]
 }
 
 type SignUpResultSuccess {

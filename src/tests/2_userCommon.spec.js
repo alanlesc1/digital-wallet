@@ -40,7 +40,7 @@ describe('User Common', () => {
         "data": {
           "myCurrentQRCode": {
             "__typename": "UserQRCodeNotFoundError",
-            "message": "QR Code not found"
+            "message": "User QR Code not found"
           }
         }
       };

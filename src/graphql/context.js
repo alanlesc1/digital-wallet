@@ -1,6 +1,12 @@
+import * as sequelizeDB from '../db/models';
+import * as results  from './results';
+
 const context = async ({ req }) => {
-    const ctx = req.auth ? req.auth : null;
-    return { ctx };
+    return {
+        authUser: req.auth ? req.auth : null,
+        db: sequelizeDB,
+        results: results
+    };
 };
 
 export default context;

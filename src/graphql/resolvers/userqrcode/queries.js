@@ -1,11 +1,3 @@
-import { MUserQRCode } from '../../../db/models';
-import {
-  ResultsFactory,
-  UserQRCodeNotFoundError,
-  NotAuthenticatedError,
-  Error
-} from '../../helpers/resultsFactory';
-
 /*
 Used to declare the QR Code current schema version.
 For version 1.0, data is just the QR Code UUID (table UserQRCodes.uuid) 
@@ -13,13 +5,13 @@ For version 1.0, data is just the QR Code UUID (table UserQRCodes.uuid)
 const currentQRCodeSchemaVersion = "1.0";
 
 const userQRCodeQueries = {
-  myCurrentQRCode: async (_, args, { ctx }) => {
-    if (ctx) {
+  myCurrentQRCode: async (_, args, { authUser, db, results }) => {
+    if (authUser) {
       try {
         // Find existing
-        let existing = await MUserQRCode.findOne({
+        let existing = await db.MUserQRCode.findOne({
           where: {
-            C_User_ID: ctx.C_User_ID,
+            C_User_ID: authUser.C_User_ID,
             isActive: true
           },
           order: [
@@ -29,7 +21,7 @@ const userQRCodeQueries = {
 
         // If not found, return an error
         if (!existing) {
-          return ResultsFactory.create({ type: UserQRCodeNotFoundError });
+          return results.create(results.UserQRCodeNotFoundError);
         }
 
         return {
@@ -40,10 +32,10 @@ const userQRCodeQueries = {
         };
       } catch (error) {
         console.error(error);
-        return ResultsFactory.create({ type: Error });
+        return results.create(results.Error);
       }
     } else {
-      return ResultsFactory.create({ type: NotAuthenticatedError });
+      return results.create(results.NotAuthenticatedError);
     }
   }
 };

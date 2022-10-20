@@ -1,20 +1,9 @@
-import { MUser, MUserRole } from '../../../db/models';
-import {
-  ResultsFactory,
-  NotAuthenticatedError,
-  Error
-} from '../../helpers/resultsFactory';
-
 const userQueries = {
-  me: async (_, args, { ctx }) => {
-    if (ctx) {
+  me: async (_, args, { authUser, db, results }) => {
+    if (authUser) {
       try {
-        const userModel = await MUser.findOne({
-          where: { C_User_ID: ctx.C_User_ID },
-          include: {
-            model: MUserRole,
-            as: 'userRoles'
-          }
+        const userModel = await db.MUser.findOne({
+          where: { C_User_ID: authUser.C_User_ID },
         });
 
         return {
@@ -23,10 +12,10 @@ const userQueries = {
         };
       } catch (error) {
         console.error(error);
-        return ResultsFactory.create({ type: Error });
+        return results.create(results.Error);
       }
     } else {
-      return ResultsFactory.create({ type: NotAuthenticatedError });
+      return results.create(results.NotAuthenticatedError);
     }
   }
 };

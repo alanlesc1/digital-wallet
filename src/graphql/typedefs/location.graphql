@@ -1,0 +1,22 @@
+type Location {
+  C_Location_ID: ID!
+  C_Location_UU: String!
+  created: Date!
+  updated: Date!
+  isActive: Boolean!
+  line1: String
+  line2: String
+  city: String
+  state: String
+  country: String
+  zipCode: String
+}
+
+input CreateLocationInput {
+  line1: String
+  line2: String
+  city: String
+  state: String
+  country: String
+  zipCode: String
+}

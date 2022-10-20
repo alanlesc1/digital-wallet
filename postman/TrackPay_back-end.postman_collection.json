@@ -126,31 +126,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query me {\n  me {\n    __typename\n    ... on User {\n      C_User_ID\n      C_User_UU\n      created\n      updated\n      isActive\n      name\n      email\n      userRoles {\n        C_UserRole_ID\n        C_UserRole_UU\n        created\n        updated\n        isActive\n        roleName\n      }\n    }\n    ... on NotAuthenticatedError {\n      message\n    }\n    ... on Error {\n      message\n    }\n  }\n}\n",
-						"variables": ""
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/graphql",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"graphql"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Return my current QR Code",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "graphql",
-					"graphql": {
-						"query": "mutation renewMyCurrentQRCode {\n  renewMyCurrentQRCode {\n    __typename\n    ... on UserQRCode {\n      schemaVersion\n      dataType\n      data\n    }\n    ... on UserQRCodeError {\n      message\n    }\n    ... on Error {\n      message\n    }\n  }\n}\n",
+						"query": "query me {\n  me {\n    __typename\n    ... on User {\n      C_User_ID\n      C_User_UU\n      created\n      updated\n      isActive\n      name\n      email\n      userRoles {\n        C_UserRole_ID\n        C_UserRole_UU\n        created\n        updated\n        isActive\n        roleName\n      }\n      userWallets {\n          name\n      }\n    }\n    ... on NotAuthenticatedError {\n      message\n    }\n    ... on Error {\n      message\n    }\n  }\n}\n",
 						"variables": ""
 					}
 				},
@@ -174,8 +150,104 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
+						"query": "mutation renewMyCurrentQRCode {\n  renewMyCurrentQRCode {\n    __typename\n    ... on UserQRCode {\n      schemaVersion\n      dataType\n      data\n    }\n    ... on UserQRCodeError {\n      message\n    }\n    ... on Error {\n      message\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/graphql",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Return my current QR Code",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
 						"query": "query myCurrentQRCode {\n  myCurrentQRCode {\n    __typename\n    ... on UserQRCode {\n      schemaVersion\n      dataType\n      data\n    }\n    ... on UserQRCodeError {\n      message\n    }\n    ... on Error {\n      message\n    }\n  }\n}\n",
 						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/graphql",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User Wallet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n  createUserWallet(input: {}) {\n    ... on UserWallet {\n      name\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/graphql",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Return User Wallet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query userWallet($C_UserWallet_ID: ID!) {\n  userWallet(C_UserWallet_ID: $C_UserWallet_ID) {\n    __typename\n    ... on UserWallet {\n      name\n    }\n    ... on UserWalletError {\n      message\n    }\n    ... on Error {\n      message\n    }\n  }\n}\n",
+						"variables": "{\n    \"C_UserWallet_ID\": \"1\"\n}"
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/graphql",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Return User Wallets",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query userWallets($C_User_ID: ID!) {\n  userWallets(C_User_ID: $C_User_ID) {\n    __typename\n    ... on UserWallets {\n      userWallets {\n          user {\n              name\n          }\n          billingLocation {\n              line1\n          }\n          name\n      }\n    }\n    ... on UserWalletError {\n      message\n    }\n    ... on Error {\n      message\n    }\n  }\n}\n",
+						"variables": "{\n    \"C_User_ID\": \"1\"\n}"
 					}
 				},
 				"url": {
