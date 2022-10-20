@@ -1,3 +1,6 @@
+import { combineResolvers } from 'graphql-resolvers';
+import { isAuthenticated } from '../authorization';
+
 /*
 Used to declare the QR Code current schema version.
 For version 1.0, data is just the QR Code UUID (table UserQRCodes.uuid) 
@@ -5,8 +8,9 @@ For version 1.0, data is just the QR Code UUID (table UserQRCodes.uuid)
 const currentQRCodeSchemaVersion = "1.0";
 
 const userQRCodeQueries = {
-  myCurrentQRCode: async (_, args, { authUser, db, results }) => {
-    if (authUser) {
+  myCurrentQRCode: combineResolvers(
+    isAuthenticated,
+    async (_, args, { authUser, db, results }) => {
       try {
         // Find existing
         let existing = await db.MUserQRCode.findOne({
@@ -34,10 +38,8 @@ const userQRCodeQueries = {
         console.error(error);
         return results.create(results.Error);
       }
-    } else {
-      return results.create(results.NotAuthenticatedError);
     }
-  }
+  )
 };
 
 export default userQRCodeQueries;

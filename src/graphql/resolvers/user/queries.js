@@ -1,6 +1,10 @@
+import { combineResolvers } from 'graphql-resolvers';
+import { isAuthenticated } from '../authorization';
+
 const userQueries = {
-  me: async (_, args, { authUser, db, results }) => {
-    if (authUser) {
+  me: combineResolvers(
+    isAuthenticated,
+    async (_, args, { authUser, db, results }) => {
       try {
         const userModel = await db.MUser.findByPk(authUser.C_User_ID);
 
@@ -12,10 +16,8 @@ const userQueries = {
         console.error(error);
         return results.create(results.Error);
       }
-    } else {
-      return results.create(results.NotAuthenticatedError);
     }
-  }
-};
+  )
+}
 
 export default userQueries;

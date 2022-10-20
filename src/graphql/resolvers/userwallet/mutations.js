@@ -1,6 +1,10 @@
+import { combineResolvers } from 'graphql-resolvers';
+import { isAuthenticated } from '../authorization';
+
 const userWalletMutations = {
-  createUserWallet: async (_, args, { authUser, db, results }) => {
-    if (authUser) {
+  createUserWallet: combineResolvers(
+    isAuthenticated,
+    async (_, args, { authUser, db, results }) => {
       try {
         // TODO: Create card in Pagar.me API
 
@@ -17,10 +21,8 @@ const userWalletMutations = {
         console.error(error);
         return results.create(results.Error);
       }
-    } else {
-      return results.create(results.NotAuthenticatedError);
     }
-  }
+  )
 };
 
 export default userWalletMutations;

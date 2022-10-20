@@ -1,6 +1,10 @@
+import { combineResolvers } from 'graphql-resolvers';
+import { isAuthenticated } from '../authorization';
+
 const userWalletQueries = {
-  userWallet: async (_, { C_UserWallet_ID }, { authUser, db, results }) => {
-    if (authUser) {
+  userWallet: combineResolvers(
+    isAuthenticated,
+    async (_, { C_UserWallet_ID }, { authUser, db, results }) => {
       try {
         const userWallet = await db.MUserWallet.findByPk(C_UserWallet_ID);
 
@@ -16,13 +20,12 @@ const userWalletQueries = {
         console.error(error);
         return results.create(results.Error);
       }
-    } else {
-      return results.create(results.NotAuthenticatedError);
-    }
-  },
+    },
+  ),
 
-  userWallets: async (_, { C_User_ID }, { authUser, db, results }) => {
-    if (authUser) {
+  userWallets: combineResolvers(
+    isAuthenticated,
+    async (_, { C_User_ID }, { authUser, db, results }) => {
       try {
         const wallets = await db.MUserWallet.findAll({
           where: {
@@ -45,10 +48,8 @@ const userWalletQueries = {
         console.error(error);
         return results.create(results.Error);
       }
-    } else {
-      return results.create(results.NotAuthenticatedError);
     }
-  }
+  )
 };
 
 export default userWalletQueries;

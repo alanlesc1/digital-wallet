@@ -1,3 +1,6 @@
+import { combineResolvers } from 'graphql-resolvers';
+import { isAuthenticated } from '../authorization';
+
 /*
 Used to declare the QR Code current schema version.
 For version 1.0, data is just the QR Code UUID (table UserQRCodes.uuid) 
@@ -5,8 +8,9 @@ For version 1.0, data is just the QR Code UUID (table UserQRCodes.uuid)
 const currentQRCodeSchemaVersion = "1.0";
 
 const userQRCodeMutations = {
-  renewMyCurrentQRCode: async (_, args, { authUser, db, results }) => {
-    if (authUser) {
+  renewMyCurrentQRCode: combineResolvers(
+    isAuthenticated,
+    async (_, args, { authUser, db, results }) => {
       try {
         // Deactivate existing active records
         await db.sequelize.query('UPDATE C_UserQrCode SET IsActive = ? WHERE C_User_ID = ?',
@@ -29,10 +33,8 @@ const userQRCodeMutations = {
         console.error(error);
         return results.create(results.Error);
       }
-    } else {
-      return results.create(results.NotAuthenticatedError);
     }
-  }
+  )
 };
 
 export default userQRCodeMutations;
