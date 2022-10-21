@@ -84,6 +84,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: false,
     },
+    PGM_CustomerId: {
+      type: DataTypes.STRING(60),
+      field: 'pgm_customerid',
+      allowNull: true,
+    }
   }, {
     sequelize,
     modelName: 'MUser',

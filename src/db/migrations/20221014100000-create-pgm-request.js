@@ -34,6 +34,14 @@ module.exports = {
           allowNull: false,
           type: Sequelize.DATE
         },
+        method: {
+          allowNull: false,
+          type: Sequelize.STRING(6)
+        },
+        url: {
+          allowNull: false,
+          type: Sequelize.STRING(255)
+        },
         jsonrequest: {
           allowNull: false,
           type: Sequelize.TEXT

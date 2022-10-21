@@ -60,7 +60,11 @@ module.exports = {
           type: Sequelize.BOOLEAN,
           allowNull: false,
           defaultValue: false,
-        }
+        },
+        pgm_customerid: {
+          allowNull: true,
+          type: Sequelize.STRING(60)
+        },
       };
 
       await queryInterface.createTable('c_user', schema, { trx });

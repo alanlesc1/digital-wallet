@@ -4,7 +4,7 @@
 * Ubuntu 20.04 64 bits
 * PostgreSQL >= v14
 * git Client
-* nodejs >= v16
+* nodejs ^16
 * npm
 
 ### Project configuration

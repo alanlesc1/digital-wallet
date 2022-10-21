@@ -74,7 +74,7 @@ const userMutations = {
       }
     } catch (error) {
       if (error instanceof ValidationError)
-        return resultscreate(results.UserVerificationResultError, error.errors[0].message);
+        return results.create(results.UserVerificationResultError, error.errors[0].message);
       else {
         console.error(error);
         return results.create(results.UserVerificationResultError);

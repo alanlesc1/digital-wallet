@@ -8,12 +8,12 @@ type UserQRCodeNotFoundError implements Error {
   message: String!
 }
 
-type UserQRCodeError implements Error {
+type UserQRCodeResultError implements Error {
   message: String!
 }
 
 union UserQRCodeResult = UserQRCode | 
   UserQRCodeNotFoundError | 
-  UserQRCodeError | 
+  UserQRCodeResultError | 
   NotAuthenticatedError |
   NotAuthorizedError

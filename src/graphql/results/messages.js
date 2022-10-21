@@ -10,4 +10,5 @@ export const messages = {
   notAuthorizedMessage: "Not authorized",
   userQRCodeNotFoundMessage: "User QR Code not found",
   userWalletNotFoundMessage: "User Wallet not found",
+  invalidCardErrorMessage: "Invalid card",
 }

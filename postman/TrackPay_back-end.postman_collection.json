@@ -19,7 +19,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation signUp($name: String!, $email: String!, $password: String!) {\n  signUp(name: $name, email: $email, password: $password) {\n    __typename\n    ... on SignUpResultSuccess {\n      user {\n        C_User_ID\n        C_User_UU\n        created\n        updated\n        isActive\n        name\n        email\n        isUserVerified\n      }\n    }\n    ... on SignUpResultError {\n      message\n    }\n    ... on Error {\n      message\n    }\n  }\n}\n",
+								"query": "mutation signUp($name: String!, $email: String!, $password: String!) {\n  signUp(name: $name, email: $email, password: $password) {\n    __typename\n    ... on SignUpResultSuccess {\n      user {\n        C_User_ID\n        C_User_UU\n        created\n        updated\n        isActive\n        name\n        email\n        isUserVerified\n      }\n    }\n    ... on SignUpResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 								"variables": "{\n    \"name\": \"{{userName}}\",\n    \"email\": \"{{userEmail}}\",\n    \"password\": \"{{userPassword}}\"\n}"
 							}
 						},
@@ -46,7 +46,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation generateUserVerification($email: String!, $password: String!) {\n  verifyUser(email: $email, password: $password) {\n    __typename\n    ... on UserVerificationResultSuccess {\n      user {\n        C_User_ID\n        C_User_UU\n        created\n        updated\n        isActive\n        name\n        email\n        isUserVerified\n      }\n    }\n    ... on UserVerificationResultError {\n      message\n    }\n    ... on Error {\n      message\n    }\n  }\n}\n",
+								"query": "mutation generateUserVerification($email: String!, $password: String!) {\n  verifyUser(email: $email, password: $password) {\n    __typename\n    ... on UserVerificationResultSuccess {\n      user {\n        C_User_ID\n        C_User_UU\n        created\n        updated\n        isActive\n        name\n        email\n        isUserVerified\n      }\n    }\n    ... on UserVerificationResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 								"variables": "{\n    \"email\": \"{{userEmail}}\",\n    \"password\": \"{{userPassword}}\"\n}"
 							}
 						},
@@ -73,7 +73,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation verifyUser(\n  $email: String!\n  $password: String!\n  $verificationCode: String\n) {\n  verifyUser(\n    email: $email\n    password: $password\n    verificationCode: $verificationCode\n  ) {\n    __typename\n    ... on UserVerificationResultSuccess {\n      user {\n        C_User_ID\n        C_User_UU\n        created\n        updated\n        isActive\n        name\n        email\n        isUserVerified\n        userRoles {\n          created\n          isActive\n          role\n        }\n      }\n    }\n    ... on UserVerificationResultError {\n      message\n    }\n    ... on Error {\n      message\n    }\n  }\n}\n",
+								"query": "mutation verifyUser(\n  $email: String!\n  $password: String!\n  $verificationCode: String\n) {\n  verifyUser(\n    email: $email\n    password: $password\n    verificationCode: $verificationCode\n  ) {\n    __typename\n    ... on UserVerificationResultSuccess {\n      user {\n        C_User_ID\n        C_User_UU\n        created\n        updated\n        isActive\n        name\n        email\n        isUserVerified\n        userRoles {\n          created\n          isActive\n          role\n        }\n      }\n    }\n    ... on UserVerificationResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 								"variables": "{\n    \"email\": \"{{userEmail}}\",\n    \"password\": \"{{userPassword}}\",\n    \"verificationCode\": \"\"\n}"
 							}
 						},
@@ -100,7 +100,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation login($email: String!, $password: String!, $fcmToken: String!) {\n  login(email: $email, password: $password, fcmToken: $fcmToken) {\n    __typename\n    ... on LoginResultSuccess {\n      token\n      user {\n        C_User_ID\n        C_User_UU\n        created\n        updated\n        isActive\n        name\n        email\n        userRoles {\n          C_UserRole_ID\n          C_UserRole_UU\n          created\n          updated\n          isActive\n          roleName\n        }\n      }\n    }\n    ... on LoginResultError {\n      message\n    }\n    ... on Error {\n      message\n    }\n  }\n}\n",
+								"query": "mutation login($email: String!, $password: String!, $fcmToken: String!) {\n  login(email: $email, password: $password, fcmToken: $fcmToken) {\n    __typename\n    ... on LoginResultSuccess {\n      token\n      user {\n        C_User_ID\n        C_User_UU\n        created\n        updated\n        isActive\n        name\n        email\n        userRoles {\n          C_UserRole_ID\n          C_UserRole_UU\n          created\n          updated\n          isActive\n          roleName\n        }\n      }\n    }\n    ... on LoginResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 								"variables": "{\n    \"email\": \"{{userEmail}}\",\n    \"password\": \"{{userPassword}}\",\n    \"fcmToken\": \"{{fcmToken}}\"\n}"
 							}
 						},
@@ -126,7 +126,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query me {\n  me {\n    __typename\n    ... on User {\n      C_User_ID\n      C_User_UU\n      created\n      updated\n      isActive\n      name\n      email\n      userRoles {\n        C_UserRole_ID\n        C_UserRole_UU\n        created\n        updated\n        isActive\n        roleName\n      }\n      userWallets {\n          name\n      }\n    }\n    ... on NotAuthenticatedError {\n      message\n    }\n    ... on Error {\n      message\n    }\n  }\n}\n",
+						"query": "query me {\n  me {\n    __typename\n    ... on User {\n      C_User_ID\n      C_User_UU\n      created\n      updated\n      isActive\n      name\n      email\n      userRoles {\n        C_UserRole_ID\n        C_UserRole_UU\n        created\n        updated\n        isActive\n        roleName\n      }\n      userWallets {\n          name\n      }\n    }\n    ... on NotAuthenticatedError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 						"variables": ""
 					}
 				},
@@ -150,7 +150,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "mutation renewMyCurrentQRCode {\n  renewMyCurrentQRCode {\n    __typename\n    ... on UserQRCode {\n      schemaVersion\n      dataType\n      data\n    }\n    ... on UserQRCodeError {\n      message\n    }\n    ... on Error {\n      message\n    }\n  }\n}\n",
+						"query": "mutation renewMyCurrentQRCode {\n  renewMyCurrentQRCode {\n    __typename\n    ... on UserQRCode {\n      schemaVersion\n      dataType\n      data\n    }\n    ... on UserQRCodeResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 						"variables": ""
 					}
 				},
@@ -174,7 +174,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query myCurrentQRCode {\n  myCurrentQRCode {\n    __typename\n    ... on UserQRCode {\n      schemaVersion\n      dataType\n      data\n    }\n    ... on UserQRCodeError {\n      message\n    }\n    ... on Error {\n      message\n    }\n  }\n}\n",
+						"query": "query myCurrentQRCode {\n  myCurrentQRCode {\n    __typename\n    ... on UserQRCode {\n      schemaVersion\n      dataType\n      data\n    }\n    ... on UserQRCodeResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 						"variables": ""
 					}
 				},
@@ -198,7 +198,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "mutation {\n  createUserWallet(input: {}) {\n    ... on UserWallet {\n      name\n    }\n  }\n}\n",
+						"query": "mutation {\n  createUserWallet(\n    input: {\n      name: \"My Visa card\"\n      paymentMethod: \"DRC\"\n      cardNumber: \"1000000000000010\"\n      cardCVV: \"1234\"\n      cardBrand: \"visa\"\n      cardHolderName: \"Test User\"\n      cardExpMonth: 12\n      cardExpYear: 2030\n      billingLocation: {\n        line1: \"Av. Paulista\"\n        line2: \"100\"\n        city: \"São Paulo\"\n        state: \"SP\"\n        country: \"Brazil\"\n        zipCode: \"01310000\"\n      }\n    }\n  ) {\n    ... on UserWallet {\n      C_UserWallet_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 						"variables": ""
 					}
 				},
@@ -222,7 +222,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query userWallet($C_UserWallet_ID: ID!) {\n  userWallet(C_UserWallet_ID: $C_UserWallet_ID) {\n    __typename\n    ... on UserWallet {\n      name\n    }\n    ... on UserWalletError {\n      message\n    }\n    ... on Error {\n      message\n    }\n  }\n}\n",
+						"query": "query userWallet($C_UserWallet_ID: ID!) {\n  userWallet(C_UserWallet_ID: $C_UserWallet_ID) {\n    __typename\n    ... on UserWallet {\n      name\n      user {\n        name\n      }\n      billingLocation {\n        city\n      }\n    }\n    ... on UserWalletResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 						"variables": "{\n    \"C_UserWallet_ID\": \"1\"\n}"
 					}
 				},
@@ -246,7 +246,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query userWallets($C_User_ID: ID!) {\n  userWallets(C_User_ID: $C_User_ID) {\n    __typename\n    ... on UserWallets {\n      userWallets {\n          user {\n              name\n          }\n          billingLocation {\n              line1\n          }\n          name\n      }\n    }\n    ... on UserWalletError {\n      message\n    }\n    ... on Error {\n      message\n    }\n  }\n}\n",
+						"query": "query userWallets($C_User_ID: ID!) {\n  userWallets(C_User_ID: $C_User_ID) {\n    __typename\n    ... on UserWallets {\n      userWallets {\n          name\n          user {\n              name\n          }\n          billingLocation {\n              city\n          }\n      }\n    }\n    ... on UserWalletResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 						"variables": "{\n    \"C_User_ID\": \"1\"\n}"
 					}
 				},

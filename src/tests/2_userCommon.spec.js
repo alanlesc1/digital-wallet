@@ -66,4 +66,66 @@ describe('User Common', () => {
       expect(result.data).to.eql(expectedResult);
     });
   });
+
+  describe('Create user wallet', () => {
+    it('creates a new user wallet for the current user', async () => {
+      const expectedResult = {
+        "data": {
+          "createUserWallet": {
+            "C_UserWallet_ID": "1",
+            "name": "My Visa card"
+          }
+        }
+      };
+
+      const result = await userCommonApi.createUserWallet(token);
+      expect(result.data).to.eql(expectedResult);
+    });
+  });
+
+  describe('Return user wallet', () => {
+    it('returns one user wallet', async () => {
+      const variables = {
+        "C_UserWallet_ID": "1"
+      };
+
+      const expectedResult = {
+        "data": {
+          "userWallet": {
+            "__typename": "UserWallet",
+            "C_UserWallet_ID": "1",
+            "name": "My Visa card"
+          }
+        }
+      };
+
+      const result = await userCommonApi.returnUserWallet(token, variables);
+      expect(result.data).to.eql(expectedResult);
+    });
+  });
+
+  describe('Return user wallets', () => {
+    it('returns an array of user wallets', async () => {
+      const variables = {
+        "C_User_ID": "1"
+      };
+
+      const expectedResult = {
+        "data": {
+          "userWallets": {
+            "__typename": "UserWallets",
+            "userWallets": [
+              {
+                "C_UserWallet_ID": "1",
+                "name": "My Visa card"
+              }
+            ]
+          }
+        }
+      };
+
+      const result = await userCommonApi.returnUserWallets(token, variables);
+      expect(result.data).to.eql(expectedResult);
+    });
+  });
 });

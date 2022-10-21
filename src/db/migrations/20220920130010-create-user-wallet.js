@@ -49,24 +49,20 @@ module.exports = {
           type: Sequelize.STRING(3)
         },
         cardfirstdigits: {
-          allowNull: false,
+          allowNull: true,
           type: Sequelize.STRING(6)
         },
         cardlastdigits: {
-          allowNull: false,
+          allowNull: true,
           type: Sequelize.STRING(4)
         },
         cardbrand: {
-          allowNull: false,
+          allowNull: true,
           type: Sequelize.STRING(60)
         },
         cardholdername: {
           allowNull: false,
           type: Sequelize.STRING(120)
-        },
-        cardholderdocno: {
-          allowNull: false,
-          type: Sequelize.STRING(14)
         },
         cardexpmonth: {
           allowNull: false,

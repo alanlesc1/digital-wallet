@@ -11,7 +11,6 @@ type UserWallet {
   cardLastDigits: String!
   cardBrand: String!
   cardHolderName: String!
-  cardHolderDocNo: String!
   cardExpMonth: Int!
   cardExpYear: Int!
   billingLocation: Location!
@@ -22,10 +21,11 @@ input CreateUserWalletInput {
   name: String!
   paymentMethod: String!
   cardBrand: String!
-  cardHolderName: String!
-  cardHolderDocNo: String!
+  cardNumber: String!
+  cardCVV: String!
   cardExpMonth: Int!
   cardExpYear: Int!
+  cardHolderName: String!
   billingLocation: CreateLocationInput!
 }
 
@@ -37,13 +37,18 @@ type UserWalletNotFoundError implements Error {
   message: String!
 }
 
-type UserWalletError implements Error {
+type InvalidCardError implements Error {
+  message: String!
+}
+
+type UserWalletResultError implements Error {
   message: String!
 }
 
 union UserWalletResult = UserWallet | 
   UserWallets |
   UserWalletNotFoundError | 
-  UserWalletError | 
+  InvalidCardError |
+  UserWalletResultError | 
   NotAuthenticatedError |
   NotAuthorizedError

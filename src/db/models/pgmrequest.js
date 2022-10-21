@@ -39,6 +39,25 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.DATE
     },
+    method: {
+      type: DataTypes.STRING(6),
+      allowNull: false,
+      validate: {
+        isIn: {
+          args: [[
+            'POST',
+            'GET',
+            'PUT',
+            'DELETE',
+          ]],
+          msg: "Must be one of 'POST', 'GET', 'PUT', 'DELETE'"
+        }
+      }
+    },
+    url: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
     jsonRequest: {
       type: DataTypes.TEXT,
       field: 'jsonrequest',

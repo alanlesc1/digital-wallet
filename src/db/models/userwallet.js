@@ -66,26 +66,21 @@ module.exports = (sequelize, DataTypes) => {
     cardFirstDigits: {
       type: DataTypes.STRING(6),
       field: 'cardfirstdigits',
-      allowNull: false,
+      allowNull: true,
     },
     cardLastDigits: {
       type: DataTypes.STRING(4),
       field: 'cardlastdigits',
-      allowNull: false,
+      allowNull: true,
     },
     cardBrand: {
       type: DataTypes.STRING(60),
       field: 'cardbrand',
-      allowNull: false,
+      allowNull: true,
     },
     cardHolderName: {
       type: DataTypes.STRING(120),
       field: 'cardholdername',
-      allowNull: false,
-    },
-    cardHolderDocNo: {
-      type: DataTypes.STRING(14),
-      field: 'cardholderdocno',
       allowNull: false,
     },
     cardExpMonth: {
