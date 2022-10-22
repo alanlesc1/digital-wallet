@@ -11,6 +11,7 @@ type Mutation {
   signUp(name: String!, email: String!, password: String!): SignUpResult
   verifyUser(email: String!, password: String!, verificationCode: String): UserVerificationResult
   login(email: String!, password: String!, fcmToken: String!): LoginResult
+  me(input: UpdateUserInput): UserResult
   renewMyCurrentQRCode: UserQRCodeResult
   createUserWallet(input: CreateUserWalletInput): UserWalletResult
 }

@@ -143,6 +143,30 @@
 			"response": []
 		},
 		{
+			"name": "Update me",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n  me(\n      input: {\n        phone: \"1199991234\"\n        userDocumentType: \"CPF\"\n        userDocumentNo: \"78847950007\"\n    }\n  ) {\n      __typename\n    ... on User {\n      C_User_ID\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/graphql",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Renew my current QR Code",
 			"request": {
 				"method": "POST",

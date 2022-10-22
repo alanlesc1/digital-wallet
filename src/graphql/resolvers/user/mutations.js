@@ -3,6 +3,8 @@ import jsonwebtoken from "jsonwebtoken";
 import { jwtSecret } from '../../../../src/config/environment';
 import { generateNewVerification, verifyCode } from '../../../helpers/userVerification';
 import { ValidationError } from 'sequelize';
+import { combineResolvers } from 'graphql-resolvers';
+import { isAuthenticated } from '../authorization';
 
 const passwordSaltRounds = 10;
 
@@ -158,6 +160,27 @@ const userMutations = {
       }
     }
   },
+  me: combineResolvers(
+    isAuthenticated,
+    async (parent, { phone, userDocumentType, userDocumentNo }, { authUser, db, results }) => {
+      try {
+        const user = await db.MUser.findByPk(authUser.C_User_ID);
+        user.phone = phone;
+        user.userDocumentType = userDocumentType;
+        user.userDocumentNo = userDocumentNo;
+        user.save();
+        user.reload();
+
+        return {
+          __typename: "User",
+          ...user.toJSON()
+        };
+      } catch (error) {
+        console.error(error);
+        return results.create(results.Error);
+      }
+    },
+  ),
 };
 
 export default userMutations;

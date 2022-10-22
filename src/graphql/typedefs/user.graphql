@@ -15,6 +15,12 @@ type User implements Timestamps {
   userWallets: [UserWallet!]
 }
 
+input UpdateUserInput {
+  phone: String
+  userDocumentType: String
+  userDocumentNo: String
+}
+
 type SignUpResultSuccess {
   user: User!
 }
