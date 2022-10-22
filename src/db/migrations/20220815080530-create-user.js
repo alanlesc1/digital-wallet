@@ -65,6 +65,14 @@ module.exports = {
           type: Sequelize.STRING(40),
           allowNull: true,
         },
+        userdocumenttype: {
+          type: Sequelize.STRING(4),
+          allowNull: true,
+        },
+        userdocumentno: {
+          type: Sequelize.STRING(14),
+          allowNull: true,
+        },
         pgm_customerid: {
           allowNull: true,
           type: Sequelize.STRING(60)

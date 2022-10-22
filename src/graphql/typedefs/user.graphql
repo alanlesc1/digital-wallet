@@ -9,6 +9,8 @@ type User implements Timestamps {
   isUserVerified: Boolean!
   verificationCodeExp: Date
   phone: String
+  userDocumentType: String
+  userDocumentNo: String
   userRoles: [UserRole!]
   userWallets: [UserWallet!]
 }

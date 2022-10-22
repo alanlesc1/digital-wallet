@@ -88,6 +88,25 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(40),
       allowNull: true,
     },
+    userDocumentType: {
+      type: DataTypes.STRING(4),
+      field: 'userdocumenttype',
+      allowNull: true,
+      validate: {
+        isIn: {
+          args: [[
+            'CPF',
+            'CNPJ',
+          ]],
+          msg: "Must be one of 'CPF', 'CNPJ'"
+        }
+      }
+    },
+    userDocumentNo: {
+      type: DataTypes.STRING(14),
+      field: 'userdocumentno',
+      allowNull: true,
+    },
     PGM_CustomerId: {
       type: DataTypes.STRING(60),
       field: 'pgm_customerid',
