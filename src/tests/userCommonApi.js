@@ -100,6 +100,8 @@ const CREATE_USER_WALLET_GRAPHQL = `mutation {
       cardHolderName: "Test User"
       cardExpMonth: 12
       cardExpYear: 2030
+      cardHolderDocumentType: "CPF"
+      cardHolderDocumentNo: "78847950007"
       billingLocation: {
         line1: "Av. Paulista"
         line2: "100"

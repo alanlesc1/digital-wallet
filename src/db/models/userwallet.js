@@ -93,6 +93,25 @@ module.exports = (sequelize, DataTypes) => {
       field: 'cardexpyear',
       allowNull: false,
     },
+    cardHolderDocumentType: {
+      type: DataTypes.STRING(4),
+      field: 'cardholderdocumenttype',
+      allowNull: false,
+      validate: {
+        isIn: {
+          args: [[
+            'CPF',
+            'CNPJ',
+          ]],
+          msg: "Must be one of 'CPF', 'CNPJ'"
+        }
+      }
+    },
+    cardHolderDocumentNo: {
+      type: DataTypes.STRING(14),
+      field: 'cardholderdocumentno',
+      allowNull: false,
+    },
     billing_Location_ID: {
       type: DataTypes.INTEGER,
       field: 'billing_location_id',
@@ -100,7 +119,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'c_location',
         key: 'c_location_id'
       },
-      allowNull: true,
+      allowNull: false,
     },
     PGM_CardId: {
       type: DataTypes.STRING(60),

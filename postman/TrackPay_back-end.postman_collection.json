@@ -198,7 +198,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "mutation {\n  createUserWallet(\n    input: {\n      name: \"My Visa card\"\n      paymentMethod: \"DRC\"\n      cardNumber: \"1000000000000010\"\n      cardCVV: \"1234\"\n      cardBrand: \"visa\"\n      cardHolderName: \"Test User\"\n      cardExpMonth: 12\n      cardExpYear: 2030\n      billingLocation: {\n        line1: \"Av. Paulista\"\n        line2: \"100\"\n        city: \"São Paulo\"\n        state: \"SP\"\n        country: \"Brazil\"\n        zipCode: \"01310000\"\n      }\n    }\n  ) {\n    ... on UserWallet {\n      C_UserWallet_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+						"query": "mutation {\n  createUserWallet(\n    input: {\n      name: \"My Visa card\"\n      paymentMethod: \"DRC\"\n      cardNumber: \"1000000000000010\"\n      cardCVV: \"1234\"\n      cardBrand: \"visa\"\n      cardHolderName: \"Test User\"\n      cardExpMonth: 12\n      cardExpYear: 2030\n      cardHolderDocumentType: \"CPF\"\n      cardHolderDocumentNo: \"78847950007\"\n      billingLocation: {\n        line1: \"Av. Paulista\"\n        line2: \"100\"\n        city: \"São Paulo\"\n        state: \"SP\"\n        country: \"Brazil\"\n        zipCode: \"01310000\"\n      }\n    }\n  ) {\n    ... on UserWallet {\n      C_UserWallet_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 						"variables": ""
 					}
 				},

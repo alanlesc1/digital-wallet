@@ -13,6 +13,8 @@ type UserWallet {
   cardHolderName: String!
   cardExpMonth: Int!
   cardExpYear: Int!
+  cardHolderDocumentType: String!
+  cardHolderDocumentNo: String!
   billingLocation: Location!
   PGM_CardId: String!
 }
@@ -26,6 +28,8 @@ input CreateUserWalletInput {
   cardExpMonth: Int!
   cardExpYear: Int!
   cardHolderName: String!
+  cardHolderDocumentType: String!
+  cardHolderDocumentNo: String!
   billingLocation: CreateLocationInput!
 }
 

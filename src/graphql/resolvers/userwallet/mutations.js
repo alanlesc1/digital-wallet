@@ -22,6 +22,8 @@ const userWalletMutations = {
           cardHolderName: args.input.cardHolderName,
           cardExpMonth: args.input.cardExpMonth,
           cardExpYear: args.input.cardExpYear,
+          cardHolderDocumentType: args.input.cardHolderDocumentType,
+          cardHolderDocumentNo: args.input.cardHolderDocumentNo,
           billing_Location_ID: location.C_Location_ID,
         });
 

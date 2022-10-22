@@ -72,6 +72,14 @@ module.exports = {
           allowNull: false,
           type: Sequelize.DataTypes.INTEGER
         },
+        cardholderdocumenttype: {
+          type: Sequelize.STRING(4),
+          allowNull: false,
+        },
+        cardholderdocumentno: {
+          type: Sequelize.STRING(14),
+          allowNull: false,
+        },
         billing_location_id: {
           type: Sequelize.DataTypes.INTEGER,
           references: {
@@ -80,7 +88,7 @@ module.exports = {
             },
             key: 'c_location_id'
           },
-          allowNull: true
+          allowNull: false
         },
         pgm_cardid: {
           allowNull: true,
