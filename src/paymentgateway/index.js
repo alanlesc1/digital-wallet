@@ -1,6 +1,5 @@
 import * as pagarme from "./pagarme"
 import * as db from '../db/models';
-import { RestoreSecretRequestFilterSensitiveLog } from "@aws-sdk/client-secrets-manager";
 
 export const createCustomer = async (user) => {
     // TODO: change this static data
