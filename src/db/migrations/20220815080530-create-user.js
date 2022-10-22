@@ -61,6 +61,10 @@ module.exports = {
           allowNull: false,
           defaultValue: false,
         },
+        phone: {
+          type: Sequelize.STRING(40),
+          allowNull: true,
+        },
         pgm_customerid: {
           allowNull: true,
           type: Sequelize.STRING(60)
