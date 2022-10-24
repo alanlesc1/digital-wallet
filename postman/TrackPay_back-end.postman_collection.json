@@ -119,172 +119,187 @@
 			]
 		},
 		{
-			"name": "Return me",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "graphql",
-					"graphql": {
-						"query": "query me {\n  me {\n    __typename\n    ... on User {\n      C_User_ID\n      C_User_UU\n      created\n      updated\n      isActive\n      name\n      email\n      userRoles {\n        C_UserRole_ID\n        C_UserRole_UU\n        created\n        updated\n        isActive\n        roleName\n      }\n      userWallets {\n          name\n      }\n    }\n    ... on NotAuthenticatedError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
-						"variables": ""
-					}
+			"name": "User",
+			"item": [
+				{
+					"name": "Return me",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query me {\n  me {\n    __typename\n    ... on User {\n      C_User_ID\n      C_User_UU\n      created\n      updated\n      isActive\n      name\n      email\n      userRoles {\n        C_UserRole_ID\n        C_UserRole_UU\n        created\n        updated\n        isActive\n        roleName\n      }\n      userWallets {\n          name\n      }\n    }\n    ... on NotAuthenticatedError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{baseUrl}}/graphql",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"graphql"
-					]
+				{
+					"name": "Update user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateUser($C_User_ID: ID!) {\n  updateUser(\n      C_User_ID: $C_User_ID,\n      input: {\n        phone: \"+551199991234\"\n        userDocumentType: \"CPF\"\n        userDocumentNo: \"78847950007\"\n    }\n  ) {\n      __typename\n    ... on User {\n      C_User_ID\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"C_User_ID\": \"1\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Update user",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "graphql",
-					"graphql": {
-						"query": "mutation updateUser($C_User_ID: ID!) {\n  updateUser(\n      C_User_ID: $C_User_ID,\n      input: {\n        phone: \"+551199991234\"\n        userDocumentType: \"CPF\"\n        userDocumentNo: \"78847950007\"\n    }\n  ) {\n      __typename\n    ... on User {\n      C_User_ID\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
-						"variables": "{\n    \"C_User_ID\": \"1\"\n}"
-					}
+			"name": "User QR code",
+			"item": [
+				{
+					"name": "Renew user current QR code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation renewUserCurrentQRCode($C_User_ID: ID!) {\n  renewUserCurrentQRCode(C_User_ID: $C_User_ID) {\n    __typename\n    ... on UserQRCode {\n      schemaVersion\n      dataType\n      data\n    }\n    ... on UserQRCodeResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"C_User_ID\": \"1\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{baseUrl}}/graphql",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"graphql"
-					]
+				{
+					"name": "Return user current QR code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query userCurrentQRCode($C_User_ID: ID!) {\n  userCurrentQRCode(C_User_ID: $C_User_ID) {\n    __typename\n    ... on UserQRCode {\n      schemaVersion\n      dataType\n      data\n    }\n    ... on UserQRCodeResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"C_User_ID\": \"1\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Renew user current QR code",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "graphql",
-					"graphql": {
-						"query": "mutation renewUserCurrentQRCode($C_User_ID: ID!) {\n  renewUserCurrentQRCode(C_User_ID: $C_User_ID) {\n    __typename\n    ... on UserQRCode {\n      schemaVersion\n      dataType\n      data\n    }\n    ... on UserQRCodeResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
-						"variables": "{\n    \"C_User_ID\": \"1\"\n}"
-					}
+			"name": "User wallet",
+			"item": [
+				{
+					"name": "Create user wallet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\n  createUserWallet(\n    input: {\n      name: \"My Visa card\"\n      paymentMethod: \"DRC\"\n      cardNumber: \"1000000000000010\"\n      cardCVV: \"1234\"\n      cardBrand: \"visa\"\n      cardHolderName: \"Test User\"\n      cardExpMonth: 12\n      cardExpYear: 2030\n      cardHolderDocumentType: \"CPF\"\n      cardHolderDocumentNo: \"78847950007\"\n      billingLocation: {\n        line1: \"Av. Paulista\"\n        line2: \"100\"\n        city: \"São Paulo\"\n        state: \"SP\"\n        country: \"Brazil\"\n        zipCode: \"01310000\"\n      }\n    }\n  ) {\n    ... on UserWallet {\n      C_UserWallet_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{baseUrl}}/graphql",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"graphql"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Return user current QR code",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "graphql",
-					"graphql": {
-						"query": "query userCurrentQRCode($C_User_ID: ID!) {\n  userCurrentQRCode(C_User_ID: $C_User_ID) {\n    __typename\n    ... on UserQRCode {\n      schemaVersion\n      dataType\n      data\n    }\n    ... on UserQRCodeResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
-						"variables": "{\n    \"C_User_ID\": \"1\"\n}"
-					}
+				{
+					"name": "Return user wallet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query userWallet($C_UserWallet_ID: ID!) {\n  userWallet(C_UserWallet_ID: $C_UserWallet_ID) {\n    __typename\n    ... on UserWallet {\n      name\n      user {\n        name\n      }\n      billingLocation {\n        city\n      }\n    }\n    ... on UserWalletResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"C_UserWallet_ID\": \"1\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{baseUrl}}/graphql",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"graphql"
-					]
+				{
+					"name": "Return user wallets",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query userWallets($C_User_ID: ID!) {\n  userWallets(C_User_ID: $C_User_ID) {\n    __typename\n    ... on UserWallets {\n      userWallets {\n          name\n          user {\n              name\n          }\n          billingLocation {\n              city\n          }\n      }\n    }\n    ... on UserWalletResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"C_User_ID\": \"1\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create user wallet",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "graphql",
-					"graphql": {
-						"query": "mutation {\n  createUserWallet(\n    input: {\n      name: \"My Visa card\"\n      paymentMethod: \"DRC\"\n      cardNumber: \"1000000000000010\"\n      cardCVV: \"1234\"\n      cardBrand: \"visa\"\n      cardHolderName: \"Test User\"\n      cardExpMonth: 12\n      cardExpYear: 2030\n      cardHolderDocumentType: \"CPF\"\n      cardHolderDocumentNo: \"78847950007\"\n      billingLocation: {\n        line1: \"Av. Paulista\"\n        line2: \"100\"\n        city: \"São Paulo\"\n        state: \"SP\"\n        country: \"Brazil\"\n        zipCode: \"01310000\"\n      }\n    }\n  ) {\n    ... on UserWallet {\n      C_UserWallet_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
-						"variables": ""
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/graphql",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"graphql"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Return user wallet",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "graphql",
-					"graphql": {
-						"query": "query userWallet($C_UserWallet_ID: ID!) {\n  userWallet(C_UserWallet_ID: $C_UserWallet_ID) {\n    __typename\n    ... on UserWallet {\n      name\n      user {\n        name\n      }\n      billingLocation {\n        city\n      }\n    }\n    ... on UserWalletResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
-						"variables": "{\n    \"C_UserWallet_ID\": \"1\"\n}"
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/graphql",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"graphql"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Return user wallets",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "graphql",
-					"graphql": {
-						"query": "query userWallets($C_User_ID: ID!) {\n  userWallets(C_User_ID: $C_User_ID) {\n    __typename\n    ... on UserWallets {\n      userWallets {\n          name\n          user {\n              name\n          }\n          billingLocation {\n              city\n          }\n      }\n    }\n    ... on UserWalletResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
-						"variables": "{\n    \"C_User_ID\": \"1\"\n}"
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/graphql",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"graphql"
-					]
-				}
-			},
-			"response": []
+			]
 		}
 	],
 	"auth": {
