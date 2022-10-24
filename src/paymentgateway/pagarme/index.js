@@ -53,12 +53,12 @@ export const createCustomer = async (user, data) => {
     });
 }
 
-export const createCard = async (userWallet, data) => {
+export const createCard = async (userPaymentMethod, data) => {
   const method = 'POST';
   const endpoint = ENDPOINT_CARDS;
 
   // TODO: move to the model file
-  const [results] = await db.sequelize.query("SELECT AD_Table_ID FROM AD_Table WHERE TableName='c_userwallet'");
+  const [results] = await db.sequelize.query("SELECT AD_Table_ID FROM AD_Table WHERE TableName='c_userpaymentmethod'");
   const AD_Table_ID = results[0].ad_table_id;
 
   // save request
@@ -68,7 +68,7 @@ export const createCard = async (userWallet, data) => {
     url: endpoint,
     jsonRequest: JSON.stringify(data),
     AD_Table_ID: AD_Table_ID,
-    Record_ID: userWallet.C_UserWallet_ID,
+    Record_ID: userPaymentMethod.C_UserPaymentMethod_ID,
   });
 
   const options = {

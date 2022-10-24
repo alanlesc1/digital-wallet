@@ -8,13 +8,13 @@ module.exports = {
 
     try {
       const schema = {
-        c_userwallet_id: {
+        c_userpaymentmethod_id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        c_userwallet_uu: {
+        c_userpaymentmethod_uu: {
           allowNull: false,
           type: Sequelize.UUID,
           default: Sequelize.UUID
@@ -96,22 +96,22 @@ module.exports = {
         },
       };
       
-      await queryInterface.createTable('c_userwallet', schema, { trx });
+      await queryInterface.createTable('c_userpaymentmethod', schema, { trx });
 
       await queryInterface.bulkInsert('ad_table', [
         {
           ad_table_uu: uuidv4(),
           created: new Date(),
           updated: new Date(),
-          tablename: 'c_userwallet'
+          tablename: 'c_userpaymentmethod'
         },
       ], { trx });
 
       await queryInterface.addIndex(
-        'c_userwallet',
+        'c_userpaymentmethod',
         ['isactive', 'c_user_id'],
         {
-          name: 'c_userwallet_activewallets',
+          name: 'c_userpaymentmethod_activemethods',
           indexType: 'BTREE',
           trx
         }
@@ -124,6 +124,6 @@ module.exports = {
     }
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('c_userwallet');
+    await queryInterface.dropTable('c_userpaymentmethod');
   }
 };

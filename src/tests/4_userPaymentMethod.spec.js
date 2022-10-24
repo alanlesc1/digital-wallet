@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import * as authApi from './authenticationApi';
-import * as userWalletApi from './userWalletApi';
+import * as userPaymentMethodApi from './userPaymentMethodApi';
 
-describe('User Wallet', () => {
+describe('User Payment Method', () => {
   let token;
 
   before(async () => {
@@ -30,55 +30,55 @@ describe('User Wallet', () => {
       }
     };
 
-    const result = await userWalletApi.updateUser(token, variables);
+    const result = await userPaymentMethodApi.updateUser(token, variables);
     expect(result.data).to.eql(expectedResult);
   });
 
-  it('creates a new user wallet for the current user', async () => {
+  it('creates a new user payment method for the current user', async () => {
     const expectedResult = {
       "data": {
-        "createUserWallet": {
-          "C_UserWallet_ID": "1",
+        "createUserPaymentMethod": {
+          "C_UserPaymentMethod_ID": "1",
           "name": "My Visa card"
         }
       }
     };
 
-    const result = await userWalletApi.createUserWallet(token);
+    const result = await userPaymentMethodApi.createUserPaymentMethod(token);
     expect(result.data).to.eql(expectedResult);
   });
 
-  it('returns one user wallet', async () => {
+  it('returns one user payment method', async () => {
     const variables = {
-      "C_UserWallet_ID": "1"
+      "C_UserPaymentMethod_ID": "1"
     };
 
     const expectedResult = {
       "data": {
-        "userWallet": {
-          "__typename": "UserWallet",
-          "C_UserWallet_ID": "1",
+        "userPaymentMethod": {
+          "__typename": "UserPaymentMethod",
+          "C_UserPaymentMethod_ID": "1",
           "name": "My Visa card"
         }
       }
     };
 
-    const result = await userWalletApi.returnUserWallet(token, variables);
+    const result = await userPaymentMethodApi.returnUserPaymentMethod(token, variables);
     expect(result.data).to.eql(expectedResult);
   });
 
-  it('returns an array of user wallets', async () => {
+  it('returns an array of user payment methods', async () => {
     const variables = {
       "C_User_ID": "1"
     };
 
     const expectedResult = {
       "data": {
-        "userWallets": {
-          "__typename": "UserWallets",
-          "userWallets": [
+        "userPaymentMethods": {
+          "__typename": "UserPaymentMethods",
+          "userPaymentMethods": [
             {
-              "C_UserWallet_ID": "1",
+              "C_UserPaymentMethod_ID": "1",
               "name": "My Visa card"
             }
           ]
@@ -86,7 +86,7 @@ describe('User Wallet', () => {
       }
     };
 
-    const result = await userWalletApi.returnUserWallets(token, variables);
+    const result = await userPaymentMethodApi.returnUserPaymentMethods(token, variables);
     expect(result.data).to.eql(expectedResult);
   });
 });

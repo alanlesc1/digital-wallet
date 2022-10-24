@@ -124,8 +124,8 @@ export const updateUser = async (token, variables) =>
       },
     });
 
-const CREATE_USER_WALLET_GRAPHQL = `mutation {
-  createUserWallet(
+const CREATE_USER_PAYMENT_METHOD_GRAPHQL = `mutation {
+  createUserPaymentMethod(
     input: {
       name: "My Visa card"
       paymentMethod: "DRC"
@@ -147,8 +147,8 @@ const CREATE_USER_WALLET_GRAPHQL = `mutation {
       }
     }
   ) {
-    ... on UserWallet {
-      C_UserWallet_ID
+    ... on UserPaymentMethod {
+      C_UserPaymentMethod_ID
       name
     }
     ... on Error {
@@ -159,9 +159,9 @@ const CREATE_USER_WALLET_GRAPHQL = `mutation {
 }
 `;
 
-export const createUserWallet = async token =>
+export const createUserPaymentMethod = async token =>
   axios.post(API_URL, {
-    query: CREATE_USER_WALLET_GRAPHQL,
+    query: CREATE_USER_PAYMENT_METHOD_GRAPHQL,
   },
     {
       headers: {
@@ -169,14 +169,14 @@ export const createUserWallet = async token =>
       },
     });
 
-const RETURN_USER_WALLET_GRAPHQL = `query userWallet($C_UserWallet_ID: ID!) {
-  userWallet(C_UserWallet_ID: $C_UserWallet_ID) {
+const RETURN_USER_PAYMENT_METHOD_GRAPHQL = `query userPaymentMethod($C_UserPaymentMethod_ID: ID!) {
+  userPaymentMethod(C_UserPaymentMethod_ID: $C_UserPaymentMethod_ID) {
     __typename
-    ... on UserWallet {
-      C_UserWallet_ID
+    ... on UserPaymentMethod {
+      C_UserPaymentMethod_ID
       name
     }
-    ... on UserWalletResultError {
+    ... on UserPaymentMethodResultError {
       message
     }
     ... on Error {
@@ -187,9 +187,9 @@ const RETURN_USER_WALLET_GRAPHQL = `query userWallet($C_UserWallet_ID: ID!) {
 }
 `;
 
-export const returnUserWallet = async (token, variables) =>
+export const returnUserPaymentMethod = async (token, variables) =>
   axios.post(API_URL, {
-    query: RETURN_USER_WALLET_GRAPHQL,
+    query: RETURN_USER_PAYMENT_METHOD_GRAPHQL,
     variables,
   },
     {
@@ -198,16 +198,16 @@ export const returnUserWallet = async (token, variables) =>
       },
     });
 
-const RETURN_USER_WALLETS_GRAPHQL = `query userWallets($C_User_ID: ID!) {
-  userWallets(C_User_ID: $C_User_ID) {
+const RETURN_USER_PAYMENT_METHODS_GRAPHQL = `query userPaymentMethods($C_User_ID: ID!) {
+  userPaymentMethods(C_User_ID: $C_User_ID) {
     __typename
-    ... on UserWallets {
-      userWallets {
-        C_UserWallet_ID
+    ... on UserPaymentMethods {
+      userPaymentMethods {
+        C_UserPaymentMethod_ID
         name
       }
     }
-    ... on UserWalletResultError {
+    ... on UserPaymentMethodResultError {
       message
     }
     ... on Error {
@@ -218,9 +218,9 @@ const RETURN_USER_WALLETS_GRAPHQL = `query userWallets($C_User_ID: ID!) {
 }
 `;
 
-export const returnUserWallets = async (token, variables) =>
+export const returnUserPaymentMethods = async (token, variables) =>
   axios.post(API_URL, {
-    query: RETURN_USER_WALLETS_GRAPHQL,
+    query: RETURN_USER_PAYMENT_METHODS_GRAPHQL,
     variables,
   },
     {

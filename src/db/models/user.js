@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       MUser.hasMany(models.MUserQRCode, {
         foreignKey: 'C_User_ID',
       });
-      MUser.hasMany(models.MUserWallet, {
+      MUser.hasMany(models.MUserPaymentMethod, {
         foreignKey: 'C_User_ID',
       });
       MUser.hasMany(models.MOrder, {

@@ -1,6 +1,6 @@
-type UserWallet {
-  C_UserWallet_ID: ID!
-  C_UserWallet_UU: String!
+type UserPaymentMethod {
+  C_UserPaymentMethod_ID: ID!
+  C_UserPaymentMethod_UU: String!
   created: Date!
   updated: Date!
   isActive: Boolean!
@@ -19,7 +19,7 @@ type UserWallet {
   PGM_CardId: String!
 }
 
-input CreateUserWalletInput {
+input CreateUserPaymentMethodInput {
   name: String!
   paymentMethod: String!
   cardBrand: String!
@@ -33,11 +33,11 @@ input CreateUserWalletInput {
   billingLocation: CreateLocationInput!
 }
 
-type UserWallets { 
-  userWallets: [UserWallet]!
+type UserPaymentMethods { 
+  userPaymentMethods: [UserPaymentMethod]!
 }
 
-type UserWalletNotFoundError implements Error {
+type UserPaymentMethodNotFoundError implements Error {
   message: String!
 }
 
@@ -45,14 +45,14 @@ type InvalidCardError implements Error {
   message: String!
 }
 
-type UserWalletResultError implements Error {
+type UserPaymentMethodResultError implements Error {
   message: String!
 }
 
-union UserWalletResult = UserWallet | 
-  UserWallets |
-  UserWalletNotFoundError | 
+union UserPaymentMethodResult = UserPaymentMethod | 
+  UserPaymentMethods |
+  UserPaymentMethodNotFoundError | 
   InvalidCardError |
-  UserWalletResultError | 
+  UserPaymentMethodResultError | 
   NotAuthenticatedError |
   NotAuthorizedError

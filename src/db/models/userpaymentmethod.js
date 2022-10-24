@@ -3,31 +3,31 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class MUserWallet extends Model {
+  class MUserPaymentMethod extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      MUserWallet.belongsTo(models.MUser, {
+      MUserPaymentMethod.belongsTo(models.MUser, {
         foreignKey: 'C_User_ID'
       });
-      MUserWallet.belongsTo(models.MLocation, {
+      MUserPaymentMethod.belongsTo(models.MLocation, {
         foreignKey: 'billing_Location_ID'
       });
     }
   }
-  MUserWallet.init({
-    C_UserWallet_ID: {
+  MUserPaymentMethod.init({
+    C_UserPaymentMethod_ID: {
       type: DataTypes.INTEGER,
-      field: 'c_userwallet_id',
+      field: 'c_userpaymentmethod_id',
       primaryKey: true,
       autoIncrement: true
     },
-    C_UserWallet_UU: {
+    C_UserPaymentMethod_UU: {
       type: DataTypes.UUID,
-      field: 'c_userwallet_uu',
+      field: 'c_userpaymentmethod_uu',
       allowNull: false,
       defaultValue: DataTypes.UUIDV4
     },
@@ -128,10 +128,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'MUserWallet',
-    tableName: 'c_userwallet',
+    modelName: 'MUserPaymentMethod',
+    tableName: 'c_userpaymentmethod',
     createdAt: 'created',
     updatedAt: 'updated',
   });
-  return MUserWallet;
+  return MUserPaymentMethod;
 };

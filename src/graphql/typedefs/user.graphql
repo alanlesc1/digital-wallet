@@ -12,7 +12,7 @@ type User implements Timestamps {
   userDocumentType: String
   userDocumentNo: String
   userRoles: [UserRole!]
-  userWallets: [UserWallet!]
+  userPaymentMethods: [UserPaymentMethod!]
 }
 
 input UpdateUserInput {

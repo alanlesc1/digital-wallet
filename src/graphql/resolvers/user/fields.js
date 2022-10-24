@@ -17,16 +17,16 @@ const userFields = {
       return result;
     },
 
-    userWallets: async (user, _, { db }) => {
-      const userWallets = await db.MUserWallet.findAll({
+    userPaymentMethods: async (user, _, { db }) => {
+      const userPaymentMethods = await db.MUserPaymentMethod.findAll({
         where: {
           C_User_ID: user.C_User_ID,
         },
       });
 
-      const result = userWallets.map(element => {
+      const result = userPaymentMethods.map(element => {
         return {
-          __typename: "UserWallet",
+          __typename: "UserPaymentMethod",
           ...element.toJSON()
         }
       });

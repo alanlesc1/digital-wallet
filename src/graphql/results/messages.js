@@ -9,6 +9,6 @@ export const messages = {
   notAuthenticatedMessage: "Not authenticated",
   notAuthorizedMessage: "Not authorized",
   userQRCodeNotFoundMessage: "User QR Code not found",
-  userWalletNotFoundMessage: "User Wallet not found",
+  userPaymentMethodNotFoundMessage: "User Payment Method not found",
   invalidCardErrorMessage: "Invalid card",
 }

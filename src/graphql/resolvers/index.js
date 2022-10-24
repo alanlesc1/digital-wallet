@@ -1,21 +1,21 @@
 import { userQueries, userMutations, userFields } from './user';
 import { userQRCodeQueries, userQRCodeMutations, userQRCodeFields } from './userqrcode';
-import { userWalletQueries, userWalletMutations, userWalletFields } from './userwallet';
+import { userPaymentMethodQueries, userPaymentMethodMutations, userPaymentMethodFields } from './userpaymentmethod';
 
 const resolvers = {
   Query: {
     ...userQueries,
     ...userQRCodeQueries,
-    ...userWalletQueries,
+    ...userPaymentMethodQueries,
   },
   Mutation: {
     ...userMutations,
     ...userQRCodeMutations,
-    ...userWalletMutations,
+    ...userPaymentMethodMutations,
   },
   ...userFields,
   ...userQRCodeFields,
-  ...userWalletFields,
+  ...userPaymentMethodFields,
 };
 
 export default resolvers;

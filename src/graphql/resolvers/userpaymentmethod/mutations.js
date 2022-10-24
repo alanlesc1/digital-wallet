@@ -3,8 +3,8 @@ import { combineResolvers } from 'graphql-resolvers';
 import { isAuthenticated } from '../authorization';
 import { ValidationError } from 'sequelize';
 
-const userWalletMutations = {
-  createUserWallet: combineResolvers(
+const userPaymentMethodMutations = {
+  createUserPaymentMethod: combineResolvers(
     isAuthenticated,
     async (_, args, { authUser, db, paymentGateway, results }) => {
       try {
@@ -14,8 +14,8 @@ const userWalletMutations = {
           ...args.input.billingLocation,
         });
 
-        // Create user wallet
-        const userWallet = await db.MUserWallet.create({
+        // Create user payment method
+        const userPaymentMethod = await db.MUserPaymentMethod.create({
           C_User_ID: authUser.C_User_ID,
           name: args.input.name,
           paymentMethod: args.input.paymentMethod,
@@ -28,7 +28,7 @@ const userWalletMutations = {
         });
 
         const response = await paymentGateway.createCard(
-          userWallet,
+          userPaymentMethod,
           {
             card_number: args.input.cardNumber,
             card_expiration_date: args.input.cardExpMonth + '' + args.input.cardExpYear,
@@ -41,26 +41,26 @@ const userWalletMutations = {
           return results.create(results.InvalidCardError);
         }
 
-        userWallet.set({
+        userPaymentMethod.set({
           ...response,
         });
 
-        await userWallet.save();
+        await userPaymentMethod.save();
 
         return {
-          __typename: "UserWallet",
-          ...userWallet.toJSON()
+          __typename: "UserPaymentMethod",
+          ...userPaymentMethod.toJSON()
         };
       } catch (error) {
         if (error instanceof ValidationError)
-          return results.create(results.UserWalletResultError, error.errors[0].message);
+          return results.create(results.UserPaymentMethodResultError, error.errors[0].message);
         else {
           console.error(error);
-          return results.create(results.UserWalletResultError);
+          return results.create(results.UserPaymentMethodResultError);
         }
       }
     }
   )
 };
 
-export default userWalletMutations;
+export default userPaymentMethodMutations;

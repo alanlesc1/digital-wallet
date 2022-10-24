@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      MLocation.hasMany(models.MUserWallet, {
+      MLocation.hasMany(models.MUserPaymentMethod, {
         foreignKey: 'billing_Location_ID',
       });
     }

@@ -22,8 +22,8 @@ export const createCustomer = async (user) => {
     };
 }
 
-export const createCard = async (userWallet, data) => {
-    const user = await db.MUser.findByPk(userWallet.C_User_ID);
+export const createCard = async (userPaymentMethod, data) => {
+    const user = await db.MUser.findByPk(userPaymentMethod.C_User_ID);
 
     // if the customer is not created yet, create it before creating the card
     if (!user.PGM_CustomerID) {
@@ -34,7 +34,7 @@ export const createCard = async (userWallet, data) => {
 
     data.customer_id = user.PGM_CustomerId;
 
-    const result = await pagarme.createCard(userWallet, data);
+    const result = await pagarme.createCard(userPaymentMethod, data);
 
     return {
         isValid: result.valid,
