@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_URL } from './api';
+import * as authApi from './authenticationApi';
 
 const RETURN_CURRENT_USER_GRAPHQL = `query me {
   me {
@@ -91,6 +92,38 @@ export const renewUserCurrentQrCode = async (token, variables) =>
       },
     });
 
+const UPDATE_USER_GRAPHQL = `mutation updateUser($C_User_ID: ID!) {
+  updateUser(
+      C_User_ID: $C_User_ID,
+      input: {
+        phone: "${authApi.DEFAULT_USER_PHONE}"
+        userDocumentType: "${authApi.DEFAULT_USER_DOCUMENT_TYPE}"
+        userDocumentNo: "${authApi.DEFAULT_USER_DOCUMENT_NO}"
+    }
+  ) {
+      __typename
+    ... on User {
+      C_User_ID
+    }
+    ... on Error {
+      __typename
+      message
+    }
+  }
+}
+`;
+
+export const updateUser = async (token, variables) =>
+  axios.post(API_URL, {
+    query: UPDATE_USER_GRAPHQL,
+    variables,
+  },
+    {
+      headers: {
+        'Authorization': 'Bearer ' + token,
+      },
+    });
+
 const CREATE_USER_WALLET_GRAPHQL = `mutation {
   createUserWallet(
     input: {
@@ -102,8 +135,8 @@ const CREATE_USER_WALLET_GRAPHQL = `mutation {
       cardHolderName: "Test User"
       cardExpMonth: 12
       cardExpYear: 2030
-      cardHolderDocumentType: "CPF"
-      cardHolderDocumentNo: "78847950007"
+      cardHolderDocumentType: "${authApi.DEFAULT_USER_DOCUMENT_TYPE}"
+      cardHolderDocumentNo: "${authApi.DEFAULT_USER_DOCUMENT_NO}"
       billingLocation: {
         line1: "Av. Paulista"
         line2: "100"

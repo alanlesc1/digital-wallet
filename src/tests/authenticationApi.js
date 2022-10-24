@@ -5,6 +5,9 @@ export const DEFAULT_USER_NAME = "Test User";
 export const DEFAULT_USER_EMAIL = "test@easytrackpay.com";
 export const DEFAULT_USER_PASSWORD = "123456";
 export const DEFAULT_USER_FCM_TOKEN = "MYTOKEN";
+export const DEFAULT_USER_PHONE = "+551199991234";
+export const DEFAULT_USER_DOCUMENT_TYPE = "CPF";
+export const DEFAULT_USER_DOCUMENT_NO = "78847950007";
 
 const SIGNUP_GRAPHQL = `mutation signUp($name: String!, $email: String!, $password: String!) {
   signUp(name: $name, email: $email, password: $password) {

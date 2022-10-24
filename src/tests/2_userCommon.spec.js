@@ -39,7 +39,7 @@ describe('User Common', () => {
       const variables = {
         "C_User_ID": "1"
       };
-      
+
       const expectedResult = {
         "data": {
           "userCurrentQRCode": {
@@ -76,6 +76,24 @@ describe('User Common', () => {
   });
 
   describe('Create user wallet', () => {
+    it('updates user, setting mandatory fields used by pagar.me', async () => {
+      const variables = {
+        "C_User_ID": "1"
+      };
+      
+      const expectedResult = {
+        "data": {
+          "updateUser": {
+            "__typename": "User",
+            "C_User_ID": "1"
+          }
+        }
+      };
+
+      const result = await userCommonApi.updateUser(token, variables);
+      expect(result.data).to.eql(expectedResult);
+    });
+
     it('creates a new user wallet for the current user', async () => {
       const expectedResult = {
         "data": {

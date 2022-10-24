@@ -2,17 +2,16 @@ import * as pagarme from "./pagarme"
 import * as db from '../db/models';
 
 export const createCustomer = async (user) => {
-    // TODO: change this static data
     const data = {
         name: user.name,
         email: user.email,
-        phone_numbers: ['+5511999999999'],
+        phone_numbers: [user.phone],
         external_id: user.C_User_ID.toString(),
-        type: 'individual',
-        country: "br",
+        type: user.userDocumentType === 'CPF' ? 'individual' : 'corporation',
+        country: 'br',
         documents: [{
-            number: "00639014984",
-            type: "cpf",
+            type: user.userDocumentType.toLowerCase(),
+            number: user.userDocumentNo,
         }]
     };
 
