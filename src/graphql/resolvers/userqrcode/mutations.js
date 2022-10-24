@@ -8,19 +8,19 @@ For version 1.0, data is just the QR Code UUID (table UserQRCodes.uuid)
 const currentQRCodeSchemaVersion = "1.0";
 
 const userQRCodeMutations = {
-  renewMyCurrentQRCode: combineResolvers(
+  renewUserCurrentQRCode: combineResolvers(
     isAuthenticated,
-    async (_, args, { authUser, db, results }) => {
+    async (_, { C_User_ID }, { db, results }) => {
       try {
         // Deactivate existing active records
         await db.sequelize.query('UPDATE C_UserQrCode SET IsActive = ? WHERE C_User_ID = ?',
           {
-            replacements: [false, authUser.C_User_ID]
+            replacements: [false, C_User_ID]
           });
 
         // Create a new one
         const existing = await db.MUserQRCode.create({
-          C_User_ID: authUser.C_User_ID
+          C_User_ID: C_User_ID
         });
 
         return {

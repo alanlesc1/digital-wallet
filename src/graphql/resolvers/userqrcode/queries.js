@@ -8,14 +8,14 @@ For version 1.0, data is just the QR Code UUID (table UserQRCodes.uuid)
 const currentQRCodeSchemaVersion = "1.0";
 
 const userQRCodeQueries = {
-  myCurrentQRCode: combineResolvers(
+  userCurrentQRCode: combineResolvers(
     isAuthenticated,
-    async (_, args, { authUser, db, results }) => {
+    async (_, { C_User_ID }, { db, results }) => {
       try {
         // Find existing
         let existing = await db.MUserQRCode.findOne({
           where: {
-            C_User_ID: authUser.C_User_ID,
+            C_User_ID: C_User_ID,
             isActive: true
           },
           order: [

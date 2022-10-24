@@ -23,7 +23,7 @@ const RETURN_CURRENT_USER_GRAPHQL = `query me {
 
 export const returnCurrentUser = async token =>
   axios.post(API_URL, {
-    query: RETURN_CURRENT_USER_GRAPHQL
+    query: RETURN_CURRENT_USER_GRAPHQL,
   },
     {
       headers: {
@@ -31,8 +31,8 @@ export const returnCurrentUser = async token =>
       },
     });
 
-const RETURN_MY_CURRENT_QRCODE_GRAPHQL = `query myCurrentQRCode {
-  myCurrentQRCode {
+const RETURN_MY_CURRENT_QRCODE_GRAPHQL = `query userCurrentQRCode($C_User_ID: ID!) {
+  userCurrentQRCode(C_User_ID: $C_User_ID) {
     __typename
     ... on UserQRCode {
       schemaVersion
@@ -50,9 +50,10 @@ const RETURN_MY_CURRENT_QRCODE_GRAPHQL = `query myCurrentQRCode {
 }
 `;
 
-export const returnMyCurrentQrCode = async token =>
+export const returnUserCurrentQrCode = async (token, variables) =>
   axios.post(API_URL, {
     query: RETURN_MY_CURRENT_QRCODE_GRAPHQL,
+    variables,
   },
     {
       headers: {
@@ -60,8 +61,8 @@ export const returnMyCurrentQrCode = async token =>
       },
     });
 
-const RENEW_MY_CURRENT_QRCODE_GRAPHQL = `mutation renewMyCurrentQRCode {
-  renewMyCurrentQRCode {
+const RENEW_MY_CURRENT_QRCODE_GRAPHQL = `mutation renewUserCurrentQRCode($C_User_ID: ID!) {
+  renewUserCurrentQRCode(C_User_ID: $C_User_ID) {
         __typename
         ... on UserQRCode {
           schemaVersion
@@ -79,9 +80,10 @@ const RENEW_MY_CURRENT_QRCODE_GRAPHQL = `mutation renewMyCurrentQRCode {
     }
     `;
 
-export const renewMyCurrentQrCode = async token =>
+export const renewUserCurrentQrCode = async (token, variables) =>
   axios.post(API_URL, {
     query: RENEW_MY_CURRENT_QRCODE_GRAPHQL,
+    variables,
   },
     {
       headers: {

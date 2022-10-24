@@ -160,14 +160,14 @@ const userMutations = {
       }
     }
   },
-  me: combineResolvers(
+  updateUser: combineResolvers(
     isAuthenticated,
-    async (parent, { phone, userDocumentType, userDocumentNo }, { authUser, db, results }) => {
+    async (parent, { C_User_ID, input }, { db, results }) => {
       try {
-        const user = await db.MUser.findByPk(authUser.C_User_ID);
-        user.phone = phone;
-        user.userDocumentType = userDocumentType;
-        user.userDocumentNo = userDocumentNo;
+        const user = await db.MUser.findByPk(C_User_ID);
+        user.phone = input.phone;
+        user.userDocumentType = input.userDocumentType;
+        user.userDocumentNo = input.userDocumentNo;
         user.save();
         user.reload();
 

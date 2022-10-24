@@ -34,27 +34,35 @@ describe('User Common', () => {
     });
   });
 
-  describe('Return my current QR Code', () => {
+  describe('Return user current QR Code', () => {
     it('returns a UserQRCodeNotFoundError when current QR Code does not exist', async () => {
+      const variables = {
+        "C_User_ID": "1"
+      };
+      
       const expectedResult = {
         "data": {
-          "myCurrentQRCode": {
+          "userCurrentQRCode": {
             "__typename": "UserQRCodeNotFoundError",
             "message": "User QR Code not found"
           }
         }
       };
 
-      const result = await userCommonApi.returnMyCurrentQrCode(token);
+      const result = await userCommonApi.returnUserCurrentQrCode(token, variables);
       expect(result.data).to.eql(expectedResult);
     });
   });
 
-  describe('Renew my current QR Code', () => {
-    it('renews my current QR Code', async () => {
+  describe('Renew user current QR Code', () => {
+    it('renews user current QR Code', async () => {
+      const variables = {
+        "C_User_ID": "1"
+      };
+
       const expectedResult = {
         "data": {
-          "renewMyCurrentQRCode": {
+          "renewUserCurrentQRCode": {
             "__typename": "UserQRCode",
             "schemaVersion": "1.0",
             "dataType": "PlainText"
@@ -62,7 +70,7 @@ describe('User Common', () => {
         }
       };
 
-      const result = await userCommonApi.renewMyCurrentQrCode(token);
+      const result = await userCommonApi.renewUserCurrentQrCode(token, variables);
       expect(result.data).to.eql(expectedResult);
     });
   });
