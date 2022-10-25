@@ -153,7 +153,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updateUser($C_User_ID: ID!) {\n  updateUser(\n      C_User_ID: $C_User_ID,\n      input: {\n        phone: \"+551199991234\"\n        userDocumentType: \"CPF\"\n        userDocumentNo: \"78847950007\"\n    }\n  ) {\n      __typename\n    ... on User {\n      C_User_ID\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"query": "mutation updateUser($C_User_ID: ID!) {\n  updateUser(\n      C_User_ID: $C_User_ID,\n      input: {\n        phone: \"+551199991234\"\n        documentType: \"CPF\"\n        documentNo: \"78847950007\"\n    }\n  ) {\n      __typename\n    ... on User {\n      C_User_ID\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 								"variables": "{\n    \"C_User_ID\": \"1\"\n}"
 							}
 						},

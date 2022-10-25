@@ -7,11 +7,11 @@ export const createCustomer = async (user) => {
         email: user.email,
         phone_numbers: [user.phone],
         external_id: user.C_User_ID.toString(),
-        type: user.userDocumentType === 'CPF' ? 'individual' : 'corporation',
+        type: user.documentType === 'CPF' ? 'individual' : 'corporation',
         country: 'br',
         documents: [{
-            type: user.userDocumentType.toLowerCase(),
-            number: user.userDocumentNo,
+            type: user.documentType.toLowerCase(),
+            number: user.documentNo,
         }]
     };
 

@@ -9,16 +9,16 @@ type User implements Timestamps {
   isUserVerified: Boolean!
   verificationCodeExp: Date
   phone: String
-  userDocumentType: String
-  userDocumentNo: String
+  documentType: String
+  documentNo: String
   userRoles: [UserRole!]
   userPaymentMethods: [UserPaymentMethod!]
 }
 
 input UpdateUserInput {
   phone: String
-  userDocumentType: String
-  userDocumentNo: String
+  documentType: String
+  documentNo: String
 }
 
 type SignUpResultSuccess {

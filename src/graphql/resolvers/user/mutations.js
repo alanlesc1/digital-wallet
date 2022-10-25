@@ -166,8 +166,8 @@ const userMutations = {
       try {
         const user = await db.MUser.findByPk(C_User_ID);
         user.phone = input.phone;
-        user.userDocumentType = input.userDocumentType;
-        user.userDocumentNo = input.userDocumentNo;
+        user.documentType = input.documentType;
+        user.documentNo = input.documentNo;
         user.save();
         user.reload();
 

@@ -65,11 +65,11 @@ module.exports = {
           type: Sequelize.STRING(40),
           allowNull: true,
         },
-        userdocumenttype: {
+        documenttype: {
           type: Sequelize.STRING(4),
           allowNull: true,
         },
-        userdocumentno: {
+        documentno: {
           type: Sequelize.STRING(14),
           allowNull: true,
         },

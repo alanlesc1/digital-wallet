@@ -97,8 +97,8 @@ const UPDATE_USER_GRAPHQL = `mutation updateUser($C_User_ID: ID!) {
       C_User_ID: $C_User_ID,
       input: {
         phone: "${authApi.DEFAULT_USER_PHONE}"
-        userDocumentType: "${authApi.DEFAULT_USER_DOCUMENT_TYPE}"
-        userDocumentNo: "${authApi.DEFAULT_USER_DOCUMENT_NO}"
+        documentType: "${authApi.DEFAULT_USER_DOCUMENT_TYPE}"
+        documentNo: "${authApi.DEFAULT_USER_DOCUMENT_NO}"
     }
   ) {
       __typename

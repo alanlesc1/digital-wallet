@@ -88,9 +88,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(40),
       allowNull: true,
     },
-    userDocumentType: {
+    documentType: {
       type: DataTypes.STRING(4),
-      field: 'userdocumenttype',
+      field: 'documenttype',
       allowNull: true,
       validate: {
         isIn: {
@@ -102,9 +102,9 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    userDocumentNo: {
+    documentNo: {
       type: DataTypes.STRING(14),
-      field: 'userdocumentno',
+      field: 'documentno',
       allowNull: true,
     },
     PGM_CustomerId: {
