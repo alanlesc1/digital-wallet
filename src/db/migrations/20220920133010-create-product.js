@@ -30,6 +30,10 @@ module.exports = {
         isactive: {
           type: Sequelize.BOOLEAN
         },
+        publicid: {
+          allowNull: false,
+          type: Sequelize.STRING(12)
+        },
         value: {
           allowNull: true,
           type: Sequelize.STRING(60)
@@ -55,6 +59,13 @@ module.exports = {
       };
 
       await queryInterface.createTable('m_product', schema, { trx });
+
+      await queryInterface.addConstraint('m_product', {
+        fields: ['publicid'],
+        type: 'unique',
+        name: 'm_product_publicid_unique',
+        trx
+      });
 
       await queryInterface.bulkInsert('ad_table', [
         {

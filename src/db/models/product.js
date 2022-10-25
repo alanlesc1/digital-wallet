@@ -1,4 +1,7 @@
 'use strict';
+
+import { generatePublicId } from '../../helpers/publicId';
+
 const {
   Model
 } = require('sequelize');
@@ -11,10 +14,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       MProduct.belongsTo(models.MProductCategory, {
-        foreignKey: 'vendor_User_ID'
+        foreignKey: 'M_ProductCategory_ID'
       });
       MProduct.hasMany(models.MOrderLine, {
-        foreignKey: 'M_ProductCategory_ID'
+        foreignKey: 'M_Product_ID'
       });
     }
   }
@@ -36,6 +39,12 @@ module.exports = (sequelize, DataTypes) => {
       field: 'isactive',
       allowNull: false,
       defaultValue: true,
+    },
+    publicId: {
+      type: DataTypes.STRING(12),
+      field: 'publicid',
+      allowNull: false,
+      defaultValue: generatePublicId()
     },
     value: {
       type: DataTypes.STRING(60),
