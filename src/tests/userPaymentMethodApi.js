@@ -2,96 +2,6 @@ import axios from 'axios';
 import { API_URL } from './api';
 import * as authApi from './authenticationApi';
 
-const RETURN_CURRENT_USER_GRAPHQL = `query me {
-  me {
-    __typename
-    ... on User {
-      isActive
-      name
-      email
-    }
-
-    ... on NotAuthenticatedError {
-      message
-    }
-
-    ... on Error {
-      message
-    }
-  }
-}
-`;
-
-export const returnCurrentUser = async token =>
-  axios.post(API_URL, {
-    query: RETURN_CURRENT_USER_GRAPHQL,
-  },
-    {
-      headers: {
-        'Authorization': 'Bearer ' + token,
-      },
-    });
-
-const RETURN_MY_CURRENT_QRCODE_GRAPHQL = `query userCurrentQRCode($C_User_ID: ID!) {
-  userCurrentQRCode(C_User_ID: $C_User_ID) {
-    __typename
-    ... on UserQRCode {
-      schemaVersion
-      dataType
-    }
-
-    ... on UserQRCodeResultError {
-      message
-    }
-
-    ... on Error {
-      message
-    }
-  }
-}
-`;
-
-export const returnUserCurrentQrCode = async (token, variables) =>
-  axios.post(API_URL, {
-    query: RETURN_MY_CURRENT_QRCODE_GRAPHQL,
-    variables,
-  },
-    {
-      headers: {
-        'Authorization': 'Bearer ' + token,
-      },
-    });
-
-const RENEW_MY_CURRENT_QRCODE_GRAPHQL = `mutation renewUserCurrentQRCode($C_User_ID: ID!) {
-  renewUserCurrentQRCode(C_User_ID: $C_User_ID) {
-        __typename
-        ... on UserQRCode {
-          schemaVersion
-          dataType
-        }
-    
-        ... on UserQRCodeResultError {
-          message
-        }
-    
-        ... on Error {
-          message
-        }
-      }
-    }
-    `;
-
-export const renewUserCurrentQrCode = async (token, variables) =>
-  axios.post(API_URL, {
-    query: RENEW_MY_CURRENT_QRCODE_GRAPHQL,
-    variables,
-  },
-    {
-      headers: {
-        'Authorization': 'Bearer ' + token,
-      },
-    });
-
 const UPDATE_USER_GRAPHQL = `mutation updateUser($C_User_ID: ID!) {
   updateUser(
       C_User_ID: $C_User_ID,
@@ -199,7 +109,10 @@ export const returnUserPaymentMethod = async (token, variables) =>
     });
 
 const RETURN_USER_PAYMENT_METHODS_GRAPHQL = `query userPaymentMethods($C_User_ID: ID!) {
-  userPaymentMethods(C_User_ID: $C_User_ID) {
+  userPaymentMethods(
+    filter: {
+      C_User_ID: $C_User_ID
+    }) {
     __typename
     ... on UserPaymentMethods {
       userPaymentMethods {

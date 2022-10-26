@@ -15,7 +15,7 @@ type User implements Timestamps {
   userPaymentMethods: [UserPaymentMethod!]
 }
 
-input UpdateUserInput {
+input UserInput {
   phone: String
   documentType: String
   documentNo: String

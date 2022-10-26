@@ -1,22 +1,22 @@
 import { combineResolvers } from 'graphql-resolvers';
 import { isAuthenticated } from '../authorization';
 
-const userPaymentMethodQueries = {
-  userPaymentMethods: combineResolvers(
+const merchantQueries = {
+  merchants: combineResolvers(
     isAuthenticated,
     async (_, args, { db, results }) => {
       try {
-        const paymentMethods = await db.MUserPaymentMethod.findAll({
+        const merchants = await db.MMerchant.findAll({
           where: {
-            C_User_ID: args.filter.C_User_ID,
+            publicId: args.filter.publicId,
           },
         });
 
         const result = {
-          __typename: "UserPaymentMethods",
-          userPaymentMethods: paymentMethods.map(element => {
+          __typename: "Merchants",
+          merchants: merchants.map(element => {
             return {
-              __typename: "UserPaymentMethod",
+              __typename: "Merchant",
               ...element.toJSON()
             }
           })
@@ -27,8 +27,8 @@ const userPaymentMethodQueries = {
         console.error(error);
         return results.create(results.Error);
       }
-    }
-  )
+    },
+  ),
 };
 
-export default userPaymentMethodQueries;
+export default merchantQueries;

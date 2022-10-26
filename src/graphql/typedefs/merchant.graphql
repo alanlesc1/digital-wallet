@@ -1,0 +1,40 @@
+type Merchant {
+  C_Merchant_ID: ID!
+  C_Merchant_UU: String!
+  created: Date!
+  updated: Date!
+  isActive: Boolean!
+  publicId: String! 
+  name: String!
+  documentType: String!
+  documentNo: String!
+}
+
+input MerchantInput {
+  name: String!
+  documentType: String!
+  documentNo: String!
+}
+
+input MerchantFilter {
+  publicId: String! 
+}
+
+type Merchants { 
+  merchants: [Merchant]!
+}
+
+type MerchantNotFoundError implements Error {
+  message: String!
+}
+
+type MerchantResultError implements Error {
+  message: String!
+}
+
+union MerchantResult = Merchant | 
+  Merchants |
+  MerchantNotFoundError | 
+  MerchantResultError | 
+  NotAuthenticatedError |
+  NotAuthorizedError

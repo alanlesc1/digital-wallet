@@ -48,25 +48,6 @@ describe('User Payment Method', () => {
     expect(result.data).to.eql(expectedResult);
   });
 
-  it('returns one user payment method', async () => {
-    const variables = {
-      "C_UserPaymentMethod_ID": "1"
-    };
-
-    const expectedResult = {
-      "data": {
-        "userPaymentMethod": {
-          "__typename": "UserPaymentMethod",
-          "C_UserPaymentMethod_ID": "1",
-          "name": "My Visa card"
-        }
-      }
-    };
-
-    const result = await userPaymentMethodApi.returnUserPaymentMethod(token, variables);
-    expect(result.data).to.eql(expectedResult);
-  });
-
   it('returns an array of user payment methods', async () => {
     const variables = {
       "C_User_ID": "1"

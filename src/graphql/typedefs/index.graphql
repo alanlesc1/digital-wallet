@@ -1,17 +1,34 @@
 scalar Date
 
 type Query {
+  # User
   me: UserResult
+  
+  # User QR Code
   userCurrentQRCode(C_User_ID: ID!): UserQRCodeResult
-  userPaymentMethod(C_UserPaymentMethod_ID: ID!): UserPaymentMethodResult
-  userPaymentMethods(C_User_ID: ID!): UserPaymentMethodResult
+
+  # User Payment Method
+  userPaymentMethods(filter: UserPaymentMethodFilter!): UserPaymentMethodResult
+
+  # Merchant
+  merchants(filter: MerchantFilter!): MerchantResult
 }
 
 type Mutation {
+  # Authentication
   signUp(name: String!, email: String!, password: String!): SignUpResult
   verifyUser(email: String!, password: String!, verificationCode: String): UserVerificationResult
   login(email: String!, password: String!, fcmToken: String!): LoginResult
-  updateUser(C_User_ID: ID!, input: UpdateUserInput): UserResult
+
+  # User
+  updateUser(C_User_ID: ID!, input: UserInput): UserResult
+
+  # User QR Code 
   renewUserCurrentQRCode(C_User_ID: ID!): UserQRCodeResult
-  createUserPaymentMethod(input: CreateUserPaymentMethodInput): UserPaymentMethodResult
+
+  # User Payment Method
+  createUserPaymentMethod(input: UserPaymentMethodInput): UserPaymentMethodResult
+
+  # Merchant
+  createMerchant(input: MerchantInput): MerchantResult
 }

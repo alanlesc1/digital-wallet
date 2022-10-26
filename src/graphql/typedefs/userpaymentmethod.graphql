@@ -19,7 +19,7 @@ type UserPaymentMethod {
   PGM_CardId: String!
 }
 
-input CreateUserPaymentMethodInput {
+input UserPaymentMethodInput {
   name: String!
   paymentMethod: String!
   cardBrand: String!
@@ -31,6 +31,10 @@ input CreateUserPaymentMethodInput {
   cardHolderDocumentType: String!
   cardHolderDocumentNo: String!
   billingLocation: CreateLocationInput!
+}
+
+input UserPaymentMethodFilter {
+  C_User_ID: ID!
 }
 
 type UserPaymentMethods { 
