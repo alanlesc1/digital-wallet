@@ -9,6 +9,10 @@ export const DEFAULT_USER_PHONE = "+551199991234";
 export const DEFAULT_USER_DOCUMENT_TYPE = "CPF";
 export const DEFAULT_USER_DOCUMENT_NO = "78847950007";
 
+export const DEFAULT_MERCHANT_NAME = "Test Merchant";
+export const DEFAULT_MERCHANT_DOCUMENT_TYPE = "CNPJ";
+export const DEFAULT_MERCHANT_DOCUMENT_NO = "07087842000171";
+
 const SIGNUP_GRAPHQL = `mutation signup($name: String!, $email: String!, $password: String!) {
   signup(name: $name, email: $email, password: $password) {
     __typename

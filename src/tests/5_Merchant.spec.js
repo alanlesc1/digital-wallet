@@ -19,9 +19,9 @@ describe('Merchant', () => {
   it('creates a new merchant', async () => {
     const variables = {
       "input": {
-        "name": "Test Merchant",
-        "documentType": "CNPJ",
-        "documentNo": "07087842000171"
+        "name": authApi.DEFAULT_MERCHANT_NAME,
+        "documentType": authApi.DEFAULT_MERCHANT_DOCUMENT_TYPE,
+        "documentNo": authApi.DEFAULT_MERCHANT_DOCUMENT_NO
       }
     };
 
@@ -29,7 +29,7 @@ describe('Merchant', () => {
       "data": {
         "createMerchant": {
           "C_Merchant_ID": "1",
-          "name": "Test Merchant"
+          "name": authApi.DEFAULT_MERCHANT_NAME
         }
       }
     };
