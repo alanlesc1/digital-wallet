@@ -32,7 +32,24 @@ const userFields = {
       });
 
       return result;
-    }
+    },
+
+    merchantUsers: async (user, _, { db }) => {
+      const merchantUsers = await db.MMerchantUser.findAll({
+        where: {
+          C_User_ID: user.C_User_ID,
+        },
+      });
+
+      const result = merchantUsers.map(element => {
+        return {
+          __typename: "MerchantUser",
+          ...element.toJSON()
+        }
+      });
+
+      return result;
+    },
   }
 };
 

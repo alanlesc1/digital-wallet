@@ -55,3 +55,67 @@ export const returnMerchants = async (token, variables) =>
         'Authorization': 'Bearer ' + token,
       },
     });
+
+const CREATE_MERCHANT_USER_GRAPHQL = `mutation createMerchantUser($input: MerchantUserInput!) {
+  createMerchantUser(input: $input) {
+    ... on MerchantUser {
+      merchant {
+          name
+      }
+      user {
+          name
+      }
+    }
+    ... on Error {
+      __typename
+      message
+    }
+  }
+}
+`;
+
+export const createMerchantUser = async (token, variables) =>
+  axios.post(API_URL, {
+    query: CREATE_MERCHANT_USER_GRAPHQL,
+    variables,
+  },
+    {
+      headers: {
+        'Authorization': 'Bearer ' + token,
+      },
+    });
+
+const RETURN_MERCHANT_USERS_GRAPHQL = `query merchantUsers($filter: MerchantUserFilter!) {
+  merchantUsers(filter: $filter) {
+    __typename
+    ... on MerchantUsers {
+      merchantUsers {
+        merchant {
+            name
+        }
+        user {
+            name
+        }
+      }
+    }
+    ... on MerchantUserResultError {
+      message
+    }
+    ... on Error {
+      __typename
+      message
+    }
+  }
+}
+`;
+
+export const returnMerchantUsers = async (token, variables) =>
+  axios.post(API_URL, {
+    query: RETURN_MERCHANT_USERS_GRAPHQL,
+    variables,
+  },
+    {
+      headers: {
+        'Authorization': 'Bearer ' + token,
+      },
+    });

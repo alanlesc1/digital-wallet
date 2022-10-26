@@ -12,6 +12,9 @@ type Query {
 
   # Merchant
   merchants(filter: MerchantFilter!): MerchantResult!
+
+  # Merchant User
+  merchantUsers(filter: MerchantUserFilter!): MerchantUserResult!
 }
 
 type Mutation {
@@ -31,4 +34,7 @@ type Mutation {
 
   # Merchant
   createMerchant(input: MerchantInput!): MerchantResult!
+
+  # Merchant User
+  createMerchantUser(input: MerchantUserInput!): MerchantUserResult!
 }

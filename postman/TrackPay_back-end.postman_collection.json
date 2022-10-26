@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a60f1d49-5563-4bb5-bc29-59ade21075cf",
+		"_postman_id": "cca1e3ff-27f7-40ad-9c12-74fc8e63569c",
 		"name": "TrackPay back-end",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -153,7 +153,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updateUser($C_User_ID: ID!, $input: UserInput) {\n  updateUser(\n      C_User_ID: $C_User_ID,\n      input: $input\n  ) {\n      __typename\n    ... on User {\n      C_User_ID\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"query": "mutation updateUser($C_User_ID: ID!, $input: UserInput!) {\n  updateUser(\n      C_User_ID: $C_User_ID,\n      input: $input\n  ) {\n      __typename\n    ... on User {\n      C_User_ID\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 								"variables": "{\n    \"C_User_ID\": \"1\",\n    \"input\": {\n        \"phone\": \"+551199991234\",\n        \"documentType\": \"CPF\",\n        \"documentNo\": \"78847950007\"\n    }\n}"
 							}
 						},
@@ -235,7 +235,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createUserPaymentMethod($input: UserPaymentMethodInput) {\n  createUserPaymentMethod(input: $input) {\n    ... on UserPaymentMethod {\n      C_UserPaymentMethod_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"query": "mutation createUserPaymentMethod($input: UserPaymentMethodInput!) {\n  createUserPaymentMethod(input: $input) {\n    ... on UserPaymentMethod {\n      C_UserPaymentMethod_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 								"variables": "{ \n    \"input\": {\n        \"name\": \"My Visa card\",\n        \"paymentMethod\": \"DRC\",\n        \"cardNumber\": \"1000000000000010\",\n        \"cardCVV\": \"1234\",\n        \"cardBrand\": \"visa\",\n        \"cardHolderName\": \"Test User\",\n        \"cardExpMonth\": 12,\n        \"cardExpYear\": 2030,\n        \"cardHolderDocumentType\": \"CPF\",\n        \"cardHolderDocumentNo\": \"78847950007\",\n        \"billingLocation\": {\n            \"line1\": \"Av. Paulista\",\n            \"line2\": \"100\",\n            \"city\": \"São Paulo\",\n            \"state\": \"SP\",\n            \"country\": \"Brazil\",\n            \"zipCode\": \"01310000\"\n        }\n    }\n}"
 							}
 						},
@@ -288,8 +288,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createMerchant($input: MerchantInput) {\n  createMerchant(input: $input) {\n    ... on Merchant {\n      C_Merchant_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
-								"variables": "{\n    \"input\": {\n        \"name\": \"Test Merchant\",\n        \"documentType\" : \"CNPJ\",\n        \"documentNo\": \"07087842000171\"\n    }\n}"
+								"query": "mutation createMerchantUser($input: MerchantUserInput!) {\n  createMerchantUser(input: $input) {\n    ... on MerchantUser {\n      C_MerchantUser_ID\n      merchant {\n          C_Merchant_ID\n      }\n      user {\n          C_User_ID\n      }\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"input\": {\n        \"C_Merchant_ID\": 1,\n        \"C_User_ID\" : 1\n    }\n}"
 							}
 						},
 						"url": {
@@ -314,6 +314,54 @@
 							"graphql": {
 								"query": "query merchants($filter: MerchantFilter!) {\n  merchants(filter: $filter) {\n    __typename\n    ... on Merchants {\n      merchants {\n        name\n      }\n    }\n    ... on MerchantResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 								"variables": "{\n    \"filter\": {\n        \"publicId\": \"VDIXZF7CCBUN\"\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create merchant user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createMerchantUser($input: MerchantUserInput!) {\n  createMerchantUser(input: $input) {\n    ... on MerchantUser {\n      merchant {\n          name\n      }\n      user {\n          name\n      }\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"input\": {\n        \"C_Merchant_ID\": 1,\n        \"C_User_ID\" : 1\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return merchant users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query merchantUsers($filter: MerchantUserFilter!) {\n  merchantUsers(filter: $filter) {\n    __typename\n    ... on MerchantUsers {\n      merchantUsers {\n        merchant {\n            name\n        }\n        user {\n            name\n        }\n      }\n    }\n    ... on MerchantUserResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"filter\": {\n        \"C_Merchant_ID\": 1\n    }\n}"
 							}
 						},
 						"url": {

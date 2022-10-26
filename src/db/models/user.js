@@ -28,6 +28,9 @@ module.exports = (sequelize, DataTypes) => {
       MUser.hasMany(models.MOrder, {
         foreignKey: 'buyer_User_ID'
       });
+      MUser.hasMany(models.MMerchantUser, {
+        foreignKey: 'C_User_ID',
+      });
     }
   }
   MUser.init({

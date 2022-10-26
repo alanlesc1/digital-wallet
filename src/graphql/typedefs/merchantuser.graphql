@@ -1,0 +1,33 @@
+type MerchantUser {
+  C_MerchantUser_ID: ID!
+  C_MerchantUser_UU: String!
+  created: Date!
+  updated: Date!
+  isActive: Boolean!
+  merchant: Merchant! 
+  user: User!
+}
+
+input MerchantUserInput {
+  C_Merchant_ID: ID!
+  C_User_ID: ID! 
+}
+
+input MerchantUserFilter {
+  C_Merchant_ID: ID
+  C_User_ID: ID
+}
+
+type MerchantUsers { 
+  merchantUsers: [MerchantUser]!
+}
+
+type MerchantUserResultError implements Error {
+  message: String!
+}
+
+union MerchantUserResult = MerchantUser | 
+  MerchantUsers |
+  MerchantUserResultError | 
+  NotAuthenticatedError |
+  NotAuthorizedError

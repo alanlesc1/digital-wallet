@@ -57,4 +57,58 @@ describe('Merchant', () => {
     const result = await merchantApi.returnMerchants(token, variables);
     expect(result.data).to.eql(expectedResult);
   });
+
+  it('creates a new merchant user', async () => {
+    const variables = {
+      "input": {
+        "C_Merchant_ID": 1,
+        "C_User_ID": 1
+      }
+    };
+
+    const expectedResult = {
+      "data": {
+        "createMerchantUser": {
+          "merchant": {
+            "name": authApi.DEFAULT_MERCHANT_NAME
+          },
+          "user": {
+            "name": authApi.DEFAULT_USER_NAME
+          }
+        }
+      }
+    };
+
+    const result = await merchantApi.createMerchantUser(token, variables);
+    expect(result.data).to.eql(expectedResult);
+  });
+
+  it('returns an array of merchant users', async () => {
+    const variables = {
+      "filter": {
+        "C_Merchant_ID": 1
+      }
+    };
+
+    const expectedResult = {
+      "data": {
+        "merchantUsers": {
+          "__typename": "MerchantUsers",
+          "merchantUsers": [
+            {
+              "merchant": {
+                "name": authApi.DEFAULT_MERCHANT_NAME
+              },
+              "user": {
+                "name": authApi.DEFAULT_USER_NAME
+              }
+            }
+          ]
+        }
+      }
+    };
+
+    const result = await merchantApi.returnMerchantUsers(token, variables);
+    expect(result.data).to.eql(expectedResult);
+  });
 });

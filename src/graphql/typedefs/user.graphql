@@ -13,6 +13,7 @@ type User implements Timestamps {
   documentNo: String
   userRoles: [UserRole]!
   userPaymentMethods: [UserPaymentMethod]!
+  merchantUsers: [MerchantUser]!
 }
 
 input UserInput {
