@@ -79,35 +79,6 @@ export const createUserPaymentMethod = async token =>
       },
     });
 
-const RETURN_USER_PAYMENT_METHOD_GRAPHQL = `query userPaymentMethod($C_UserPaymentMethod_ID: ID!) {
-  userPaymentMethod(C_UserPaymentMethod_ID: $C_UserPaymentMethod_ID) {
-    __typename
-    ... on UserPaymentMethod {
-      C_UserPaymentMethod_ID
-      name
-    }
-    ... on UserPaymentMethodResultError {
-      message
-    }
-    ... on Error {
-      __typename
-      message
-    }
-  }
-}
-`;
-
-export const returnUserPaymentMethod = async (token, variables) =>
-  axios.post(API_URL, {
-    query: RETURN_USER_PAYMENT_METHOD_GRAPHQL,
-    variables,
-  },
-    {
-      headers: {
-        'Authorization': 'Bearer ' + token,
-      },
-    });
-
 const RETURN_USER_PAYMENT_METHODS_GRAPHQL = `query userPaymentMethods($C_User_ID: ID!) {
   userPaymentMethods(
     filter: {

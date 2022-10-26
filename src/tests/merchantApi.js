@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { API_URL } from './api';
-import * as authApi from './authenticationApi';
 
 const CREATE_MERCHANT_GRAPHQL = `mutation createMerchant($input: MerchantInput!) {
   createMerchant(input: $input) {
