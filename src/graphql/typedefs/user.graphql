@@ -11,8 +11,8 @@ type User implements Timestamps {
   phone: String
   documentType: String
   documentNo: String
-  userRoles: [UserRole!]
-  userPaymentMethods: [UserPaymentMethod!]
+  userRoles: [UserRole]!
+  userPaymentMethods: [UserPaymentMethod]!
 }
 
 input UserInput {
@@ -30,8 +30,8 @@ type UserVerificationResultSuccess {
 }
 
 type LoginResultSuccess {
-  token: String
-  user: User
+  token: String!
+  user: User!
 }
 
 type NotAuthenticatedError implements Error {

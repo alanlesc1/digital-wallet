@@ -5,30 +5,30 @@ type Query {
   me: UserResult
   
   # User QR Code
-  userCurrentQRCode(C_User_ID: ID!): UserQRCodeResult
+  userCurrentQRCode(C_User_ID: ID!): UserQRCodeResult!
 
   # User Payment Method
-  userPaymentMethods(filter: UserPaymentMethodFilter!): UserPaymentMethodResult
+  userPaymentMethods(filter: UserPaymentMethodFilter!): UserPaymentMethodResult!
 
   # Merchant
-  merchants(filter: MerchantFilter!): MerchantResult
+  merchants(filter: MerchantFilter!): MerchantResult!
 }
 
 type Mutation {
   # Authentication
-  signup(name: String!, email: String!, password: String!): SignupResult
-  verifyUser(email: String!, password: String!, verificationCode: String): UserVerificationResult
-  login(email: String!, password: String!, fcmToken: String!): LoginResult
+  signup(name: String!, email: String!, password: String!): SignupResult!
+  verifyUser(email: String!, password: String!, verificationCode: String): UserVerificationResult!
+  login(email: String!, password: String!, fcmToken: String!): LoginResult!
 
   # User
-  updateUser(C_User_ID: ID!, input: UserInput): UserResult
+  updateUser(C_User_ID: ID!, input: UserInput!): UserResult!
 
   # User QR Code 
-  renewUserCurrentQRCode(C_User_ID: ID!): UserQRCodeResult
+  renewUserCurrentQRCode(C_User_ID: ID!): UserQRCodeResult!
 
   # User Payment Method
-  createUserPaymentMethod(input: UserPaymentMethodInput): UserPaymentMethodResult
+  createUserPaymentMethod(input: UserPaymentMethodInput!): UserPaymentMethodResult!
 
   # Merchant
-  createMerchant(input: MerchantInput): MerchantResult
+  createMerchant(input: MerchantInput!): MerchantResult!
 }
