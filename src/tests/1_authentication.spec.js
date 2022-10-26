@@ -3,8 +3,8 @@ import * as authApi from './authenticationApi';
 import { sequelize, MUser, MUserRole } from '../db/models';
 
 describe('Authentication', () => {
-  describe('SignUp', () => {
-    it('returns a SignUpResultSuccess when user can be created', async () => {
+  describe('Signup', () => {
+    it('returns a SignupResultSuccess when user can be created', async () => {
       const variables = {
         "name": authApi.DEFAULT_USER_NAME,
         "email": authApi.DEFAULT_USER_EMAIL,
@@ -13,8 +13,8 @@ describe('Authentication', () => {
 
       const expectedResult = {
         "data": {
-          "signUp": {
-            "__typename": "SignUpResultSuccess",
+          "signup": {
+            "__typename": "SignupResultSuccess",
             "user": {
               "isActive": true,
               "name": authApi.DEFAULT_USER_NAME,
@@ -25,11 +25,11 @@ describe('Authentication', () => {
         }
       };
 
-      const result = await authApi.signUp(variables);
+      const result = await authApi.signup(variables);
       expect(result.data).to.eql(expectedResult);
     });
 
-    it('returns a SignUpResultError when user already exists', async () => {
+    it('returns a SignupResultError when user already exists', async () => {
       const variables = {
         "name": authApi.DEFAULT_USER_NAME,
         "email": authApi.DEFAULT_USER_EMAIL,
@@ -38,14 +38,14 @@ describe('Authentication', () => {
 
       const expectedResult = {
         "data": {
-          "signUp": {
-            "__typename": "SignUpResultError",
+          "signup": {
+            "__typename": "SignupResultError",
             "message": "email must be unique"
           }
         }
       };
 
-      const result = await authApi.signUp(variables);
+      const result = await authApi.signup(variables);
       expect(result.data).to.eql(expectedResult);
     });
   });

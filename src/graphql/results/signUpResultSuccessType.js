@@ -1,6 +1,6 @@
-module.exports = class SignUpResultSuccess {
+module.exports = class SignupResultSuccess {
   constructor(user) {
-    this.__typename = "SignUpResultSuccess";
+    this.__typename = "SignupResultSuccess";
     this.user = user.toJSON();
   };
 };

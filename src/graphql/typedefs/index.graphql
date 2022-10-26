@@ -16,7 +16,7 @@ type Query {
 
 type Mutation {
   # Authentication
-  signUp(name: String!, email: String!, password: String!): SignUpResult
+  signup(name: String!, email: String!, password: String!): SignupResult
   verifyUser(email: String!, password: String!, verificationCode: String): UserVerificationResult
   login(email: String!, password: String!, fcmToken: String!): LoginResult
 

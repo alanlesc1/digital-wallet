@@ -21,7 +21,7 @@ input UserInput {
   documentNo: String
 }
 
-type SignUpResultSuccess {
+type SignupResultSuccess {
   user: User!
 }
 
@@ -42,7 +42,7 @@ type NotAuthorizedError implements Error {
   message: String!
 }
 
-type SignUpResultError implements Error {
+type SignupResultError implements Error {
   message: String!
 }
 
@@ -54,7 +54,7 @@ type LoginResultError implements Error {
   message: String!
 }
 
-union SignUpResult = SignUpResultSuccess | SignUpResultError
+union SignupResult = SignupResultSuccess | SignupResultError
 union UserVerificationResult = UserVerificationResultSuccess |
   UserVerificationResultError
 union LoginResult = LoginResultSuccess | LoginResultError

@@ -9,10 +9,10 @@ export const DEFAULT_USER_PHONE = "+551199991234";
 export const DEFAULT_USER_DOCUMENT_TYPE = "CPF";
 export const DEFAULT_USER_DOCUMENT_NO = "78847950007";
 
-const SIGNUP_GRAPHQL = `mutation signUp($name: String!, $email: String!, $password: String!) {
-  signUp(name: $name, email: $email, password: $password) {
+const SIGNUP_GRAPHQL = `mutation signup($name: String!, $email: String!, $password: String!) {
+  signup(name: $name, email: $email, password: $password) {
     __typename
-    ... on SignUpResultSuccess {
+    ... on SignupResultSuccess {
       user {
         isActive
         name
@@ -21,14 +21,14 @@ const SIGNUP_GRAPHQL = `mutation signUp($name: String!, $email: String!, $passwo
       }
     }
 
-    ... on SignUpResultError {
+    ... on SignupResultError {
       message
     }
   }
 }
 `;
 
-export const signUp = async variables =>
+export const signup = async variables =>
   axios.post(API_URL, {
     query: SIGNUP_GRAPHQL,
     variables,

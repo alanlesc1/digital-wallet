@@ -1,8 +1,8 @@
 import { messages } from './messages';
 
-module.exports = class SignUpResultError {
+module.exports = class SignupResultError {
   constructor(message) {
-    this.__typename = "SignUpResultError";
+    this.__typename = "SignupResultError";
     this.message = message ? message : messages.serverInternalErrorMessage;
   };
 };

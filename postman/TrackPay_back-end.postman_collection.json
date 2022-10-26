@@ -19,7 +19,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation signUp($name: String!, $email: String!, $password: String!) {\n  signUp(name: $name, email: $email, password: $password) {\n    __typename\n    ... on SignUpResultSuccess {\n      user {\n        C_User_ID\n        C_User_UU\n        created\n        updated\n        isActive\n        name\n        email\n        isUserVerified\n      }\n    }\n    ... on SignUpResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"query": "mutation signup($name: String!, $email: String!, $password: String!) {\n  signup(name: $name, email: $email, password: $password) {\n    __typename\n    ... on SignupResultSuccess {\n      user {\n        C_User_ID\n        C_User_UU\n        created\n        updated\n        isActive\n        name\n        email\n        isUserVerified\n      }\n    }\n    ... on SignupResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 								"variables": "{\n    \"name\": \"{{userName}}\",\n    \"email\": \"{{userEmail}}\",\n    \"password\": \"{{userPassword}}\"\n}"
 							}
 						},
