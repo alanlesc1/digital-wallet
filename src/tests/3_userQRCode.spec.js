@@ -2,10 +2,10 @@ import { expect } from 'chai';
 import * as authApi from './authenticationApi';
 import * as userQRCodeApi from './userQRCodeApi';
 
-describe('User current QR Code', () => {
+describe('User current QR Code', function () {
   let token;
 
-  before(async () => {
+  before(async function () {
     const loginVariables = {
       "email": authApi.DEFAULT_USER_EMAIL,
       "password": authApi.DEFAULT_USER_PASSWORD,
@@ -16,7 +16,7 @@ describe('User current QR Code', () => {
     token = loginToken.data.data.login.token;
   });
 
-  it('returns a UserQRCodeNotFoundError when current QR Code does not exist', async () => {
+  it('returns a UserQRCodeNotFoundError when current QR Code does not exist', async function () {
     const variables = {
       "C_User_ID": "1"
     };
@@ -34,7 +34,7 @@ describe('User current QR Code', () => {
     expect(result.data).to.eql(expectedResult);
   });
 
-  it('renews user current QR Code', async () => {
+  it('renews user current QR Code', async function () {
     const variables = {
       "C_User_ID": "1"
     };

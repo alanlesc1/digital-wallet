@@ -1,11 +1,14 @@
 import { expect } from 'chai';
+import { TIMEOUT } from './api';
 import * as authApi from './authenticationApi';
 import * as userPaymentMethodApi from './userPaymentMethodApi';
 
-describe('User Payment Method', () => {
+describe('User Payment Method', function () {
+  this.timeout(TIMEOUT);
+
   let token;
 
-  before(async () => {
+  before(async function () {
     const loginVariables = {
       "email": authApi.DEFAULT_USER_EMAIL,
       "password": authApi.DEFAULT_USER_PASSWORD,
@@ -16,7 +19,7 @@ describe('User Payment Method', () => {
     token = loginToken.data.data.login.token;
   });
 
-  it('updates user, setting mandatory fields used by pagar.me', async () => {
+  it('updates user, setting mandatory fields used by pagar.me', async function () {
     const variables = {
       "C_User_ID": "1"
     };
@@ -34,7 +37,7 @@ describe('User Payment Method', () => {
     expect(result.data).to.eql(expectedResult);
   });
 
-  it('creates a new user payment method for the current user', async () => {
+  it('creates a new user payment method for the current user', async function () {
     const expectedResult = {
       "data": {
         "createUserPaymentMethod": {
@@ -48,7 +51,7 @@ describe('User Payment Method', () => {
     expect(result.data).to.eql(expectedResult);
   });
 
-  it('returns an array of user payment methods', async () => {
+  it('returns an array of user payment methods', async function () {
     const variables = {
       "C_User_ID": "1"
     };

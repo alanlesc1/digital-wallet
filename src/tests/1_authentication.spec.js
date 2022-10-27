@@ -2,9 +2,9 @@ import { expect } from 'chai';
 import * as authApi from './authenticationApi';
 import { sequelize, MUser, MUserRole } from '../db/models';
 
-describe('Authentication', () => {
-  describe('Signup', () => {
-    it('returns a SignupResultSuccess when user can be created', async () => {
+describe('Authentication', function () {
+  describe('Signup', function () {
+    it('returns a SignupResultSuccess when user can be created', async function () {
       const variables = {
         "name": authApi.DEFAULT_USER_NAME,
         "email": authApi.DEFAULT_USER_EMAIL,
@@ -29,7 +29,7 @@ describe('Authentication', () => {
       expect(result.data).to.eql(expectedResult);
     });
 
-    it('returns a SignupResultError when user already exists', async () => {
+    it('returns a SignupResultError when user already exists', async function () {
       const variables = {
         "name": authApi.DEFAULT_USER_NAME,
         "email": authApi.DEFAULT_USER_EMAIL,
@@ -50,8 +50,8 @@ describe('Authentication', () => {
     });
   });
 
-  describe('Generate verification code', () => {
-    it('returns a UserVerificationResultError when is a invalid email/password', async () => {
+  describe('Generate verification code', function () {
+    it('returns a UserVerificationResultError when is a invalid email/password', async function () {
       const variables = {
         "email": authApi.DEFAULT_USER_EMAIL,
         "password": "wrongPassword"
@@ -70,7 +70,7 @@ describe('Authentication', () => {
       expect(result.data).to.eql(expectedResult);
     });
 
-    it('returns a UserVerificationResultSuccess when verification code was generated', async () => {
+    it('returns a UserVerificationResultSuccess when verification code was generated', async function () {
       const variables = {
         "email": authApi.DEFAULT_USER_EMAIL,
         "password": authApi.DEFAULT_USER_PASSWORD
@@ -95,8 +95,8 @@ describe('Authentication', () => {
     });
   });
 
-  describe('Verify verification code', () => {
-    it('returns a UserVerificationResultError when verification code is invalid', async () => {
+  describe('Verify verification code', function () {
+    it('returns a UserVerificationResultError when verification code is invalid', async function () {
       await sequelize.query('UPDATE C_User SET VerificationCode = ? WHERE Email = ?',
         {
           replacements: ["1111", authApi.DEFAULT_USER_EMAIL]
@@ -121,7 +121,7 @@ describe('Authentication', () => {
       expect(result.data).to.eql(expectedResult);
     });
 
-    it('returns a UserVerificationResultError when verification code is expired', async () => {
+    it('returns a UserVerificationResultError when verification code is expired', async function () {
       await sequelize.query("UPDATE C_User SET VerificationCodeExp = NOW() - INTERVAL '1 DAY' WHERE Email = ?",
         {
           replacements: [authApi.DEFAULT_USER_EMAIL]
@@ -151,7 +151,7 @@ describe('Authentication', () => {
         });
     });
 
-    it('returns a UserVerificationResultSuccess when verification code is valid', async () => {
+    it('returns a UserVerificationResultSuccess when verification code is valid', async function () {
       const variables = {
         "email": authApi.DEFAULT_USER_EMAIL,
         "password": authApi.DEFAULT_USER_PASSWORD,
@@ -176,13 +176,13 @@ describe('Authentication', () => {
       expect(result.data).to.eql(expectedResult);
     });
 
-    it('checks that the default access role BUYER was created', async () => {
+    it('checks that the default access role BUYER was created', async function () {
       const user = await MUser.findOne({ where: { email: authApi.DEFAULT_USER_EMAIL } });
       const userRole = await MUserRole.findOne({ where: { C_User_ID: user.C_User_ID } });
       expect(userRole.roleName).to.eql("BUY");
     });
 
-    it('returns a UserVerificationResultError when verification code is already verified', async () => {
+    it('returns a UserVerificationResultError when verification code is already verified', async function () {
       const variables = {
         "email": authApi.DEFAULT_USER_EMAIL,
         "password": authApi.DEFAULT_USER_PASSWORD,
@@ -203,8 +203,8 @@ describe('Authentication', () => {
     });
   });
 
-  describe('Login', () => {
-    it('returns a LoginResultError when is a invalid email/password', async () => {
+  describe('Login', function () {
+    it('returns a LoginResultError when is a invalid email/password', async function () {
       const variables = {
         "email": authApi.DEFAULT_USER_EMAIL,
         "password": "wrongPassword",
@@ -224,7 +224,7 @@ describe('Authentication', () => {
       expect(result.data).to.eql(expectedResult);
     });
 
-    it('returns a LoginResultSuccess when login was successful', async () => {
+    it('returns a LoginResultSuccess when login was successful', async function () {
       const variables = {
         "email": authApi.DEFAULT_USER_EMAIL,
         "password": authApi.DEFAULT_USER_PASSWORD,

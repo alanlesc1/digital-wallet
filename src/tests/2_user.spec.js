@@ -2,10 +2,10 @@ import { expect } from 'chai';
 import * as authApi from './authenticationApi';
 import * as userApi from './userApi';
 
-describe('User', () => {
+describe('User', function () {
   let token;
 
-  before(async () => {
+  before(async function () {
     const loginVariables = {
       "email": authApi.DEFAULT_USER_EMAIL,
       "password": authApi.DEFAULT_USER_PASSWORD,
@@ -16,7 +16,7 @@ describe('User', () => {
     token = loginToken.data.data.login.token;
   });
 
-  it('returns the current logged in user', async () => {
+  it('returns the current logged in user', async function () {
     const expectedResult = {
       "data": {
         "me": {

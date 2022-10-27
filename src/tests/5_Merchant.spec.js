@@ -2,10 +2,10 @@ import { expect } from 'chai';
 import * as authApi from './authenticationApi';
 import * as merchantApi from './merchantApi';
 
-describe('Merchant', () => {
+describe('Merchant', function () {
   let token;
 
-  before(async () => {
+  before(async function () {
     const loginVariables = {
       "email": authApi.DEFAULT_USER_EMAIL,
       "password": authApi.DEFAULT_USER_PASSWORD,
@@ -16,7 +16,7 @@ describe('Merchant', () => {
     token = loginToken.data.data.login.token;
   });
 
-  it('creates a new merchant', async () => {
+  it('creates a new merchant', async function () {
     const variables = {
       "input": {
         "name": authApi.DEFAULT_MERCHANT_NAME,
@@ -38,7 +38,7 @@ describe('Merchant', () => {
     expect(result.data).to.eql(expectedResult);
   });
 
-  it('returns an array of merchants', async () => {
+  it('returns an array of merchants', async function () {
     const variables = {
       "filter": {
         "publicId": "VDIXZF7CCBUN"
@@ -58,7 +58,7 @@ describe('Merchant', () => {
     expect(result.data).to.eql(expectedResult);
   });
 
-  it('creates a new merchant user', async () => {
+  it('creates a new merchant user', async function () {
     const variables = {
       "input": {
         "C_Merchant_ID": 1,
@@ -83,7 +83,7 @@ describe('Merchant', () => {
     expect(result.data).to.eql(expectedResult);
   });
 
-  it('returns an array of merchant users', async () => {
+  it('returns an array of merchant users', async function () {
     const variables = {
       "filter": {
         "C_Merchant_ID": 1
