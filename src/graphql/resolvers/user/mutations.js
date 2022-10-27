@@ -128,7 +128,7 @@ const userMutations = {
 
           const userRoles = await db.MUserRole.findAll({
             where: {
-              C_User_ID: user.C_User_ID,
+              ...user.C_User_ID,
             },
             attributes: ['roleName'],
           });

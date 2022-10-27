@@ -3,7 +3,7 @@ const merchantUserFields = {
     merchant: async (merchantUser, _, { db }) => {
       const merchant = await db.MMerchant.findOne({
         where: {
-          C_Merchant_ID: merchantUser.C_Merchant_ID,
+          ...merchantUser.C_Merchant_ID,
         },
       });
 
@@ -18,7 +18,7 @@ const merchantUserFields = {
     user: async (merchantUser, _, { db }) => {
       const user = await db.MUser.findOne({
         where: {
-          C_User_ID: merchantUser.C_User_ID,
+          ...merchantUser.C_User_ID,
         },
       });
 

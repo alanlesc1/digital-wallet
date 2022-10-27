@@ -20,7 +20,7 @@ const userQRCodeMutations = {
 
         // Create a new one
         const existing = await db.MUserQRCode.create({
-          C_User_ID: C_User_ID
+          C_User_ID,
         });
 
         return {

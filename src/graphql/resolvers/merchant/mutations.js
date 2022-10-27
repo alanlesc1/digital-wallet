@@ -9,9 +9,7 @@ const merchantMutations = {
     async (_, args, { db, results }) => {
       try {
         const merchant = await db.MMerchant.create({
-          name: args.input.name,
-          documentType: args.input.documentType,
-          documentNo: args.input.documentNo,
+          ...args.input,
         });
 
         return {

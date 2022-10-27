@@ -17,13 +17,7 @@ const userPaymentMethodMutations = {
         // Create user payment method
         const userPaymentMethod = await db.MUserPaymentMethod.create({
           C_User_ID: authUser.C_User_ID,
-          name: args.input.name,
-          paymentMethod: args.input.paymentMethod,
-          cardHolderName: args.input.cardHolderName,
-          cardExpMonth: args.input.cardExpMonth,
-          cardExpYear: args.input.cardExpYear,
-          cardHolderDocumentType: args.input.cardHolderDocumentType,
-          cardHolderDocumentNo: args.input.cardHolderDocumentNo,
+          ...args.input,
           billing_Location_ID: location.C_Location_ID,
         });
 

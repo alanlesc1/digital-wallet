@@ -3,7 +3,7 @@ const userFields = {
     userRoles: async (user, _, { db }) => {
       const userRoles = await db.MUserRole.findAll({
         where: {
-          C_User_ID: user.C_User_ID,
+          ...user.C_User_ID,
         },
       });
 
@@ -20,7 +20,7 @@ const userFields = {
     userPaymentMethods: async (user, _, { db }) => {
       const userPaymentMethods = await db.MUserPaymentMethod.findAll({
         where: {
-          C_User_ID: user.C_User_ID,
+          ...user.C_User_ID,
         },
       });
 
@@ -37,7 +37,7 @@ const userFields = {
     merchantUsers: async (user, _, { db }) => {
       const merchantUsers = await db.MMerchantUser.findAll({
         where: {
-          C_User_ID: user.C_User_ID,
+          ...user.C_User_ID,
         },
       });
 

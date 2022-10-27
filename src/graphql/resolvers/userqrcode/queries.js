@@ -15,7 +15,7 @@ const userQRCodeQueries = {
         // Find existing
         let existing = await db.MUserQRCode.findOne({
           where: {
-            C_User_ID: C_User_ID,
+            C_User_ID,
             isActive: true
           },
           order: [
@@ -24,9 +24,8 @@ const userQRCodeQueries = {
         });
 
         // If not found, return an error
-        if (!existing) {
+        if (!existing)
           return results.create(results.UserQRCodeNotFoundError);
-        }
 
         return {
           __typename: "UserQRCode",

@@ -8,7 +8,7 @@ const userPaymentMethodQueries = {
       try {
         const paymentMethods = await db.MUserPaymentMethod.findAll({
           where: {
-            C_User_ID: args.filter.C_User_ID,
+            ...args.filter,
           },
         });
 

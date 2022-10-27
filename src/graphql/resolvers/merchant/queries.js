@@ -8,7 +8,7 @@ const merchantQueries = {
       try {
         const merchants = await db.MMerchant.findAll({
           where: {
-            publicId: args.filter.publicId,
+            ...args.filter,
           },
         });
 
