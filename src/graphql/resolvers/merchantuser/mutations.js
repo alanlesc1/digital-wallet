@@ -25,7 +25,30 @@ const merchantUserMutations = {
         }
       }
     }
-  )
+  ),
+
+  updateMerchantUser: combineResolvers(
+    isAuthenticated,
+    async (_, { C_MerchantUser_ID, input }, { db, results }) => {
+      try {
+        await db.MMerchantUser.update({ ...input }, {
+          where: {
+            C_MerchantUser_ID
+          }
+        });
+
+        const merchantUser = await db.MMerchantUser.findByPk(C_MerchantUser_ID);
+
+        return {
+          __typename: "MerchantUser",
+          ...merchantUser.toJSON()
+        };
+      } catch (error) {
+        console.error(error);
+        return results.create(results.Error);
+      }
+    },
+  ),
 };
 
 export default merchantUserMutations;

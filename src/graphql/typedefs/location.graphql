@@ -13,6 +13,7 @@ type Location {
 }
 
 input CreateLocationInput {
+  isActive: Boolean
   line1: String
   line2: String
   city: String

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "cca1e3ff-27f7-40ad-9c12-74fc8e63569c",
+		"_postman_id": "d2e02d26-4a61-4510-8982-669d64ec4c9c",
 		"name": "TrackPay back-end",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -154,7 +154,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation updateUser($C_User_ID: ID!, $input: UserInput!) {\n  updateUser(\n      C_User_ID: $C_User_ID,\n      input: $input\n  ) {\n      __typename\n    ... on User {\n      C_User_ID\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
-								"variables": "{\n    \"C_User_ID\": \"1\",\n    \"input\": {\n        \"phone\": \"+551199991234\",\n        \"documentType\": \"CPF\",\n        \"documentNo\": \"78847950007\"\n    }\n}"
+								"variables": "{\n    \"C_User_ID\": \"1\",\n    \"input\": {\n        \"isActive\": true,\n        \"phone\": \"+551199991234\",\n        \"documentType\": \"CPF\",\n        \"documentNo\": \"78847950007\"\n    }\n}"
 							}
 						},
 						"url": {
@@ -288,8 +288,32 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createMerchantUser($input: MerchantUserInput!) {\n  createMerchantUser(input: $input) {\n    ... on MerchantUser {\n      C_MerchantUser_ID\n      merchant {\n          C_Merchant_ID\n      }\n      user {\n          C_User_ID\n      }\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
-								"variables": "{\n    \"input\": {\n        \"C_Merchant_ID\": 1,\n        \"C_User_ID\" : 1\n    }\n}"
+								"query": "mutation createMerchant($input: MerchantInput!) {\n  createMerchant(input: $input) {\n    ... on Merchant {\n      C_Merchant_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"input\": {\n        \"name\": \"Test Merchant\",\n        \"documentType\": \"CNPJ\",\n        \"documentNo\": \"07087842000171\"\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update merchant",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateMerchant($C_Merchant_ID: ID!, $input: MerchantInput!) {\n  updateMerchant(C_Merchant_ID: $C_Merchant_ID, input: $input) {\n    ... on Merchant {\n      C_Merchant_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"C_Merchant_ID\": 1,\n    \"input\": {\n        \"isActive\": true,\n        \"name\": \"Test Merchant\",\n        \"documentType\": \"CNPJ\",\n        \"documentNo\": \"07087842000171\"\n    }\n}"
 							}
 						},
 						"url": {
@@ -338,6 +362,30 @@
 							"graphql": {
 								"query": "mutation createMerchantUser($input: MerchantUserInput!) {\n  createMerchantUser(input: $input) {\n    ... on MerchantUser {\n      merchant {\n          name\n      }\n      user {\n          name\n      }\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 								"variables": "{\n    \"input\": {\n        \"C_Merchant_ID\": 1,\n        \"C_User_ID\" : 1\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update merchant user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateMerchantUser($C_MerchantUser_ID: ID!, $input: MerchantUserInput!) {\n  updateMerchantUser(C_MerchantUser_ID: $C_MerchantUser_ID, input: $input) {\n    ... on MerchantUser {\n      merchant {\n          name\n      }\n      user {\n          name\n      }\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"C_MerchantUser_ID\": 1,\n    \"input\": {\n        \"isActive\": true,\n        \"C_Merchant_ID\": 1,\n        \"C_User_ID\" : 1\n    }\n}"
 							}
 						},
 						"url": {

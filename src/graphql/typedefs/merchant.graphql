@@ -12,13 +12,18 @@ type Merchant {
 }
 
 input MerchantInput {
+  isActive: Boolean
   name: String!
   documentType: String!
   documentNo: String!
 }
 
 input MerchantFilter {
-  publicId: String! 
+  isActive: Boolean
+  publicId: String!
+  name: String
+  documentType: String
+  documentNo: String
 }
 
 type Merchants { 

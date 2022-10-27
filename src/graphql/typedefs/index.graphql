@@ -24,17 +24,27 @@ type Mutation {
   login(email: String!, password: String!, fcmToken: String!): LoginResult!
 
   # User
+  # ... does not allow 'create'. It should be done by the signup endpoint
   updateUser(C_User_ID: ID!, input: UserInput!): UserResult!
+  # ... does not allow 'delete'. Record should be deactivated
 
   # User QR Code 
   renewUserCurrentQRCode(C_User_ID: ID!): UserQRCodeResult!
+  # ... does not allow 'update'
+  # ... does not allow 'delete'. Record should be deactivated
 
   # User Payment Method
   createUserPaymentMethod(input: UserPaymentMethodInput!): UserPaymentMethodResult!
+  # ... does not allow 'update'
+  # ... does not allow 'delete'. Record should be deactivated
 
   # Merchant
   createMerchant(input: MerchantInput!): MerchantResult!
+  updateMerchant(C_Merchant_ID: ID!, input: MerchantInput!): MerchantResult!
+  # ... does not allow 'delete'. Record should be deactivated
 
   # Merchant User
   createMerchantUser(input: MerchantUserInput!): MerchantUserResult!
+  updateMerchantUser(C_MerchantUser_ID: ID!, input: MerchantUserInput!): MerchantUserResult!
+  # ... does not allow 'delete'. Record should be deactivated
 }

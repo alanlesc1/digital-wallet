@@ -9,11 +9,13 @@ type MerchantUser {
 }
 
 input MerchantUserInput {
-  C_Merchant_ID: ID!
-  C_User_ID: ID! 
+  isActive: Boolean
+  C_Merchant_ID: ID
+  C_User_ID: ID
 }
 
 input MerchantUserFilter {
+  isActive: Boolean
   C_Merchant_ID: ID
   C_User_ID: ID
 }
