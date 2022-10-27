@@ -38,6 +38,30 @@ describe('Merchant', function () {
     expect(result.data).to.eql(expectedResult);
   });
 
+  it('updates a merchant', async function () {
+    const variables = {
+      "C_Merchant_ID": 1,
+      "input": {
+        "isActive": true,
+        "name": "Test Merchant",
+        "documentType": "CNPJ",
+        "documentNo": "07087842000171"
+      }
+    };
+
+    const expectedResult = {
+      "data": {
+        "updateMerchant": {
+          "C_Merchant_ID": "1",
+          "name": "Test Merchant"
+        }
+      }
+    };
+
+    const result = await merchantApi.updateMerchant(token, variables);
+    expect(result.data).to.eql(expectedResult);
+  });
+
   it('returns an array of merchants', async function () {
     const variables = {
       "filter": {
@@ -80,6 +104,33 @@ describe('Merchant', function () {
     };
 
     const result = await merchantApi.createMerchantUser(token, variables);
+    expect(result.data).to.eql(expectedResult);
+  });
+
+  it('updates a merchant user', async function () {
+    const variables = {
+      "C_MerchantUser_ID": 1,
+      "input": {
+        "isActive": true,
+        "C_Merchant_ID": 1,
+        "C_User_ID": 1
+      }
+    };
+
+    const expectedResult = {
+      "data": {
+        "updateMerchantUser": {
+          "merchant": {
+            "name": "Test Merchant"
+          },
+          "user": {
+            "name": "Test User"
+          }
+        }
+      }
+    };
+
+    const result = await merchantApi.updateMerchantUser(token, variables);
     expect(result.data).to.eql(expectedResult);
   });
 

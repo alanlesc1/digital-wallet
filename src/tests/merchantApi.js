@@ -26,6 +26,31 @@ export const createMerchant = async (token, variables) =>
       },
     });
 
+const UPDATE_MERCHANT_GRAPHQL = `mutation updateMerchant($C_Merchant_ID: ID!, $input: MerchantInput!) {
+  updateMerchant(C_Merchant_ID: $C_Merchant_ID, input: $input) {
+    ... on Merchant {
+      C_Merchant_ID
+      name
+    }
+    ... on Error {
+      __typename
+      message
+    }
+  }
+}
+`;
+
+export const updateMerchant = async (token, variables) =>
+  axios.post(API_URL, {
+    query: UPDATE_MERCHANT_GRAPHQL,
+    variables,
+  },
+    {
+      headers: {
+        'Authorization': 'Bearer ' + token,
+      },
+    });
+
 const RETURN_MERCHANTS_GRAPHQL = `query merchants($filter: MerchantFilter!) {
   merchants(filter: $filter) {
     __typename
@@ -77,6 +102,35 @@ const CREATE_MERCHANT_USER_GRAPHQL = `mutation createMerchantUser($input: Mercha
 export const createMerchantUser = async (token, variables) =>
   axios.post(API_URL, {
     query: CREATE_MERCHANT_USER_GRAPHQL,
+    variables,
+  },
+    {
+      headers: {
+        'Authorization': 'Bearer ' + token,
+      },
+    });
+
+const UPDATE_MERCHANT_USER_GRAPHQL = `mutation updateMerchantUser($C_MerchantUser_ID: ID!, $input: MerchantUserInput!) {
+  updateMerchantUser(C_MerchantUser_ID: $C_MerchantUser_ID, input: $input) {
+    ... on MerchantUser {
+      merchant {
+          name
+      }
+      user {
+          name
+      }
+    }
+    ... on Error {
+      __typename
+      message
+    }
+  }
+}
+`;
+
+export const updateMerchantUser = async (token, variables) =>
+  axios.post(API_URL, {
+    query: UPDATE_MERCHANT_USER_GRAPHQL,
     variables,
   },
     {
