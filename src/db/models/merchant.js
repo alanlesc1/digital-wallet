@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      MMerchant.hasMany(models.MMerchantUser, {
+        foreignKey: 'C_Merchant_ID',
+      });
     }
   }
   MMerchant.init({
