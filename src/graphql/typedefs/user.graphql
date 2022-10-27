@@ -17,6 +17,8 @@ type User implements Timestamps {
 }
 
 input UserInput {
+  isActive: Boolean
+  name: String
   phone: String
   documentType: String
   documentNo: String
