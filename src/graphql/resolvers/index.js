@@ -3,6 +3,8 @@ import { userQRCodeQueries, userQRCodeMutations, userQRCodeFields } from './user
 import { userPaymentMethodQueries, userPaymentMethodMutations, userPaymentMethodFields } from './userpaymentmethod';
 import { merchantQueries, merchantMutations, merchantFields } from './merchant';
 import { merchantUserQueries, merchantUserMutations, merchantUserFields } from './merchantuser';
+import { eventQueries, eventMutations, eventFields } from './event';
+import { eventMerchantQueries, eventMerchantMutations, eventMerchantFields } from './eventmerchant';
 
 const resolvers = {
   Query: {
@@ -11,6 +13,8 @@ const resolvers = {
     ...userPaymentMethodQueries,
     ...merchantQueries,
     ...merchantUserQueries,
+    ...eventQueries,
+    ...eventMerchantQueries,
   },
   Mutation: {
     ...userMutations,
@@ -18,12 +22,16 @@ const resolvers = {
     ...userPaymentMethodMutations,
     ...merchantMutations,
     ...merchantUserMutations,
+    ...eventMutations,
+    ...eventMerchantMutations,
   },
   ...userFields,
   ...userQRCodeFields,
   ...userPaymentMethodFields,
   ...merchantFields,
   ...merchantUserFields,
+  ...eventFields,
+  ...eventMerchantFields,
 };
 
 export default resolvers;

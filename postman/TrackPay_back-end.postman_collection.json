@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d2e02d26-4a61-4510-8982-669d64ec4c9c",
+		"_postman_id": "3272e5a4-f573-4efb-8bb3-573763414b3e",
 		"name": "TrackPay back-end",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -410,6 +410,155 @@
 							"graphql": {
 								"query": "query merchantUsers($filter: MerchantUserFilter!) {\n  merchantUsers(filter: $filter) {\n    __typename\n    ... on MerchantUsers {\n      merchantUsers {\n        merchant {\n            name\n        }\n        user {\n            name\n        }\n      }\n    }\n    ... on MerchantUserResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
 								"variables": "{\n    \"filter\": {\n        \"C_Merchant_ID\": 1\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Event",
+			"item": [
+				{
+					"name": "Create event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createEvent($input: EventInput!) {\n  createEvent(input: $input) {\n    ... on Event {\n      C_Event_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"input\": {\n        \"name\": \"Test Event\",\n        \"startDate\": \"2030-12-31 00:00:00\",\n        \"endDate\": \"2030-12-31 23:59:59\"\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateEvent($C_Event_ID: ID!, $input: EventInput!) {\n  updateEvent(C_Event_ID: $C_Event_ID, input: $input) {\n    ... on Event {\n      C_Event_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"C_Event_ID\": 1,\n    \"input\": {\n        \"isActive\": true,\n        \"name\": \"Test Event\",\n        \"startDate\": \"2030-12-31 00:00:00\",\n        \"endDate\": \"2030-12-31 23:59:59\"\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return events",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query events($filter: EventFilter!) {\n  events(filter: $filter) {\n    __typename\n    ... on Events {\n      events {\n        name\n      }\n    }\n    ... on EventResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"filter\": {\n        \"publicId\": \"VDIXZF7CCBUN\"\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create event merchant",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createEventMerchant($input: EventMerchantInput!) {\n  createEventMerchant(input: $input) {\n    ... on EventMerchant {\n      event {\n          name\n      }\n      merchant {\n          name\n      }\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"input\": {\n        \"C_Event_ID\" : 1,\n        \"C_Merchant_ID\": 1\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update event merchant",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateEventMerchant($C_EventMerchant_ID: ID!, $input: EventMerchantInput!) {\n  updateEventMerchant(C_EventMerchant_ID: $C_EventMerchant_ID, input: $input) {\n    ... on EventMerchant {\n      event {\n          name\n      }\n      merchant {\n          name\n      }\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"C_EventMerchant_ID\": 1,\n    \"input\": {\n        \"isActive\": true,\n        \"C_Event_ID\" : 1,\n        \"C_Merchant_ID\": 1\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return event merchants",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query eventMerchants($filter: EventMerchantFilter!) {\n  eventMerchants(filter: $filter) {\n    __typename\n    ... on EventMerchants {\n      eventMerchants {\n        event {\n            name\n        }\n        merchant {\n            name\n        }\n      }\n    }\n    ... on EventMerchantResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"filter\": {\n        \"C_Event_ID\": 1\n    }\n}"
 							}
 						},
 						"url": {

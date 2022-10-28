@@ -1,0 +1,35 @@
+type EventMerchant {
+  C_EventMerchant_ID: ID!
+  C_EventMerchant_UU: String!
+  created: Date!
+  updated: Date!
+  isActive: Boolean!
+  event: Event!
+  merchant: Merchant! 
+}
+
+input EventMerchantInput {
+  isActive: Boolean
+  C_Event_ID: ID
+  C_Merchant_ID: ID
+}
+
+input EventMerchantFilter {
+  isActive: Boolean
+  C_Event_ID: ID
+  C_Merchant_ID: ID
+}
+
+type EventMerchants { 
+  eventMerchants: [EventMerchant]!
+}
+
+type EventMerchantResultError implements Error {
+  message: String!
+}
+
+union EventMerchantResult = EventMerchant | 
+  EventMerchants |
+  EventMerchantResultError | 
+  NotAuthenticatedError |
+  NotAuthorizedError

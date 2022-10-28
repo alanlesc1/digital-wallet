@@ -1,0 +1,45 @@
+type Event {
+  C_Event_ID: ID!
+  C_Event_UU: String!
+  created: Date!
+  updated: Date!
+  isActive: Boolean!
+  publicId: String! 
+  name: String!
+  startDate: Date!
+  endDate: Date!
+}
+
+input EventInput {
+  isActive: Boolean
+  name: String
+  startDate: Date
+  endDate: Date
+}
+
+input EventFilter {
+  isActive: Boolean
+  publicId: String!
+  name: String
+  startDate: Date
+  endDate: Date
+}
+
+type Events { 
+  events: [Event]!
+}
+
+type EventNotFoundError implements Error {
+  message: String!
+}
+
+type EventResultError implements Error {
+  message: String!
+}
+
+union EventResult = Event | 
+  Events |
+  EventNotFoundError | 
+  EventResultError | 
+  NotAuthenticatedError |
+  NotAuthorizedError

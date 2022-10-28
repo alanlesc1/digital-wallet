@@ -6,31 +6,28 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class MMerchant extends Model {
+  class MEvent extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      MMerchant.hasMany(models.MMerchantUser, {
-        foreignKey: 'C_Merchant_ID',
-      });
-      MMerchant.hasMany(models.MEventMerchant, {
-        foreignKey: 'C_Merchant_ID',
+      MEvent.hasMany(models.MEventMerchant, {
+        foreignKey: 'C_Event_ID',
       });
     }
   }
-  MMerchant.init({
-    C_Merchant_ID: {
+  MEvent.init({
+    C_Event_ID: {
       type: DataTypes.INTEGER,
-      field: 'c_merchant_id',
+      field: 'c_event_id',
       primaryKey: true,
       autoIncrement: true
     },
-    C_Merchant_UU: {
+    C_Event_UU: {
       type: DataTypes.UUID,
-      field: 'c_merchant_uu',
+      field: 'c_event_uu',
       allowNull: false,
       defaultValue: DataTypes.UUIDV4
     },
@@ -56,32 +53,22 @@ module.exports = (sequelize, DataTypes) => {
         min: 5
       }
     },
-    documentType: {
-      type: DataTypes.STRING(4),
-      field: 'documenttype',
-      allowNull: true,
-      validate: {
-        isIn: {
-          args: [[
-            'CPF',
-            'CNPJ',
-          ]],
-          msg: "Must be one of 'CPF', 'CNPJ'"
-        }
-      }
+    startDate: {
+      field: 'startdate',
+      allowNull: false,
+      type: DataTypes.DATE
     },
-    documentNo: {
-      type: DataTypes.STRING(14),
-      field: 'documentno',
-      unique: true,
-      allowNull: true,
+    endDate: {
+      field: 'enddate',
+      allowNull: false,
+      type: DataTypes.DATE
     },
   }, {
     sequelize,
-    modelName: 'MMerchant',
-    tableName: 'c_merchant',
+    modelName: 'MEvent',
+    tableName: 'c_event',
     createdAt: 'created',
     updatedAt: 'updated',
   });
-  return MMerchant;
+  return MEvent;
 };

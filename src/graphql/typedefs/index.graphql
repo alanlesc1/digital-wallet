@@ -15,6 +15,12 @@ type Query {
 
   # Merchant User
   merchantUsers(filter: MerchantUserFilter!): MerchantUserResult!
+
+  # Event
+  events(filter: EventFilter!): EventResult!
+
+  # Event Merchant
+  eventMerchants(filter: EventMerchantFilter!): EventMerchantResult!
 }
 
 type Mutation {
@@ -46,5 +52,15 @@ type Mutation {
   # Merchant User
   createMerchantUser(input: MerchantUserInput!): MerchantUserResult!
   updateMerchantUser(C_MerchantUser_ID: ID!, input: MerchantUserInput!): MerchantUserResult!
+  # ... does not allow 'delete'. Record should be deactivated
+
+  # Event
+  createEvent(input: EventInput!): EventResult!
+  updateEvent(C_Event_ID: ID!, input: EventInput!): EventResult!
+  # ... does not allow 'delete'. Record should be deactivated
+
+  # Event Merchant
+  createEventMerchant(input: EventMerchantInput!): EventMerchantResult!
+  updateEventMerchant(C_EventMerchant_ID: ID!, input: EventMerchantInput!): EventMerchantResult!
   # ... does not allow 'delete'. Record should be deactivated
 }
