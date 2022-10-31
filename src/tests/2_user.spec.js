@@ -1,18 +1,20 @@
 import { expect } from 'chai';
-import * as authApi from './authenticationApi';
-import * as userApi from './userApi';
+import * as api from './api';
+import * as authQuery from './authenticationQuery';
+import * as testData from './testData';
+import * as userQuery from './userQuery';
 
 describe('User', function () {
   let token;
 
   before(async function () {
     const loginVariables = {
-      "email": authApi.DEFAULT_USER_EMAIL,
-      "password": authApi.DEFAULT_USER_PASSWORD,
-      "fcmToken": authApi.DEFAULT_USER_FCM_TOKEN
+      "email": testData.DEFAULT_USER_EMAIL,
+      "password": testData.DEFAULT_USER_PASSWORD,
+      "fcmToken": testData.DEFAULT_USER_FCM_TOKEN
     };
 
-    const loginToken = await authApi.loginToken(loginVariables);
+    const loginToken = await api.request(authQuery.LOGIN_TOKEN_QUERY, loginVariables, null);
     token = loginToken.data.data.login.token;
   });
 
@@ -21,14 +23,14 @@ describe('User', function () {
       "data": {
         "me": {
           "__typename": "User",
-          "email": authApi.DEFAULT_USER_EMAIL,
+          "email": testData.DEFAULT_USER_EMAIL,
           "isActive": true,
-          "name": authApi.DEFAULT_USER_NAME,
+          "name": testData.DEFAULT_USER_NAME,
         }
       }
     };
 
-    const result = await userApi.returnCurrentUser(token);
+    const result = await api.request(userQuery.RETURN_CURRENT_USER_QUERY, null, token);
     expect(result.data).to.eql(expectedResult);
   });
 });

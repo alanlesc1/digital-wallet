@@ -1,27 +1,29 @@
 import { expect } from 'chai';
-import * as authApi from './authenticationApi';
-import * as eventApi from './eventApi';
+import * as api from './api';
+import * as authQuery from './authenticationQuery';
+import * as eventQuery from './eventQuery';
+import * as testData from './testData';
 
 describe('Event', function () {
   let token;
 
   before(async function () {
     const loginVariables = {
-      "email": authApi.DEFAULT_USER_EMAIL,
-      "password": authApi.DEFAULT_USER_PASSWORD,
-      "fcmToken": authApi.DEFAULT_USER_FCM_TOKEN
+      "email": testData.DEFAULT_USER_EMAIL,
+      "password": testData.DEFAULT_USER_PASSWORD,
+      "fcmToken": testData.DEFAULT_USER_FCM_TOKEN
     };
 
-    const loginToken = await authApi.loginToken(loginVariables);
+    const loginToken = await api.request(authQuery.LOGIN_TOKEN_QUERY, loginVariables, null);
     token = loginToken.data.data.login.token;
   });
 
   it('creates a new event', async function () {
     const variables = {
       "input": {
-        "name": authApi.DEFAULT_EVENT_NAME,
-        "startDate": authApi.DEFAULT_EVENT_START_DATE,
-        "endDate": authApi.DEFAULT_EVENT_END_DATE
+        "name": testData.DEFAULT_EVENT_NAME,
+        "startDate": testData.DEFAULT_EVENT_START_DATE,
+        "endDate": testData.DEFAULT_EVENT_END_DATE
       }
     };
 
@@ -29,12 +31,12 @@ describe('Event', function () {
       "data": {
         "createEvent": {
           "C_Event_ID": "1",
-          "name": authApi.DEFAULT_EVENT_NAME
+          "name": testData.DEFAULT_EVENT_NAME
         }
       }
     };
 
-    const result = await eventApi.createEvent(token, variables);
+    const result = await api.request(eventQuery.CREATE_EVENT_QUERY, variables, token);
     expect(result.data).to.eql(expectedResult);
   });
 
@@ -43,9 +45,9 @@ describe('Event', function () {
       "C_Event_ID": 1,
       "input": {
         "isActive": true,
-        "name": authApi.DEFAULT_EVENT_NAME,
-        "startDate": authApi.DEFAULT_EVENT_START_DATE,
-        "endDate": authApi.DEFAULT_EVENT_END_DATE
+        "name": testData.DEFAULT_EVENT_NAME,
+        "startDate": testData.DEFAULT_EVENT_START_DATE,
+        "endDate": testData.DEFAULT_EVENT_END_DATE
       }
     };
 
@@ -53,12 +55,12 @@ describe('Event', function () {
       "data": {
         "updateEvent": {
           "C_Event_ID": "1",
-          "name": authApi.DEFAULT_EVENT_NAME
+          "name": testData.DEFAULT_EVENT_NAME
         }
       }
     };
 
-    const result = await eventApi.updateEvent(token, variables);
+    const result = await api.request(eventQuery.UPDATE_EVENT_QUERY, variables, token);
     expect(result.data).to.eql(expectedResult);
   });
 
@@ -78,7 +80,7 @@ describe('Event', function () {
       }
     };
 
-    const result = await eventApi.returnEvents(token, variables);
+    const result = await api.request(eventQuery.RETURN_EVENTS_QUERY, variables, token);
     expect(result.data).to.eql(expectedResult);
   });
 
@@ -94,16 +96,16 @@ describe('Event', function () {
       "data": {
         "createEventMerchant": {
           "event": {
-            "name": authApi.DEFAULT_EVENT_NAME
+            "name": testData.DEFAULT_EVENT_NAME
           },
           "merchant": {
-            "name": authApi.DEFAULT_MERCHANT_NAME
+            "name": testData.DEFAULT_MERCHANT_NAME
           }
         }
       }
     };
 
-    const result = await eventApi.createEventMerchant(token, variables);
+    const result = await api.request(eventQuery.CREATE_EVENT_MERCHANT_QUERY, variables, token);
     expect(result.data).to.eql(expectedResult);
   });
 
@@ -121,16 +123,16 @@ describe('Event', function () {
       "data": {
         "updateEventMerchant": {
           "event": {
-            "name": authApi.DEFAULT_EVENT_NAME
+            "name": testData.DEFAULT_EVENT_NAME
           },
           "merchant": {
-            "name": "Test Merchant"
+            "name": testData.DEFAULT_MERCHANT_NAME
           }
         }
       }
     };
 
-    const result = await eventApi.updateEventMerchant(token, variables);
+    const result = await api.request(eventQuery.UPDATE_EVENT_MERCHANT_QUERY, variables, token);
     expect(result.data).to.eql(expectedResult);
   });
 
@@ -148,10 +150,10 @@ describe('Event', function () {
           "eventMerchants": [
             {
               "event": {
-                "name": authApi.DEFAULT_EVENT_NAME
+                "name": testData.DEFAULT_EVENT_NAME
               },
               "merchant": {
-                "name": authApi.DEFAULT_MERCHANT_NAME
+                "name": testData.DEFAULT_MERCHANT_NAME
               }
             }
           ]
@@ -159,7 +161,7 @@ describe('Event', function () {
       }
     };
 
-    const result = await eventApi.returnEventMerchants(token, variables);
+    const result = await api.request(eventQuery.RETURN_EVENT_MERCHANTS_QUERY, variables, token);
     expect(result.data).to.eql(expectedResult);
   });
 });

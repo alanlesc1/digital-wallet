@@ -1,14 +1,16 @@
 import { expect } from 'chai';
-import * as authApi from './authenticationApi';
+import * as authQuery from './authenticationQuery';
+import * as testData from './testData';
+import * as api from './api';
 import { sequelize, MUser, MUserRole } from '../db/models';
 
 describe('Authentication', function () {
   describe('Signup', function () {
     it('returns a SignupResultSuccess when user can be created', async function () {
       const variables = {
-        "name": authApi.DEFAULT_USER_NAME,
-        "email": authApi.DEFAULT_USER_EMAIL,
-        "password": authApi.DEFAULT_USER_PASSWORD
+        "name": testData.DEFAULT_USER_NAME,
+        "email": testData.DEFAULT_USER_EMAIL,
+        "password": testData.DEFAULT_USER_PASSWORD
       };
 
       const expectedResult = {
@@ -17,23 +19,23 @@ describe('Authentication', function () {
             "__typename": "SignupResultSuccess",
             "user": {
               "isActive": true,
-              "name": authApi.DEFAULT_USER_NAME,
-              "email": authApi.DEFAULT_USER_EMAIL,
+              "name": testData.DEFAULT_USER_NAME,
+              "email": testData.DEFAULT_USER_EMAIL,
               "isUserVerified": false
             }
           }
         }
       };
 
-      const result = await authApi.signup(variables);
+      const result = await api.request(authQuery.SIGNUP_QUERY, variables, null);
       expect(result.data).to.eql(expectedResult);
     });
 
     it('returns a SignupResultError when user already exists', async function () {
       const variables = {
-        "name": authApi.DEFAULT_USER_NAME,
-        "email": authApi.DEFAULT_USER_EMAIL,
-        "password": authApi.DEFAULT_USER_PASSWORD
+        "name": testData.DEFAULT_USER_NAME,
+        "email": testData.DEFAULT_USER_EMAIL,
+        "password": testData.DEFAULT_USER_PASSWORD
       };
 
       const expectedResult = {
@@ -45,7 +47,7 @@ describe('Authentication', function () {
         }
       };
 
-      const result = await authApi.signup(variables);
+      const result = await api.request(authQuery.SIGNUP_QUERY, variables, null);
       expect(result.data).to.eql(expectedResult);
     });
   });
@@ -53,7 +55,7 @@ describe('Authentication', function () {
   describe('Generate verification code', function () {
     it('returns a UserVerificationResultError when is a invalid email/password', async function () {
       const variables = {
-        "email": authApi.DEFAULT_USER_EMAIL,
+        "email": testData.DEFAULT_USER_EMAIL,
         "password": "wrongPassword"
       };
 
@@ -66,14 +68,14 @@ describe('Authentication', function () {
         }
       };
 
-      const result = await authApi.generateVerificationCode(variables);
+      const result = await api.request(authQuery.GENERATE_VERIFICATION_CODE_QUERY, variables, null);
       expect(result.data).to.eql(expectedResult);
     });
 
     it('returns a UserVerificationResultSuccess when verification code was generated', async function () {
       const variables = {
-        "email": authApi.DEFAULT_USER_EMAIL,
-        "password": authApi.DEFAULT_USER_PASSWORD
+        "email": testData.DEFAULT_USER_EMAIL,
+        "password": testData.DEFAULT_USER_PASSWORD
       };
 
       const expectedResult = {
@@ -82,15 +84,15 @@ describe('Authentication', function () {
             "__typename": "UserVerificationResultSuccess",
             "user": {
               "isActive": true,
-              "name": "Test User",
-              "email": "test@easytrackpay.com",
+              "name": testData.DEFAULT_USER_NAME,
+              "email": testData.DEFAULT_USER_EMAIL,
               "isUserVerified": false
             }
           }
         }
       };
 
-      const result = await authApi.generateVerificationCode(variables);
+      const result = await api.request(authQuery.GENERATE_VERIFICATION_CODE_QUERY, variables, null);
       expect(result.data).to.eql(expectedResult);
     });
   });
@@ -99,12 +101,12 @@ describe('Authentication', function () {
     it('returns a UserVerificationResultError when verification code is invalid', async function () {
       await sequelize.query('UPDATE C_User SET VerificationCode = ? WHERE Email = ?',
         {
-          replacements: ["1111", authApi.DEFAULT_USER_EMAIL]
+          replacements: ["1111", testData.DEFAULT_USER_EMAIL]
         });
 
       const variables = {
-        "email": authApi.DEFAULT_USER_EMAIL,
-        "password": authApi.DEFAULT_USER_PASSWORD,
+        "email": testData.DEFAULT_USER_EMAIL,
+        "password": testData.DEFAULT_USER_PASSWORD,
         "verificationCode": "0000"
       };
 
@@ -117,19 +119,19 @@ describe('Authentication', function () {
         }
       };
 
-      const result = await authApi.verifyUser(variables);
+      const result = await api.request(authQuery.VERIFY_USER_QUERY, variables, null);
       expect(result.data).to.eql(expectedResult);
     });
 
     it('returns a UserVerificationResultError when verification code is expired', async function () {
       await sequelize.query("UPDATE C_User SET VerificationCodeExp = NOW() - INTERVAL '1 DAY' WHERE Email = ?",
         {
-          replacements: [authApi.DEFAULT_USER_EMAIL]
+          replacements: [testData.DEFAULT_USER_EMAIL]
         });
 
       const variables = {
-        "email": authApi.DEFAULT_USER_EMAIL,
-        "password": authApi.DEFAULT_USER_PASSWORD,
+        "email": testData.DEFAULT_USER_EMAIL,
+        "password": testData.DEFAULT_USER_PASSWORD,
         "verificationCode": "1111"
       };
 
@@ -142,19 +144,19 @@ describe('Authentication', function () {
         }
       };
 
-      const result = await authApi.verifyUser(variables);
+      const result = await api.request(authQuery.VERIFY_USER_QUERY, variables, null);
       expect(result.data).to.eql(expectedResult);
 
       await sequelize.query("UPDATE C_User SET VerificationCodeExp = NOW() + INTERVAL '1 DAY' WHERE Email = ?",
         {
-          replacements: [authApi.DEFAULT_USER_EMAIL]
+          replacements: [testData.DEFAULT_USER_EMAIL]
         });
     });
 
     it('returns a UserVerificationResultSuccess when verification code is valid', async function () {
       const variables = {
-        "email": authApi.DEFAULT_USER_EMAIL,
-        "password": authApi.DEFAULT_USER_PASSWORD,
+        "email": testData.DEFAULT_USER_EMAIL,
+        "password": testData.DEFAULT_USER_PASSWORD,
         "verificationCode": "1111"
       };
 
@@ -164,28 +166,28 @@ describe('Authentication', function () {
             "__typename": "UserVerificationResultSuccess",
             "user": {
               "isActive": true,
-              "name": authApi.DEFAULT_USER_NAME,
-              "email": authApi.DEFAULT_USER_EMAIL,
+              "name": testData.DEFAULT_USER_NAME,
+              "email": testData.DEFAULT_USER_EMAIL,
               "isUserVerified": true
             }
           }
         }
       };
 
-      const result = await authApi.verifyUser(variables);
+      const result = await api.request(authQuery.VERIFY_USER_QUERY, variables, null);
       expect(result.data).to.eql(expectedResult);
     });
 
     it('checks that the default access role BUYER was created', async function () {
-      const user = await MUser.findOne({ where: { email: authApi.DEFAULT_USER_EMAIL } });
+      const user = await MUser.findOne({ where: { email: testData.DEFAULT_USER_EMAIL } });
       const userRole = await MUserRole.findOne({ where: { C_User_ID: user.C_User_ID } });
       expect(userRole.roleName).to.eql("BUY");
     });
 
     it('returns a UserVerificationResultError when verification code is already verified', async function () {
       const variables = {
-        "email": authApi.DEFAULT_USER_EMAIL,
-        "password": authApi.DEFAULT_USER_PASSWORD,
+        "email": testData.DEFAULT_USER_EMAIL,
+        "password": testData.DEFAULT_USER_PASSWORD,
         "verificationCode": "1111"
       };
 
@@ -198,7 +200,7 @@ describe('Authentication', function () {
         }
       };
 
-      const result = await authApi.verifyUser(variables);
+      const result = await api.request(authQuery.VERIFY_USER_QUERY, variables, null);
       expect(result.data).to.eql(expectedResult);
     });
   });
@@ -206,9 +208,9 @@ describe('Authentication', function () {
   describe('Login', function () {
     it('returns a LoginResultError when is a invalid email/password', async function () {
       const variables = {
-        "email": authApi.DEFAULT_USER_EMAIL,
+        "email": testData.DEFAULT_USER_EMAIL,
         "password": "wrongPassword",
-        "fcmToken": authApi.DEFAULT_USER_FCM_TOKEN
+        "fcmToken": testData.DEFAULT_USER_FCM_TOKEN
       };
 
       const expectedResult = {
@@ -220,15 +222,15 @@ describe('Authentication', function () {
         }
       };
 
-      const result = await authApi.login(variables);
+      const result = await api.request(authQuery.LOGIN_QUERY, variables, null);
       expect(result.data).to.eql(expectedResult);
     });
 
     it('returns a LoginResultSuccess when login was successful', async function () {
       const variables = {
-        "email": authApi.DEFAULT_USER_EMAIL,
-        "password": authApi.DEFAULT_USER_PASSWORD,
-        "fcmToken": authApi.DEFAULT_USER_FCM_TOKEN
+        "email": testData.DEFAULT_USER_EMAIL,
+        "password": testData.DEFAULT_USER_PASSWORD,
+        "fcmToken": testData.DEFAULT_USER_FCM_TOKEN
       };
 
       const expectedResult = {
@@ -237,8 +239,8 @@ describe('Authentication', function () {
             "__typename": "LoginResultSuccess",
             "user": {
               "isActive": true,
-              "name": authApi.DEFAULT_USER_NAME,
-              "email": authApi.DEFAULT_USER_EMAIL,
+              "name": testData.DEFAULT_USER_NAME,
+              "email": testData.DEFAULT_USER_EMAIL,
               "userRoles": [
                 {
                   "isActive": true,
@@ -250,7 +252,7 @@ describe('Authentication', function () {
         }
       };
 
-      const result = await authApi.login(variables);
+      const result = await api.request(authQuery.LOGIN_QUERY, variables, null);
       expect(result.data).to.eql(expectedResult);
     });
   });

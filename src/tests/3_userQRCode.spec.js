@@ -1,18 +1,20 @@
 import { expect } from 'chai';
-import * as authApi from './authenticationApi';
-import * as userQRCodeApi from './userQRCodeApi';
+import * as api from './api';
+import * as authQuery from './authenticationQuery';
+import * as testData from './testData';
+import * as userQRCodeQuery from './userQRCodeQuery';
 
 describe('User current QR Code', function () {
   let token;
 
   before(async function () {
     const loginVariables = {
-      "email": authApi.DEFAULT_USER_EMAIL,
-      "password": authApi.DEFAULT_USER_PASSWORD,
-      "fcmToken": authApi.DEFAULT_USER_FCM_TOKEN
+      "email": testData.DEFAULT_USER_EMAIL,
+      "password": testData.DEFAULT_USER_PASSWORD,
+      "fcmToken": testData.DEFAULT_USER_FCM_TOKEN
     };
 
-    const loginToken = await authApi.loginToken(loginVariables);
+    const loginToken = await api.request(authQuery.LOGIN_TOKEN_QUERY, loginVariables, null);
     token = loginToken.data.data.login.token;
   });
 
@@ -30,7 +32,7 @@ describe('User current QR Code', function () {
       }
     };
 
-    const result = await userQRCodeApi.returnUserCurrentQrCode(token, variables);
+    const result = await api.request(userQRCodeQuery.RETURN_USER_CURRENT_QRCODE_QUERY, variables, token);
     expect(result.data).to.eql(expectedResult);
   });
 
@@ -49,7 +51,7 @@ describe('User current QR Code', function () {
       }
     };
 
-    const result = await userQRCodeApi.renewUserCurrentQrCode(token, variables);
+    const result = await api.request(userQRCodeQuery.RENEW_USER_CURRENT_QRCODE_QUERY, variables, token);
     expect(result.data).to.eql(expectedResult);
   });
 });

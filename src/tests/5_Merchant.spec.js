@@ -1,27 +1,29 @@
 import { expect } from 'chai';
-import * as authApi from './authenticationApi';
-import * as merchantApi from './merchantApi';
+import * as api from './api';
+import * as authQuery from './authenticationQuery';
+import * as merchantQuery from './merchantQuery';
+import * as testData from './testData';
 
 describe('Merchant', function () {
   let token;
 
   before(async function () {
     const loginVariables = {
-      "email": authApi.DEFAULT_USER_EMAIL,
-      "password": authApi.DEFAULT_USER_PASSWORD,
-      "fcmToken": authApi.DEFAULT_USER_FCM_TOKEN
+      "email": testData.DEFAULT_USER_EMAIL,
+      "password": testData.DEFAULT_USER_PASSWORD,
+      "fcmToken": testData.DEFAULT_USER_FCM_TOKEN
     };
 
-    const loginToken = await authApi.loginToken(loginVariables);
+    const loginToken = await api.request(authQuery.LOGIN_TOKEN_QUERY, loginVariables, null);
     token = loginToken.data.data.login.token;
   });
 
   it('creates a new merchant', async function () {
     const variables = {
       "input": {
-        "name": authApi.DEFAULT_MERCHANT_NAME,
-        "documentType": authApi.DEFAULT_MERCHANT_DOCUMENT_TYPE,
-        "documentNo": authApi.DEFAULT_MERCHANT_DOCUMENT_NO
+        "name": testData.DEFAULT_MERCHANT_NAME,
+        "documentType": testData.DEFAULT_MERCHANT_DOCUMENT_TYPE,
+        "documentNo": testData.DEFAULT_MERCHANT_DOCUMENT_NO
       }
     };
 
@@ -29,12 +31,12 @@ describe('Merchant', function () {
       "data": {
         "createMerchant": {
           "C_Merchant_ID": "1",
-          "name": authApi.DEFAULT_MERCHANT_NAME
+          "name": testData.DEFAULT_MERCHANT_NAME
         }
       }
     };
 
-    const result = await merchantApi.createMerchant(token, variables);
+    const result = await api.request(merchantQuery.CREATE_MERCHANT_QUERY, variables, token);
     expect(result.data).to.eql(expectedResult);
   });
 
@@ -43,9 +45,9 @@ describe('Merchant', function () {
       "C_Merchant_ID": 1,
       "input": {
         "isActive": true,
-        "name": "Test Merchant",
-        "documentType": "CNPJ",
-        "documentNo": "07087842000171"
+        "name": testData.DEFAULT_MERCHANT_NAME,
+        "documentType": testData.DEFAULT_MERCHANT_DOCUMENT_TYPE,
+        "documentNo": testData.DEFAULT_MERCHANT_DOCUMENT_NO
       }
     };
 
@@ -53,12 +55,12 @@ describe('Merchant', function () {
       "data": {
         "updateMerchant": {
           "C_Merchant_ID": "1",
-          "name": "Test Merchant"
+          "name": testData.DEFAULT_MERCHANT_NAME
         }
       }
     };
 
-    const result = await merchantApi.updateMerchant(token, variables);
+    const result = await api.request(merchantQuery.UPDATE_MERCHANT_QUERY, variables, token);
     expect(result.data).to.eql(expectedResult);
   });
 
@@ -78,7 +80,7 @@ describe('Merchant', function () {
       }
     };
 
-    const result = await merchantApi.returnMerchants(token, variables);
+    const result = await api.request(merchantQuery.RETURN_MERCHANTS_QUERY, variables, token);
     expect(result.data).to.eql(expectedResult);
   });
 
@@ -94,16 +96,16 @@ describe('Merchant', function () {
       "data": {
         "createMerchantUser": {
           "merchant": {
-            "name": authApi.DEFAULT_MERCHANT_NAME
+            "name": testData.DEFAULT_MERCHANT_NAME
           },
           "user": {
-            "name": authApi.DEFAULT_USER_NAME
+            "name": testData.DEFAULT_USER_NAME
           }
         }
       }
     };
 
-    const result = await merchantApi.createMerchantUser(token, variables);
+    const result = await api.request(merchantQuery.CREATE_MERCHANT_USER_QUERY, variables, token);
     expect(result.data).to.eql(expectedResult);
   });
 
@@ -121,16 +123,16 @@ describe('Merchant', function () {
       "data": {
         "updateMerchantUser": {
           "merchant": {
-            "name": "Test Merchant"
+            "name": testData.DEFAULT_MERCHANT_NAME
           },
           "user": {
-            "name": "Test User"
+            "name": testData.DEFAULT_USER_NAME
           }
         }
       }
     };
 
-    const result = await merchantApi.updateMerchantUser(token, variables);
+    const result = await api.request(merchantQuery.UPDATE_MERCHANT_USER_QUERY, variables, token);
     expect(result.data).to.eql(expectedResult);
   });
 
@@ -148,10 +150,10 @@ describe('Merchant', function () {
           "merchantUsers": [
             {
               "merchant": {
-                "name": authApi.DEFAULT_MERCHANT_NAME
+                "name": testData.DEFAULT_MERCHANT_NAME
               },
               "user": {
-                "name": authApi.DEFAULT_USER_NAME
+                "name": testData.DEFAULT_USER_NAME
               }
             }
           ]
@@ -159,7 +161,7 @@ describe('Merchant', function () {
       }
     };
 
-    const result = await merchantApi.returnMerchantUsers(token, variables);
+    const result = await api.request(merchantQuery.RETURN_MERCHANT_USERS_QUERY, variables, token);
     expect(result.data).to.eql(expectedResult);
   });
 });
