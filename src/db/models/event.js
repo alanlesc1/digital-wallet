@@ -53,6 +53,10 @@ module.exports = (sequelize, DataTypes) => {
         min: 5
       }
     },
+    description: {
+      type: DataTypes.STRING(2000),
+      allowNull: true,
+    },
     startDate: {
       field: 'startdate',
       allowNull: false,

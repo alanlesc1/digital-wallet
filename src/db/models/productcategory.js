@@ -48,6 +48,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
+    description: {
+      type: DataTypes.STRING(2000),
+      allowNull: true,
+    },
     parent_ProductCategory_ID: {
       type: DataTypes.INTEGER,
       field: 'parent_productcategory_id',

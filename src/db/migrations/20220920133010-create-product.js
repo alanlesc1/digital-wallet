@@ -36,12 +36,16 @@ module.exports = {
           unique: true,
         },
         value: {
-          allowNull: true,
+          allowNull: false,
           type: Sequelize.STRING(60)
         },
         name: {
-          allowNull: true,
+          allowNull: false,
           type: Sequelize.STRING(255)
+        },
+        description: {
+          allowNull: true,
+          type: Sequelize.STRING(2000)
         },
         producttype: {
           allowNull: false,
