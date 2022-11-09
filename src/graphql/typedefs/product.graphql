@@ -17,7 +17,7 @@ input ProductInput {
   value: String!
   name: String!
   description: String
-  productType: String!
+  productType: String
   M_ProductCategory_ID: ID
 }
 

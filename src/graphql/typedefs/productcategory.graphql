@@ -12,8 +12,8 @@ type ProductCategory {
 
 input ProductCategoryInput {
   isActive: Boolean
-  value: String!
-  name: String!
+  value: String
+  name: String
   description: String
   parent_ProductCategory_ID: ID
 }

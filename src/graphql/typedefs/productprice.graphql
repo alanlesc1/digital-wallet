@@ -13,7 +13,7 @@ input ProductPriceInput {
   isActive: Boolean
   M_PriceList_ID: ID
   M_Product_ID: ID
-  listPrice: Float!
+  listPrice: Float
 }
 
 input ProductPriceFilter {

@@ -14,13 +14,13 @@ type Merchant {
 input MerchantInput {
   isActive: Boolean
   name: String!
-  documentType: String!
+  documentType: String
   documentNo: String!
 }
 
 input MerchantFilter {
   isActive: Boolean
-  publicId: String!
+  publicId: String
   name: String
   documentType: String
   documentNo: String
