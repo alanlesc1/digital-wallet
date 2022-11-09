@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      MEvent.belongsTo(models.MPriceList, {
+        foreignKey: 'M_PriceList_ID'
+      });
       MEvent.hasMany(models.MEventMerchant, {
         foreignKey: 'C_Event_ID',
       });
@@ -66,6 +69,14 @@ module.exports = (sequelize, DataTypes) => {
       field: 'enddate',
       allowNull: false,
       type: DataTypes.DATE
+    },
+    M_PriceList_ID: {
+      type: DataTypes.INTEGER,
+      field: 'm_pricelist_id',
+      references: {
+        model: 'm_pricelist',
+        key: 'm_pricelist_id'
+      }
     },
   }, {
     sequelize,

@@ -8,13 +8,13 @@ module.exports = {
 
     try {
       const schema = {
-        c_event_id: {
+        m_pricelist_id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        c_event_uu: {
+        m_pricelist_uu: {
           allowNull: false,
           type: Sequelize.UUID,
           default: Sequelize.UUID
@@ -28,51 +28,26 @@ module.exports = {
           type: Sequelize.DATE
         },
         isactive: {
-          type: Sequelize.BOOLEAN,
-          allowNull: false,
-          defaultValue: true,
-        },
-        publicid: {
-          allowNull: false,
-          type: Sequelize.STRING(12),
-          unique: true,
+          type: Sequelize.BOOLEAN
         },
         name: {
           allowNull: false,
-          type: Sequelize.STRING(120)
+          type: Sequelize.STRING(255)
         },
         description: {
           allowNull: true,
           type: Sequelize.STRING(2000)
         },
-        startdate: {
-          allowNull: false,
-          type: Sequelize.DATE
-        },
-        enddate: {
-          allowNull: false,
-          type: Sequelize.DATE
-        },
-        m_pricelist_id: {
-          type: Sequelize.DataTypes.INTEGER,
-          references: {
-            model: {
-              tableName: 'm_pricelist'
-            },
-            key: 'm_pricelist_id'
-          },
-          allowNull: true
-        },
       };
 
-      await queryInterface.createTable('c_event', schema, { trx });
+      await queryInterface.createTable('m_pricelist', schema, { trx });
 
       await queryInterface.bulkInsert('ad_table', [
         {
           ad_table_uu: uuidv4(),
           created: new Date(),
           updated: new Date(),
-          tablename: 'c_event'
+          tablename: 'm_pricelist'
         },
       ], { trx });
 
@@ -83,6 +58,6 @@ module.exports = {
     }
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('c_event');
+    await queryInterface.dropTable('m_pricelist');
   }
 };

@@ -1,0 +1,50 @@
+type Product {
+  M_Product_ID: ID!
+  M_Product_UU: String!
+  created: Date!
+  updated: Date!
+  isActive: Boolean!
+  publicId: String! 
+  value: String!
+  name: String!
+  description: String
+  productType: String!
+  productCategory: ProductCategory!
+}
+
+input ProductInput {
+  isActive: Boolean
+  value: String!
+  name: String!
+  description: String
+  productType: String!
+  M_ProductCategory_ID: ID
+}
+
+input ProductFilter {
+  isActive: Boolean
+  value: String
+  name: String
+  description: String
+  productType: String
+  M_ProductCategory_ID: ID
+}
+
+type Products { 
+  products: [Product]!
+}
+
+type ProductNotFoundError implements Error {
+  message: String!
+}
+
+type ProductResultError implements Error {
+  message: String!
+}
+
+union ProductResult = Product | 
+  Products |
+  ProductNotFoundError | 
+  ProductResultError | 
+  NotAuthenticatedError |
+  NotAuthorizedError

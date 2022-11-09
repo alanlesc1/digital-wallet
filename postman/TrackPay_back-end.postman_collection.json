@@ -427,6 +427,299 @@
 			]
 		},
 		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Create product category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createProductCategory($input: ProductCategoryInput!) {\n  createProductCategory(input: $input) {\n    ... on ProductCategory {\n      M_ProductCategory_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"input\": {\n        \"value\": \"1\",\n        \"name\": \"Test Product Category\"\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update product category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateProductCategory($M_ProductCategory_ID: ID!, $input: ProductCategoryInput!) {\n  updateProductCategory(M_ProductCategory_ID: $M_ProductCategory_ID, input: $input) {\n    ... on ProductCategory {\n      M_ProductCategory_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"M_ProductCategory_ID\": 1,\n    \"input\": {\n        \"value\": \"1\",\n        \"name\": \"Test Product Category\"\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return product categories",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query productCategories($filter: ProductCategoryFilter!) {\n  productCategories(filter: $filter) {\n    __typename\n    ... on ProductCategories {\n      productCategories {\n        name\n      }\n    }\n    ... on ProductCategoryResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"filter\": {\n        \"name\": \"Test Product Category\"\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createProduct($input: ProductInput!) {\n  createProduct(input: $input) {\n    ... on Product {\n      M_Product_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"input\": {\n        \"value\": \"1\",\n        \"name\": \"Test Product\",\n        \"productType\": \"I\",\n        \"M_ProductCategory_ID\": 1\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateProduct($M_Product_ID: ID!, $input: ProductInput!) {\n  updateProduct(M_Product_ID: $M_Product_ID, input: $input) {\n    ... on Product {\n      M_Product_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"M_Product_ID\": 1,\n    \"input\": {\n        \"value\": \"1\",\n        \"name\": \"Test Product\",\n        \"productType\": \"I\",\n        \"M_ProductCategory_ID\": 1\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return products",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query products($filter: ProductFilter!) {\n  products(filter: $filter) {\n    __typename\n    ... on Products {\n      products {\n        name\n      }\n    }\n    ... on ProductResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"filter\": {\n        \"name\": \"Test Product\"\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create price list",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createPriceList($input: PriceListInput!) {\n  createPriceList(input: $input) {\n    ... on PriceList {\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"input\": {\n        \"name\": \"Test Price List\"\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update price list",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updatePriceList($M_PriceList_ID: ID!, $input: PriceListInput!) {\n  updatePriceList(M_PriceList_ID: $M_PriceList_ID, input: $input) {\n    ... on PriceList {\n      M_PriceList_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"M_PriceList_ID\": 1,\n    \"input\": {\n        \"name\": \"Test Price List\"\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return price lists",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query priceLists($filter: PriceListFilter!) {\n  priceLists(filter: $filter) {\n    __typename\n    ... on PriceLists {\n      priceLists {\n        name\n      }\n    }\n    ... on PriceListResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"filter\": {\n        \"name\": \"Test Price List\"\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create product price",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createProductPrice($input: ProductPriceInput!) {\n  createProductPrice(input: $input) {\n    ... on ProductPrice {\n      priceList {\n          name\n      }\n      product {\n          name\n      }\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"input\": {\n        \"M_PriceList_ID\" : 1,\n        \"M_Product_ID\": 1,\n        \"listPrice\": 12.50\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update product price",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateProductPrice($M_ProductPrice_ID: ID!, $input: ProductPriceInput!) {\n  updateProductPrice(M_ProductPrice_ID: $M_ProductPrice_ID, input: $input) {\n    ... on ProductPrice {\n      priceList {\n          name\n      }\n      product {\n          name\n      }\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"M_ProductPrice_ID\": 1,\n    \"input\": {\n        \"listPrice\": 12.50\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return product prices",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query productPrices($filter: ProductPriceFilter!) {\n  productPrices(filter: $filter) {\n    __typename\n    ... on ProductPrices {\n      productPrices {\n        priceList {\n            name\n        }\n        product {\n            name\n        }\n      }\n    }\n    ... on ProductPriceResultError {\n      message\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
+								"variables": "{\n    \"filter\": {\n        \"M_PriceList_ID\": 1\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/graphql",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Event",
 			"item": [
 				{
@@ -438,7 +731,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation createEvent($input: EventInput!) {\n  createEvent(input: $input) {\n    ... on Event {\n      C_Event_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
-								"variables": "{\n    \"input\": {\n        \"name\": \"Test Event\",\n        \"startDate\": \"2030-12-31 00:00:00\",\n        \"endDate\": \"2030-12-31 23:59:59\"\n    }\n}"
+								"variables": "{\n    \"input\": {\n        \"name\": \"Test Event\",\n        \"startDate\": \"2030-12-31 00:00:00\",\n        \"endDate\": \"2030-12-31 23:59:59\",\n        \"M_PriceList_ID\": 1\n    }\n}"
 							}
 						},
 						"url": {
@@ -462,7 +755,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation updateEvent($C_Event_ID: ID!, $input: EventInput!) {\n  updateEvent(C_Event_ID: $C_Event_ID, input: $input) {\n    ... on Event {\n      C_Event_ID\n      name\n    }\n    ... on Error {\n      __typename\n      message\n    }\n  }\n}\n",
-								"variables": "{\n    \"C_Event_ID\": 1,\n    \"input\": {\n        \"isActive\": true,\n        \"name\": \"Test Event\",\n        \"startDate\": \"2030-12-31 00:00:00\",\n        \"endDate\": \"2030-12-31 23:59:59\"\n    }\n}"
+								"variables": "{\n    \"C_Event_ID\": 1,\n    \"input\": {\n        \"isActive\": true,\n        \"name\": \"Test Event\",\n        \"startDate\": \"2030-12-31 00:00:00\",\n        \"endDate\": \"2030-12-31 23:59:59\",\n        \"M_PriceList_ID\": 1\n    }\n}"
 							}
 						},
 						"url": {

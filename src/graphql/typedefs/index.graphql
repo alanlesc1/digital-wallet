@@ -16,6 +16,18 @@ type Query {
   # Merchant User
   merchantUsers(filter: MerchantUserFilter!): MerchantUserResult!
 
+  # Product Category
+  productCategories(filter: ProductCategoryFilter!): ProductCategoryResult!
+
+  # Product
+  products(filter: ProductFilter!): ProductResult!
+
+  # Price List
+  priceLists(filter: PriceListFilter!): PriceListResult!
+
+  # Product Price
+  productPrices(filter: ProductPriceFilter!): ProductPriceResult!
+
   # Event
   events(filter: EventFilter!): EventResult!
 
@@ -52,6 +64,26 @@ type Mutation {
   # Merchant User
   createMerchantUser(input: MerchantUserInput!): MerchantUserResult!
   updateMerchantUser(C_MerchantUser_ID: ID!, input: MerchantUserInput!): MerchantUserResult!
+  # ... does not allow 'delete'. Record should be deactivated
+
+  # Product Category
+  createProductCategory(input: ProductCategoryInput!): ProductCategoryResult!
+  updateProductCategory(M_ProductCategory_ID: ID!, input: ProductCategoryInput!): ProductCategoryResult!
+  # ... does not allow 'delete'. Record should be deactivated
+
+  # Product
+  createProduct(input: ProductInput!): ProductResult!
+  updateProduct(M_Product_ID: ID!, input: ProductInput!): ProductResult!
+  # ... does not allow 'delete'. Record should be deactivated
+
+  # Price List
+  createPriceList(input: PriceListInput!): PriceListResult!
+  updatePriceList(M_PriceList_ID: ID!, input: PriceListInput!): PriceListResult!
+  # ... does not allow 'delete'. Record should be deactivated
+
+  # Product Price
+  createProductPrice(input: ProductPriceInput!): ProductPriceResult!
+  updateProductPrice(M_ProductPrice_ID: ID!, input: ProductPriceInput!): ProductPriceResult!
   # ... does not allow 'delete'. Record should be deactivated
 
   # Event

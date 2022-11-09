@@ -1,0 +1,41 @@
+type PriceList {
+  M_PriceList_ID: ID!
+  M_PriceList_UU: String!
+  created: Date!
+  updated: Date!
+  isActive: Boolean!
+  name: String!
+  description: String
+  productPrices: [ProductPrice]!
+}
+
+input PriceListInput {
+  isActive: Boolean
+  name: String!
+  description: String
+}
+
+input PriceListFilter {
+  isActive: Boolean
+  name: String
+  description: String
+}
+
+type PriceLists { 
+  priceLists: [PriceList]!
+}
+
+type PriceListNotFoundError implements Error {
+  message: String!
+}
+
+type PriceListResultError implements Error {
+  message: String!
+}
+
+union PriceListResult = PriceList | 
+  PriceLists |
+  PriceListNotFoundError | 
+  PriceListResultError | 
+  NotAuthenticatedError |
+  NotAuthorizedError

@@ -8,6 +8,7 @@ type Event {
   name: String!
   startDate: Date!
   endDate: Date!
+  priceList: PriceList
 }
 
 input EventInput {
@@ -15,6 +16,7 @@ input EventInput {
   name: String
   startDate: Date
   endDate: Date
+  M_PriceList_ID: ID
 }
 
 input EventFilter {
@@ -23,6 +25,7 @@ input EventFilter {
   name: String
   startDate: Date
   endDate: Date
+  M_PriceList_ID: ID
 }
 
 type Events { 

@@ -1,0 +1,42 @@
+type ProductPrice {
+  M_ProductPrice_ID: ID!
+  M_ProductPrice_UU: String!
+  created: Date!
+  updated: Date!
+  isActive: Boolean!
+  priceList: PriceList!
+  product: Product!
+  listPrice: Float!
+}
+
+input ProductPriceInput {
+  isActive: Boolean
+  M_PriceList_ID: ID
+  M_Product_ID: ID
+  listPrice: Float!
+}
+
+input ProductPriceFilter {
+  isActive: Boolean
+  M_PriceList_ID: ID
+  M_Product_ID: ID
+}
+
+type ProductPrices { 
+  productPrices: [ProductPrice]!
+}
+
+type ProductPriceNotFoundError implements Error {
+  message: String!
+}
+
+type ProductPriceResultError implements Error {
+  message: String!
+}
+
+union ProductPriceResult = ProductPrice | 
+  ProductPrices |
+  ProductPriceNotFoundError | 
+  ProductPriceResultError | 
+  NotAuthenticatedError |
+  NotAuthorizedError

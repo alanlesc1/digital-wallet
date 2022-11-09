@@ -8,13 +8,13 @@ module.exports = {
 
     try {
       const schema = {
-        c_event_id: {
+        m_productprice_id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        c_event_uu: {
+        m_productprice_uu: {
           allowNull: false,
           type: Sequelize.UUID,
           default: Sequelize.UUID
@@ -28,30 +28,7 @@ module.exports = {
           type: Sequelize.DATE
         },
         isactive: {
-          type: Sequelize.BOOLEAN,
-          allowNull: false,
-          defaultValue: true,
-        },
-        publicid: {
-          allowNull: false,
-          type: Sequelize.STRING(12),
-          unique: true,
-        },
-        name: {
-          allowNull: false,
-          type: Sequelize.STRING(120)
-        },
-        description: {
-          allowNull: true,
-          type: Sequelize.STRING(2000)
-        },
-        startdate: {
-          allowNull: false,
-          type: Sequelize.DATE
-        },
-        enddate: {
-          allowNull: false,
-          type: Sequelize.DATE
+          type: Sequelize.BOOLEAN
         },
         m_pricelist_id: {
           type: Sequelize.DataTypes.INTEGER,
@@ -61,20 +38,51 @@ module.exports = {
             },
             key: 'm_pricelist_id'
           },
-          allowNull: true
+          allowNull: false
+        },
+        m_product_id: {
+          type: Sequelize.DataTypes.INTEGER,
+          references: {
+            model: {
+              tableName: 'm_product'
+            },
+            key: 'm_product_id'
+          },
+          allowNull: false
+        },
+        listprice: {
+          type: Sequelize.DataTypes.DECIMAL(10, 2),
+          allowNull: false
         },
       };
 
-      await queryInterface.createTable('c_event', schema, { trx });
+      await queryInterface.createTable('m_productprice', schema, { trx });
 
       await queryInterface.bulkInsert('ad_table', [
         {
           ad_table_uu: uuidv4(),
           created: new Date(),
           updated: new Date(),
-          tablename: 'c_event'
+          tablename: 'm_productprice'
         },
       ], { trx });
+
+      await queryInterface.addConstraint('m_productprice', {
+        fields: ['m_pricelist_id', 'm_product_id'],
+        type: 'unique',
+        name: 'm_productprice_unique_product',
+        trx
+      });
+
+      await queryInterface.addIndex(
+        'm_productprice',
+        ['isactive', 'm_pricelist_id', 'm_product_id'],
+        {
+          name: 'm_productprice_product',
+          indexType: 'BTREE',
+          trx
+        }
+      );
 
       await trx.commit();
     } catch (err) {
@@ -83,6 +91,6 @@ module.exports = {
     }
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('c_event');
+    await queryInterface.dropTable('m_productprice');
   }
 };
